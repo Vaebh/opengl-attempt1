@@ -4,7 +4,7 @@ using namespace std;
 
 int main()
 {
-	cout << "Hello OpenGL world!" << endl;
+	cout << "Hello OpenGL" << endl;
 	cin.get();
 
 	return 0;
