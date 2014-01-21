@@ -1,18 +1,18 @@
-﻿Build started 21/01/2014 00:16:54.
+﻿Build started 21/01/2014 22:36:18.
      1>Project "F:\OpenGL\OpenGL Attempt1\OpenGL Attempt1\OpenGL Attempt1.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\OpenGL Attempt1.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          F:\Program Crap\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"F:\Program Crap\Microsoft SDKs\Windows\v7.1\Include\gl" /I"F:\OpenGL\glfw-3.0.4.bin.WIN32\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
-     1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(28): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(28): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(30): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(30): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(32): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(32): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(34): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(34): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(44): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(44): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(46): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(46): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(48): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(48): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(50): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(50): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
        ManifestResourceCompile:
          All outputs are up-to-date.
        Link:
@@ -31,4 +31,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.23
+Time Elapsed 00:00:00.50

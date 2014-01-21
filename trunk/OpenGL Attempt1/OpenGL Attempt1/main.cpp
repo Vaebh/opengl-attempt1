@@ -1,3 +1,4 @@
+#include <iostream>
 #include <GLFW\glfw3.h>
 
 using namespace std;
@@ -21,8 +22,23 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 		moveVert -= 0.01f;
 }
 
-void DrawSquare(double centerX, double centerY, float length)
+void DrawSquare(double centerX, double centerY, float length, GLFWwindow * window)
 {
+	float ratio;
+    int width, height;
+    glfwGetFramebufferSize(window, &width, &height);
+    ratio = width / (float) height;
+    glViewport(0, 0, width, height);
+    //glClear(GL_COLOR_BUFFER_BIT);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+
+    glOrtho(-ratio, ratio, -1.f, 1.f, 1.f, -1.f);
+
+    glMatrixMode(GL_MODELVIEW);
+
+    glLoadIdentity();
+
 	glBegin(GL_QUADS);
 	glColor3f(1.f, 0.f, 0.f);
 	glVertex3f(centerX - length + moveHorz, centerY - length + moveVert, 0.f);
@@ -33,14 +49,19 @@ void DrawSquare(double centerX, double centerY, float length)
 	glColor3f(1.f, 1.f, 1.f);
 	glVertex3f(centerX - length + moveHorz, centerY + length + moveVert, 0.f);
     glEnd();
+
+	glfwSwapBuffers(window);
 }
 
 static void mouseCallback(GLFWwindow * window, int button, int action, int mods)
 {
 	if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
 	{
+		// convert mouse coords to range 0 to 1
 		glfwGetCursorPos(window, &mouseX, &mouseY);
-		DrawSquare(0, 0, 0.5f);
+		cout << "XPos: " << mouseX / 640 << " YPos: " << mouseY / 480 << endl;
+		cout << "Scaled XPos: " << mouseX / 640 << " Scaled YPos: " << mouseY / 480 << endl;
+		DrawSquare(mouseX / 640, mouseY / 480, 0.5f, window);
 	}
 }
 
@@ -70,10 +91,11 @@ int main(void)
 	glfwSetMouseButtonCallback(window, mouseCallback);
 
 	glClearColor(0, 0, 0, 1);
+	glfwSwapBuffers(window);
   
 	while (!glfwWindowShouldClose(window))
 	{
-		float ratio;
+		/*float ratio;
         int width, height;
         glfwGetFramebufferSize(window, &width, &height);
         ratio = width / (float) height;
@@ -86,9 +108,9 @@ int main(void)
 
         glMatrixMode(GL_MODELVIEW);
 
-        glLoadIdentity();
+        glLoadIdentity();*/
 
-		DrawSquare(0, 0, 0.5f);
+		//DrawSquare(0, 0, 0.5f, window);
 
         //glRotatef((float) glfwGetTime() * 50.f, 0.f, 0.f, 1.f);
 		/*glBegin(GL_QUADS);
@@ -109,8 +131,6 @@ int main(void)
         glVertex3f(0.f, 0.6f, 0.f);
         glEnd();*/
 		glfwPollEvents();
-
-        glfwSwapBuffers(window);
 	}
   
 	glfwDestroyWindow(window);
