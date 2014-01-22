@@ -7,6 +7,10 @@ float moveHorz, moveVert = 0;
 
 double mouseX, mouseY = 0;
 
+int width, height;
+
+float ratio;
+
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
@@ -24,12 +28,8 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 
 void DrawSquare(double centerX, double centerY, float length, GLFWwindow * window)
 {
-	float ratio;
-    int width, height;
-    glfwGetFramebufferSize(window, &width, &height);
-    ratio = width / (float) height;
     glViewport(0, 0, width, height);
-    //glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
@@ -59,9 +59,12 @@ static void mouseCallback(GLFWwindow * window, int button, int action, int mods)
 	{
 		// convert mouse coords to range 0 to 1
 		glfwGetCursorPos(window, &mouseX, &mouseY);
-		cout << "XPos: " << mouseX / 640 << " YPos: " << mouseY / 480 << endl;
-		cout << "Scaled XPos: " << mouseX / 640 << " Scaled YPos: " << mouseY / 480 << endl;
-		DrawSquare(mouseX / 640, mouseY / 480, 0.5f, window);
+		cout << "XPos: " << mouseX << " YPos: " << mouseY << endl;
+		float thing = (height / (float)width);
+		mouseX = ((mouseX * 2.666f) / 640) - 1.33f;
+		mouseY = ((mouseY * 2.f) / 480) - 1.f;
+		cout << "Scaled XPos: " << mouseX << " Scaled YPos: " << mouseY << endl;
+		DrawSquare(mouseX, -mouseY, 0.5f, window);
 	}
 }
 
@@ -92,27 +95,30 @@ int main(void)
 
 	glClearColor(0, 0, 0, 1);
 	glfwSwapBuffers(window);
+	
+	glfwGetFramebufferSize(window, &width, &height);
+	ratio = width / (float) height;
   
 	while (!glfwWindowShouldClose(window))
 	{
 		/*float ratio;
-        int width, height;
-        glfwGetFramebufferSize(window, &width, &height);
-        ratio = width / (float) height;
-        glViewport(0, 0, width, height);
-        glClear(GL_COLOR_BUFFER_BIT);
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
+		int width, height;
+		glfwGetFramebufferSize(window, &width, &height);
+		ratio = width / (float) height;
+		glViewport(0, 0, width, height);
+		glClear(GL_COLOR_BUFFER_BIT);
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
 
-        glOrtho(-ratio, ratio, -1.f, 1.f, 1.f, -1.f);
+		glOrtho(-ratio, ratio, -1.f, 1.f, 1.f, -1.f);
 
-        glMatrixMode(GL_MODELVIEW);
+		glMatrixMode(GL_MODELVIEW);
 
-        glLoadIdentity();*/
+		glLoadIdentity();*/
 
 		//DrawSquare(0, 0, 0.5f, window);
 
-        //glRotatef((float) glfwGetTime() * 50.f, 0.f, 0.f, 1.f);
+		//glRotatef((float) glfwGetTime() * 50.f, 0.f, 0.f, 1.f);
 		/*glBegin(GL_QUADS);
 		glColor3f(1.f, 0.f, 0.f);
 		glVertex3f(-0.5f + moveHorz, -0.5f + moveVert, 0.f);
@@ -122,19 +128,19 @@ int main(void)
 		glVertex3f(0.5f + moveHorz, 0.5f + moveVert, 0.f);
 		glColor3f(1.f, 1.f, 1.f);
 		glVertex3f(-0.5f + moveHorz, 0.5f + moveVert, 0.f);
-        /*glBegin(GL_TRIANGLES);
-        glColor3f(1.f, 0.f, 0.f);
-        glVertex3f(-0.6f, -0.4f, 0.f);
-        glColor3f(0.f, 1.f, 0.f);
-        glVertex3f(0.6f, -0.4f, 0.f);
-        glColor3f(0.f, 0.f, 1.f);
-        glVertex3f(0.f, 0.6f, 0.f);
-        glEnd();*/
+		/*glBegin(GL_TRIANGLES);
+		glColor3f(1.f, 0.f, 0.f);
+		glVertex3f(-0.6f, -0.4f, 0.f);
+		glColor3f(0.f, 1.f, 0.f);
+		glVertex3f(0.6f, -0.4f, 0.f);
+		glColor3f(0.f, 0.f, 1.f);
+		glVertex3f(0.f, 0.6f, 0.f);
+		glEnd();*/
 		glfwPollEvents();
 	}
-  
+
 	glfwDestroyWindow(window);
-  
+
 	glfwTerminate();
 
 	return 0;
