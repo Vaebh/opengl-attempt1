@@ -98,6 +98,10 @@ int main(void)
 
 	glewExperimental = GL_TRUE;
 	glewInit();
+   
+  GLuint vao;
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
 
 	GLuint vertexBuffer;
 	glGenBuffers(1, &vertexBuffer);
@@ -116,6 +120,19 @@ int main(void)
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+   
+  // Create an element array
+  GLuint ebo;
+  glGenBuffers(1, &ebo);
+  
+  GLuint elements[] = 
+  {
+      0, 1, 2,
+      2, 3, 0
+  };
+  
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
 
 	// Vertex Shader
 	const GLchar * vertexSource = "#version 150\n"
@@ -182,10 +199,6 @@ int main(void)
 	// Set our shader to be the active shader
 	glUseProgram(shaderProgram);
 
-	GLuint vao;
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
-
 	/*GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
 	cout << posAttrib << endl;
 	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
@@ -219,7 +232,9 @@ int main(void)
 		//float time = (float)clock() / (float)CLOCKS_PER_SEC;
 		//glUniform3f(uniColor, (sin(time * 4.0f) + 1.0f) / 2.0f, 0.0f, 0.0f);
 
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		//glDrawArrays(GL_TRIANGLES, 0, 3);
+      
+    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
 
