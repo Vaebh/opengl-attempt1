@@ -110,10 +110,10 @@ int main(void)
 
 	float vertices[] = 
 	{
-		-0.5f,  0.5f, 1.0f, 0.0f, 0.0f, // Vertex 1 (X, Y) red
-		0.5f, 0.5f, 0.0f, 1.0f, 0.0f, // Vertex 2 (X, Y) green
-		0.5f, -0.5f, 0.0f, 0.0f, 1.0f,  // Vertex 3 (X, Y) blue
-		-0.5f, -0.5f, 1.0f, 1.0f, 1.0f  // Vertex 4 (X, Y) blue
+		-0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f // Vertex 1 (X, Y) red, top Left
+		0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f // Vertex 2 (X, Y) green, top right
+		0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f  // Vertex 3 (X, Y) blue, bottom right
+		-0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // Vertex 4 (X, Y) white, bottom left
 	};
 
 	GLuint vbo;
@@ -139,14 +139,28 @@ int main(void)
 	glGenTextures(1, &tex);
 
 	glBindTexture(GL_TEXTURE_2D, tex);
+   
+  int width, height;
+  unsigned char* image =
+  SOIL_load_image("sample.png", &width, &height, 0, SOIL_LOAD_RGB);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,GL_UNSIGNED_BYTE, image);
+  SOIL_free_image_data(image);
+  
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// Vertex Shader
 	const GLchar * vertexSource = "#version 150\n"
+    "in vec2 texcoord;"
 		"in vec2 position;"
 		"in vec3 color;"
 		"out vec3 Color;"
+    "out vec2 Texcoord;"
 		"void main()"
 		"{"
+    "Texcoord = texcoord;"
 		"Color = color;"
 		"gl_Position = vec4(position, 0.0, 1.0);"
 		"}";
@@ -156,10 +170,12 @@ int main(void)
 	// Fragment Shader
 	const GLchar * fragmentSource = "#version 150\n"
 		"in vec3 Color;"
+    "in vec2 Texcoord;"
 		"out vec4 outColor;"
+    "uniform sampler2D tex;"
 		"void main()"
 		"{"
-		"    outColor = vec4(Color, 1.0);"
+		"    outColor = texture(tex, Texcoord) * vec4(Color, 1.0);"
 		"}";
 
 	// Loading Vertex Shader
@@ -211,15 +227,22 @@ int main(void)
 	glEnableVertexAttribArray(posAttrib);*/
 
 	GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
+  cout << "PositionAttrib: " << posAttrib << endl;
 	glEnableVertexAttribArray(posAttrib);
 	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE,
-						   5*sizeof(float), 0);
+						   7*sizeof(float), 0);
 
 	GLint colAttrib = glGetAttribLocation(shaderProgram, "color");
-	cout << colAttrib << endl;
+	cout << "ColorAttrib: " << colAttrib << endl;
 	glEnableVertexAttribArray(colAttrib);
 	glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE,
-						   5*sizeof(float), (void*)(2*sizeof(float)));
+						   7*sizeof(float), (void*)(2*sizeof(float)));
+                     
+  GLint texAttrib = glGetAttribLocation(shaderProgram, "texcoord");
+	cout << "TexAttrib: " << texAttrib << endl;
+	glEnableVertexAttribArray(texAttrib);
+	glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE,
+						   7*sizeof(float), (void*)(5*sizeof(float)));
 
 	// Setting input callbacks
 	glfwSetKeyCallback(window, key_callback);
