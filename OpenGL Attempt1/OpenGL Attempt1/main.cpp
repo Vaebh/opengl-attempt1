@@ -99,7 +99,7 @@ int main(void)
 	glewExperimental = GL_TRUE;
 	glewInit();
    
-  GLuint vao;
+	GLuint vao;
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
@@ -110,9 +110,10 @@ int main(void)
 
 	float vertices[] = 
 	{
-		0.0f,  0.5f, 1.0f, 0.0f, 0.0f, // Vertex 1 (X, Y) red
-		0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // Vertex 2 (X, Y) green
-		-0.5f, -0.5f, 0.0f, 0.0f, 1.0f  // Vertex 3 (X, Y) blue
+		-0.5f,  0.5f, 1.0f, 0.0f, 0.0f, // Vertex 1 (X, Y) red
+		0.5f, 0.5f, 0.0f, 1.0f, 0.0f, // Vertex 2 (X, Y) green
+		0.5f, -0.5f, 0.0f, 0.0f, 1.0f,  // Vertex 3 (X, Y) blue
+		-0.5f, -0.5f, 1.0f, 1.0f, 1.0f  // Vertex 4 (X, Y) blue
 	};
 
 	GLuint vbo;
@@ -121,18 +122,23 @@ int main(void)
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
    
-  // Create an element array
-  GLuint ebo;
-  glGenBuffers(1, &ebo);
+	// Create an element array
+	GLuint ebo;
+	glGenBuffers(1, &ebo);
   
-  GLuint elements[] = 
-  {
-      0, 1, 2,
-      2, 3, 0
-  };
+	GLuint elements[] = 
+	{
+		0, 1, 2,
+		2, 3, 0
+	};
   
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
+
+	GLuint tex;
+	glGenTextures(1, &tex);
+
+	glBindTexture(GL_TEXTURE_2D, tex);
 
 	// Vertex Shader
 	const GLchar * vertexSource = "#version 150\n"
@@ -233,8 +239,8 @@ int main(void)
 		//glUniform3f(uniColor, (sin(time * 4.0f) + 1.0f) / 2.0f, 0.0f, 0.0f);
 
 		//glDrawArrays(GL_TRIANGLES, 0, 3);
-      
-    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
 
