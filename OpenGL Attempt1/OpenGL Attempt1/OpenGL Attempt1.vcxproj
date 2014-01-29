@@ -52,14 +52,14 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>F:\Program Crap\Microsoft SDKs\Windows\v7.1\Include\gl;F:\OpenGL\glew-1.10.0\include;F:\OpenGL\glfw-3.0.4.bin.WIN32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\OpenGL\Simple OpenGL Image Library\src;F:\Program Crap\Microsoft SDKs\Windows\v7.1\Include\gl;F:\OpenGL\glew-1.10.0\include;F:\OpenGL\glfw-3.0.4.bin.WIN32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>F:\Program Crap\Microsoft SDKs\Windows\v7.1\Lib;F:\OpenGL\glfw\src\Debug;F:\OpenGL\glew-1.10.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32.lib;glfw3.lib;OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>F:\OpenGL\Simple OpenGL Image Library\projects\VC9\Debug;F:\Program Crap\Microsoft SDKs\Windows\v7.1\Lib;F:\OpenGL\glfw\src\Debug;F:\OpenGL\glew-1.10.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SOIL.lib;glew32.lib;glfw3.lib;OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

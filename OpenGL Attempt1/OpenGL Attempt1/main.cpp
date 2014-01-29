@@ -1,7 +1,9 @@
 #include <iostream>
+//#include <stdio.h>
 #include <time.h>
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
+#include <SOIL.h>
 
 using namespace std;
 
@@ -110,9 +112,9 @@ int main(void)
 
 	float vertices[] = 
 	{
-		-0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f // Vertex 1 (X, Y) red, top Left
-		0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f // Vertex 2 (X, Y) green, top right
-		0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f  // Vertex 3 (X, Y) blue, bottom right
+		-0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // Vertex 1 (X, Y) red, top Left
+		0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // Vertex 2 (X, Y) green, top right
+		0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,  // Vertex 3 (X, Y) blue, bottom right
 		-0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // Vertex 4 (X, Y) white, bottom left
 	};
 
@@ -134,22 +136,6 @@ int main(void)
   
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
-
-	GLuint tex;
-	glGenTextures(1, &tex);
-
-	glBindTexture(GL_TEXTURE_2D, tex);
-   
-  int width, height;
-  unsigned char* image =
-  SOIL_load_image("sample.png", &width, &height, 0, SOIL_LOAD_RGB);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,GL_UNSIGNED_BYTE, image);
-  SOIL_free_image_data(image);
-  
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// Vertex Shader
 	const GLchar * vertexSource = "#version 150\n"
@@ -211,23 +197,15 @@ int main(void)
 	GLuint shaderProgram = glCreateProgram();
 	glAttachShader(shaderProgram, vertexShader);
 	glAttachShader(shaderProgram, fragmentShader);
-
 	// Telling the program which buffer the fragment shader is writing to
 	glBindFragDataLocation(shaderProgram, 0, "outColor");
-
 	// Link the program (?)
 	glLinkProgram(shaderProgram);
-
 	// Set our shader to be the active shader
 	glUseProgram(shaderProgram);
 
-	/*GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
-	cout << posAttrib << endl;
-	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
-	glEnableVertexAttribArray(posAttrib);*/
-
 	GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
-  cout << "PositionAttrib: " << posAttrib << endl;
+	cout << "PositionAttrib: " << posAttrib << endl;
 	glEnableVertexAttribArray(posAttrib);
 	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE,
 						   7*sizeof(float), 0);
@@ -243,6 +221,21 @@ int main(void)
 	glEnableVertexAttribArray(texAttrib);
 	glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE,
 						   7*sizeof(float), (void*)(5*sizeof(float)));
+
+	GLuint tex;
+	glGenTextures(1, &tex);
+
+	glBindTexture(GL_TEXTURE_2D, tex);
+   
+	int width, height;
+	unsigned char* image = SOIL_load_image("sample.png", &width, &height, 0, SOIL_LOAD_RGB);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	SOIL_free_image_data(image);
+  
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// Setting input callbacks
 	glfwSetKeyCallback(window, key_callback);
