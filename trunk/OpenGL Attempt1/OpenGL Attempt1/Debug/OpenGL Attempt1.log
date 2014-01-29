@@ -1,4 +1,4 @@
-﻿Build started 26/01/2014 14:10:37.
+﻿Build started 29/01/2014 01:21:39.
      1>Project "F:\OpenGL\OpenGL Attempt1\OpenGL Attempt1\OpenGL Attempt1.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\OpenGL Attempt1.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -31,4 +31,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.60
+Time Elapsed 00:00:00.96
