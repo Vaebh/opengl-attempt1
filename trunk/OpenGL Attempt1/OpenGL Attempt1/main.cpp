@@ -1,9 +1,12 @@
 #include <iostream>
-//#include <stdio.h>
+#include <string>
 #include <time.h>
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
 #include <SOIL.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 using namespace std;
 
@@ -15,19 +18,78 @@ int width, height;
 
 float ratio;
 
+// Vertex Shader
+const GLchar * vertexSource = "#version 150\n"
+"in vec2 texcoord;"
+"in vec3 position;"
+"in vec3 color;"
+
+"out vec3 Color;"
+"out vec2 Texcoord;"
+
+"uniform mat4 move;"
+"uniform mat4 view;"
+"uniform mat4 proj;"
+
+"void main()"
+"{"
+	"Texcoord = texcoord;"
+	"Color = color;"
+	"gl_Position = proj * view * move * vec4(position, 1.0);"
+"}";
+
+// Fragment Shader
+const GLchar * fragmentSource = "#version 150\n"
+"in vec3 Color;"
+"in vec2 Texcoord;"
+
+"out vec4 outColor;"
+
+"uniform sampler2D texKitten;"
+"uniform sampler2D texPuppy;"
+
+"void main()"
+"{"
+	"vec4 colKitten = texture(texKitten, Texcoord);"
+	"vec4 colPuppy = texture(texPuppy, vec2(Texcoord.x, 1- Texcoord.y));"
+	"outColor = mix(colPuppy, colKitten, 0.4);"
+"}";
+
+// Fragment Shader
+// Upside down water cat shader
+/*const GLchar * fragmentSource = "#version 150\n"
+"in vec3 Color;"
+"in vec2 Texcoord;"
+
+"out vec4 outColor;"
+
+"uniform sampler2D texKitten;"
+"uniform sampler2D texPuppy;"
+"uniform float time;"
+
+"void main()"
+"{"
+	
+    "vec4 colPuppy = texture(texPuppy, Texcoord);"
+	"if(Texcoord.y < 0.5)"
+	"{outColor = texture(texKitten, Texcoord);}"
+	"else"
+	"{outColor = texture(texKitten, vec2(Texcoord.x + sin(Texcoord.y * 60.0 + time * 2.0) / 30.0, 1.0 - Texcoord.y));}"
+"}";*/
+
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GL_TRUE);
 
 	if(key == GLFW_KEY_D && action == GLFW_REPEAT || action == GLFW_PRESS)
-		moveHorz += 0.01f;
+		moveHorz -= 10.1f;
 	if(key == GLFW_KEY_A && action == GLFW_REPEAT || action == GLFW_PRESS)
-		moveHorz -= 0.01f;
+		moveHorz += 10.1f;
 	if(key == GLFW_KEY_W && action == GLFW_REPEAT || action == GLFW_PRESS)
-		moveVert += 0.01f;
+		moveVert -= 0.1f;
 	if(key == GLFW_KEY_S && action == GLFW_REPEAT || action == GLFW_PRESS)
-		moveVert -= 0.01f;
+		moveVert += 0.1f;
 }
 
 void DrawSquare(double centerX, double centerY, float length, GLFWwindow * window)
@@ -77,10 +139,10 @@ static void mouseCallback(GLFWwindow * window, int button, int action, int mods)
 	}
 }
 
-int main(void)
+GLFWwindow* InitialiseWindow()
 {
 	if (!glfwInit())
-		return 1;
+		return NULL;
     
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
@@ -93,34 +155,89 @@ int main(void)
 	if (!window)
 	{
 		glfwTerminate();
-			return 1;
+			return NULL;
 	}
   
 	glfwMakeContextCurrent(window);
 
 	glewExperimental = GL_TRUE;
 	glewInit();
-   
+
+	return window;
+}
+
+void ShaderCompilationCheck(GLuint shader, string shaderType)
+{
+	GLint status;
+	glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
+	if(status == GL_TRUE)
+		cout << shaderType + " shader compilation SUCCESS" << endl;
+	else if(status == GL_FALSE)
+		cout << shaderType + " shader compilation FAILED" << endl;
+}
+
+int main(void)
+{
+	// Initialise the window
+	GLFWwindow* window = InitialiseWindow();
+
+	if(!window)
+		return 1;
+
+	// Creates and binds the Vertex Array Object, which stores all the links between my vertex buffer objects
 	GLuint vao;
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
-	GLuint vertexBuffer;
-	glGenBuffers(1, &vertexBuffer);
+	glEnable(GL_DEPTH_TEST);
 
-	printf("%u\n", vertexBuffer);
+	GLfloat vertices[] = {
+    -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+     0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+     0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+    -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
 
-	float vertices[] = 
-	{
-		-0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // Vertex 1 (X, Y) red, top Left
-		0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // Vertex 2 (X, Y) green, top right
-		0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,  // Vertex 3 (X, Y) blue, bottom right
-		-0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // Vertex 4 (X, Y) white, bottom left
-	};
+    -0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+     0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+    -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
 
+    -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+
+     0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+     0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+     0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+     0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+     0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+
+    -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+     0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+     0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+     0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+    -0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+
+    -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+     0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f
+};
+
+	// Create and bind the vertex buffer
 	GLuint vbo;
-	glGenBuffers(1, &vbo); // Generate 1 buffer
-
+	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
    
@@ -137,61 +254,17 @@ int main(void)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
 
-	// Vertex Shader
-	const GLchar * vertexSource = "#version 150\n"
-    "in vec2 texcoord;"
-		"in vec2 position;"
-		"in vec3 color;"
-		"out vec3 Color;"
-    "out vec2 Texcoord;"
-		"void main()"
-		"{"
-    "Texcoord = texcoord;"
-		"Color = color;"
-		"gl_Position = vec4(position, 0.0, 1.0);"
-		"}";
-
-	cout << vertexSource << endl;
-
-	// Fragment Shader
-	const GLchar * fragmentSource = "#version 150\n"
-		"in vec3 Color;"
-    "in vec2 Texcoord;"
-		"out vec4 outColor;"
-    "uniform sampler2D tex;"
-		"void main()"
-		"{"
-		"    outColor = texture(tex, Texcoord) * vec4(Color, 1.0);"
-		"}";
-
 	// Loading Vertex Shader
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertexSource, NULL);
-
 	glCompileShader(vertexShader);
-
-	// Checking if Vertex Shader compiled or not
-	char buffer[512];
-	glGetShaderInfoLog(vertexShader, 512, NULL, buffer);
-
-	GLint status;
-	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &status);
-	if(status == GL_TRUE)
-		cout << "Vertex shader compilation SUCCESS" << endl;
-	else if(status == GL_FALSE)
-		cout << "Vertex shader compilation FAILED" << endl;
+	ShaderCompilationCheck(vertexShader, "Vertex");
 
 	// Loading Fragment Shader
 	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragmentShader, 1, &fragmentSource, NULL);
-
 	glCompileShader(fragmentShader);
-
-	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &status);
-	if(status == GL_TRUE)
-		cout << "Fragment shader compilation SUCCESS" << endl;
-	else if(status == GL_FALSE)
-		cout << "Fragment shader compilation FAILED" << endl;
+	ShaderCompilationCheck(fragmentShader, "Fragment");
 
 	// Actually create the shader program
 	GLuint shaderProgram = glCreateProgram();
@@ -199,7 +272,6 @@ int main(void)
 	glAttachShader(shaderProgram, fragmentShader);
 	// Telling the program which buffer the fragment shader is writing to
 	glBindFragDataLocation(shaderProgram, 0, "outColor");
-	// Link the program (?)
 	glLinkProgram(shaderProgram);
 	// Set our shader to be the active shader
 	glUseProgram(shaderProgram);
@@ -207,56 +279,108 @@ int main(void)
 	GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
 	cout << "PositionAttrib: " << posAttrib << endl;
 	glEnableVertexAttribArray(posAttrib);
-	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE,
-						   7*sizeof(float), 0);
+	glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), 0);
 
 	GLint colAttrib = glGetAttribLocation(shaderProgram, "color");
 	cout << "ColorAttrib: " << colAttrib << endl;
 	glEnableVertexAttribArray(colAttrib);
-	glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE,
-						   7*sizeof(float), (void*)(2*sizeof(float)));
+	glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(3*sizeof(float)));
                      
-  GLint texAttrib = glGetAttribLocation(shaderProgram, "texcoord");
+	GLint texAttrib = glGetAttribLocation(shaderProgram, "texcoord");
 	cout << "TexAttrib: " << texAttrib << endl;
 	glEnableVertexAttribArray(texAttrib);
-	glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE,
-						   7*sizeof(float), (void*)(5*sizeof(float)));
+	glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(6*sizeof(float)));
 
-	GLuint tex;
-	glGenTextures(1, &tex);
-
-	glBindTexture(GL_TEXTURE_2D, tex);
-   
+	GLuint textures[2];
+	glGenTextures(2, textures);
 	int width, height;
-	unsigned char* image = SOIL_load_image("sample.png", &width, &height, 0, SOIL_LOAD_RGB);
+	unsigned char* image;
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, textures[0]);
+	image = SOIL_load_image("sample.png", &width, &height, 0, SOIL_LOAD_RGB);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 	SOIL_free_image_data(image);
-  
+	glUniform1i(glGetUniformLocation(shaderProgram, "texKitten"), 0);
+	GLint uniKitten = glGetUniformLocation(shaderProgram, "texKitten");
+
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, textures[1]);
+	image = SOIL_load_image("sample2.png", &width, &height, 0, SOIL_LOAD_RGB);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	SOIL_free_image_data(image);
+	glUniform1i(glGetUniformLocation(shaderProgram, "texPuppy"), 1);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	//GLint uniTime = glGetUniformLocation(shaderProgram, "time");
+
+	glm::mat4 model;
+	GLint uniModel = glGetUniformLocation(shaderProgram, "move");
+	//trans = glm::rotate(trans, 45.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+
 	// Setting input callbacks
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetMouseButtonCallback(window, mouseCallback);
 
-	// Setting the screen to be black and swapping the buffers
-	glClearColor(0, 0, 0, 1);
-	glfwSwapBuffers(window);
+	double currentFrame = 0;
+	double oldFrame = 0;
+	double deltaTime = 0;
+
+	glm::mat4 proj = glm::perspective(45.0f, 640.f / 480.f, 1.0f, 10.0f);
+	GLint uniProj = glGetUniformLocation(shaderProgram, "proj");
+	glUniformMatrix4fv(uniProj, 1, GL_FALSE, glm::value_ptr(proj));
 
 	// Loop until the window should close
 	while (!glfwWindowShouldClose(window))
 	{
-		//GLint uniColor = glGetUniformLocation(shaderProgram, "triangleColor");
-		//glUniform3f(uniColor, 1.0f, 0.0f, 0.0f);
+		// Clear the screen to black
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		//float time = (float)clock() / (float)CLOCKS_PER_SEC;
-		//glUniform3f(uniColor, (sin(time * 4.0f) + 1.0f) / 2.0f, 0.0f, 0.0f);
+		currentFrame = glfwGetTime();
+		deltaTime = currentFrame - oldFrame;
+		oldFrame = currentFrame;
+		
+		GLfloat time = ((GLfloat)clock() / (GLfloat)CLOCKS_PER_SEC);
+		//time -= oldTime;
+		//oldTime = time;
+		//GLfloat time = (GLfloat)clock() / (GLfloat)CLOCKS_PER_SEC * 180.0f;
+		//glUniform1f(uniTime, time);
+		//glUniform1f(uniTime, 1.f);
+		//trans = glm::rotate(trans, time, glm::vec3(0.0f, 0.0f, 1.0f));
+		//glUniformMatrix4fv(uniTrans, 1, GL_FALSE, glm::value_ptr(trans));
 
-		//glDrawArrays(GL_TRIANGLES, 0, 3);
+		// Calculate transformation
+        //glm::mat4 trans;
+		model = glm::mat4();
+        model = glm::rotate(model, ((GLfloat)clock() / (GLfloat)CLOCKS_PER_SEC * 180.f), glm::vec3(0.0f, 0.0f, 1.0f));
+		//model = glm::scale(model, glm::vec3(sin(time * 10.f) / 2.f + 1, sin(time * 10.f) / 2.f + 1, sin(time * 10.f) / 2.f + 1));
+        glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(model));
 
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		//glm::vec3 rotateVec = glm::vec3(1.2f + moveVert, 1.2f + moveVert, 1.2f + moveVert);
+		glm::mat4 rotateMat;
+		rotateMat = glm::rotate(rotateMat, moveHorz, glm::vec3(0.0f, 0.0f, 1.0f));
+
+		glm::mat4 view = glm::lookAt(
+		//glm::vec3(abs(sin(1.2f * time + moveVert - 1)), abs(sin(1.2f * time + moveVert - 1)), abs(sin(1.2f * time + moveVert - 1))),
+		glm::vec3(1.2f, 1.2f, 1.2f),
+		glm::vec3(0.0f, 0.0f, 0.0f),
+		glm::vec3(0.0f, 0.0f, 1.0f)
+		);
+		GLint uniView = glGetUniformLocation(shaderProgram, "view");
+		glUniformMatrix4fv(uniView, 1, GL_FALSE, glm::value_ptr(view * rotateMat));
+
+		//glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		glfwSwapBuffers(window);
 
@@ -265,7 +389,6 @@ int main(void)
 	}
 
 	glfwDestroyWindow(window);
-
 	glfwTerminate();
 
 	return 0;

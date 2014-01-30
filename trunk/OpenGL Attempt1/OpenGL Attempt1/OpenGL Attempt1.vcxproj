@@ -52,7 +52,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>F:\OpenGL\Simple OpenGL Image Library\src;F:\Program Crap\Microsoft SDKs\Windows\v7.1\Include\gl;F:\OpenGL\glew-1.10.0\include;F:\OpenGL\glfw-3.0.4.bin.WIN32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\OpenGL\glm;F:\OpenGL\Simple OpenGL Image Library\src;F:\Program Crap\Microsoft SDKs\Windows\v7.1\Include\gl;F:\OpenGL\glew-1.10.0\include;F:\OpenGL\glfw-3.0.4.bin.WIN32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
