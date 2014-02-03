@@ -1,18 +1,18 @@
-﻿Build started 30/01/2014 23:31:14.
+﻿Build started 02/02/2014 03:48:01.
      1>Project "F:\OpenGL\OpenGL Attempt1\OpenGL Attempt1\OpenGL Attempt1.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\OpenGL Attempt1.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          F:\Program Crap\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /IF:\OpenGL\glm /I"F:\OpenGL\Simple OpenGL Image Library\src" /I"F:\Program Crap\Microsoft SDKs\Windows\v7.1\Include\gl" /I"F:\OpenGL\glew-1.10.0\include" /I"F:\OpenGL\glfw-3.0.4.bin.WIN32\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
-     1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(110): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
-     1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(110): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
      1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(112): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
      1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(112): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
      1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(114): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
      1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(114): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
      1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(116): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
      1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(116): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(118): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>f:\opengl\opengl attempt1\opengl attempt1\main.cpp(118): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
          GLM: perspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
          GLM: rotate function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
        ManifestResourceCompile:
@@ -33,4 +33,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.09
+Time Elapsed 00:00:01.17

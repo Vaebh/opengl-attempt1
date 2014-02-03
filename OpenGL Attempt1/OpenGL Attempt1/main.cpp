@@ -48,11 +48,13 @@ const GLchar * fragmentSource = "#version 150\n"
 "uniform sampler2D texKitten;"
 "uniform sampler2D texPuppy;"
 
+"uniform vec4 tintColor;"
+
 "void main()"
 "{"
 	"vec4 colKitten = texture(texKitten, Texcoord);"
 	"vec4 colPuppy = texture(texPuppy, vec2(Texcoord.x, 1- Texcoord.y));"
-	"outColor = mix(colPuppy, colKitten, 0.4);"
+	"outColor = tintColor * vec4(Color, 1.0) * mix(colPuppy, colKitten, 0.4);"
 "}";
 
 // Fragment Shader
@@ -232,7 +234,15 @@ int main(void)
      0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
      0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
     -0.5f,  0.5f,  0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f
+    -0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+
+	// floor
+	-1.0f, -1.0f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+     1.0f, -1.0f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+     1.0f,  1.0f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+     1.0f,  1.0f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+    -1.0f,  1.0f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+    -1.0f, -1.0f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f
 };
 
 	// Create and bind the vertex buffer
@@ -343,7 +353,7 @@ int main(void)
 	while (!glfwWindowShouldClose(window))
 	{
 		// Clear the screen to black
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		currentFrame = glfwGetTime();
@@ -372,15 +382,66 @@ int main(void)
 
 		glm::mat4 view = glm::lookAt(
 		//glm::vec3(abs(sin(1.2f * time + moveVert - 1)), abs(sin(1.2f * time + moveVert - 1)), abs(sin(1.2f * time + moveVert - 1))),
-		glm::vec3(1.2f, 1.2f, 1.2f),
+		glm::vec3(2.2f, 2.2f, 2.2f),
 		glm::vec3(0.0f, 0.0f, 0.0f),
 		glm::vec3(0.0f, 0.0f, 1.0f)
 		);
 		GLint uniView = glGetUniformLocation(shaderProgram, "view");
 		glUniformMatrix4fv(uniView, 1, GL_FALSE, glm::value_ptr(view * rotateMat));
 
+		GLint uniTintColor = glGetUniformLocation(shaderProgram, "tintColor");
+		glUniform4f(uniTintColor, 1.f, 1.f, 1.f, 1.f);
+
 		//glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		glEnable(GL_STENCIL_TEST);
+
+			glStencilFunc(GL_ALWAYS, 1, 0xFF); // Always set the stencil to 1
+			glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+			glStencilMask(0xFF);
+			glDepthMask(GL_FALSE);
+			glClear(GL_STENCIL_BUFFER_BIT);
+
+			glDrawArrays(GL_TRIANGLES, 36, 6);
+
+			glDepthMask(GL_TRUE);
+			glStencilFunc(GL_EQUAL, 1, 0xFF);
+			glStencilMask(0x00);
+
+			model = glm::scale(glm::translate(model, glm::vec3(0, 0, -1)), glm::vec3(1, 1, -1));
+			glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(model));
+
+			glUniform4f(uniTintColor, 0.6f, 0.6f, 0.6f, 1.f);
+
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		glDisable(GL_STENCIL_TEST);
+
+		/*glEnable(GL_STENCIL_TEST);
+
+    // Draw floor
+    glStencilFunc(GL_ALWAYS, 1, 0xFF); // Set any stencil to 1
+    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+    glStencilMask(0xFF); // Write to stencil buffer
+    glDepthMask(GL_FALSE); // Don't write to depth buffer
+    glClear(GL_STENCIL_BUFFER_BIT); // Clear stencil buffer (0 by default)
+
+    glDrawArrays(GL_TRIANGLES, 36, 6);
+
+    // Draw cube reflection
+    glStencilFunc(GL_EQUAL, 1, 0xFF); // Pass test if stencil value is 1
+    glStencilMask(0x00); // Don't write anything to stencil buffer
+    glDepthMask(GL_TRUE); // Write to depth buffer
+
+    model = glm::scale(
+        glm::translate(model, glm::vec3(0, 0, -1)),
+        glm::vec3(1, 1, -1)
+    );
+    glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(model));
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+
+glDisable(GL_STENCIL_TEST);*/
 
 		glfwSwapBuffers(window);
 
