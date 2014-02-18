@@ -125,7 +125,11 @@ const GLchar* LoadShader(string path)
 	return "";
 }
 
-
+GLuint CreateShaderFromFile(string path, GLenum shaderType)
+{
+  // Combine CreateShaderProgram and LoadShader
+  sdgb
+}
 
 
 //-------------------------------------------------------------------------------------
