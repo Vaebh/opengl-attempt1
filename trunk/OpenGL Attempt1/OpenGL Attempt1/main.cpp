@@ -1,12 +1,7 @@
-#include <iostream>
-#include <string>
-#include <time.h>
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
-#include <SOIL.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include "GLUtils.h"
+#include <time.h>
 
 using namespace std;
 
@@ -179,67 +174,6 @@ GLfloat quadVertices[] =
 	-1.0f,  1.0f,  0.0f, 1.0f
 };
 
-static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GL_TRUE);
-
-	if(key == GLFW_KEY_D && action == GLFW_REPEAT || action == GLFW_PRESS)
-		moveHorz -= 10.1f;
-	if(key == GLFW_KEY_A && action == GLFW_REPEAT || action == GLFW_PRESS)
-		moveHorz += 10.1f;
-	if(key == GLFW_KEY_W && action == GLFW_REPEAT || action == GLFW_PRESS)
-		moveVert -= 0.1f;
-	if(key == GLFW_KEY_S && action == GLFW_REPEAT || action == GLFW_PRESS)
-		moveVert += 0.1f;
-}
-
-void DrawSquare(double centerX, double centerY, float length, GLFWwindow * window)
-{
-    glViewport(0, 0, width, height);
-    glClear(GL_COLOR_BUFFER_BIT);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-
-    glOrtho(-ratio, ratio, -1.f, 1.f, 1.f, -1.f);
-
-    glMatrixMode(GL_MODELVIEW);
-
-    glLoadIdentity();
-
-	glBegin(GL_QUADS);
-	glColor3f(1.f, 0.f, 0.f);
-	glVertex3f(centerX - length + moveHorz, centerY - length + moveVert, 0.f);
-	glColor3f(0.f, 1.f, 0.f);
-	glVertex3f(centerX + length + moveHorz, centerY - length + moveVert, 0.f);
-	glColor3f(0.f, 0.f, 1.f);
-	glVertex3f(centerX + length + moveHorz, centerY + length + moveVert, 0.f);
-	glColor3f(1.f, 1.f, 1.f);
-	glVertex3f(centerX - length + moveHorz, centerY + length + moveVert, 0.f);
-    glEnd();
-
-	glfwSwapBuffers(window);
-}
-
-static void mouseCallback(GLFWwindow * window, int button, int action, int mods)
-{
-	if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
-	{
-		// convert mouse coords to range 0 to 1
-		glfwGetCursorPos(window, &mouseX, &mouseY);
-		cout << "XPos: " << mouseX << " YPos: " << mouseY << endl;
-
-		float screenRatioW = (width / (float)height);
-		float screenRatioH = (height / (float)width) * screenRatioW;
-
-		mouseX = ((mouseX * (screenRatioW * 2)) / width) - screenRatioW;
-		mouseY = ((mouseY * (screenRatioH * 2)) / height) - screenRatioH;
-
-		cout << "Scaled XPos: " << mouseX << " Scaled YPos: " << mouseY << endl;
-
-		DrawSquare(mouseX, -mouseY, 0.5f, window);
-	}
-}
 
 GLFWwindow* InitialiseWindow()
 {
@@ -268,95 +202,11 @@ GLFWwindow* InitialiseWindow()
 	return window;
 }
 
-void ShaderCompilationCheck(GLuint shader, string shaderType)
-{
-	GLint status;
-	glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
-	if(status == GL_TRUE)
-		cout << shaderType + " shader compilation SUCCESS" << endl;
-	else if(status == GL_FALSE)
-		cout << shaderType + " shader compilation FAILED" << endl;
-}
-
-void Setup3D(GLuint& shaderProgram)
-{
-	GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
-	cout << "PositionAttrib: " << posAttrib << endl;
-	glEnableVertexAttribArray(posAttrib);
-	glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), 0);
-
-	GLint colAttrib = glGetAttribLocation(shaderProgram, "color");
-	cout << "ColorAttrib: " << colAttrib << endl;
-	glEnableVertexAttribArray(colAttrib);
-	glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(3*sizeof(float)));
-                     
-	GLint texAttrib = glGetAttribLocation(shaderProgram, "texcoord");
-	cout << "TexAttrib: " << texAttrib << endl;
-	glEnableVertexAttribArray(texAttrib);
-	glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(6*sizeof(float)));
-}
-
-void Setup2D(GLuint& shaderProgram)
-{
-	GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
-	cout << "PositionAttrib: " << posAttrib << endl;
-	glEnableVertexAttribArray(posAttrib);
-	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 4*sizeof(float), 0);
-                     
-	GLint texAttrib = glGetAttribLocation(shaderProgram, "texcoord");
-	cout << "TexAttrib: " << texAttrib << endl;
-	glEnableVertexAttribArray(texAttrib);
-	glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 4*sizeof(float), (void*)(2*sizeof(float)));
-}
-
-GLuint CreateShaderProgram(const GLchar * vertexShaderSource, const GLchar * fragShaderSource)
-{
-	// Loading Vertex Shader
-	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-	glCompileShader(vertexShader);
-	ShaderCompilationCheck(vertexShader, "Vertex");
-
-	// Loading Fragment Shader
-	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragShaderSource, NULL);
-	glCompileShader(fragmentShader);
-	ShaderCompilationCheck(fragmentShader, "Fragment");
-
-	// Actually create the shader program
-	GLuint shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	// Telling the program which buffer the fragment shader is writing to
-	glBindFragDataLocation(shaderProgram, 0, "outColor");
-	glLinkProgram(shaderProgram);
-
-	return shaderProgram;
-}
-
-GLuint LoadImage(const GLchar * path)
-{
-	GLuint texture;
-	glGenTextures(1, &texture);
-
-	int width, height;
-	unsigned char* image;
-
-	glBindTexture(GL_TEXTURE_2D, texture);
-	image = SOIL_load_image(path, &width, &height, 0, SOIL_LOAD_RGB);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-	SOIL_free_image_data(image);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	return texture;
-}
 
 int NewMain()
 {
+	glfwInit();
+
 	// Initialise the window
 	GLFWwindow* window = InitialiseWindow();
 
@@ -394,6 +244,8 @@ int NewMain()
     Setup2D(shader2D);
 
 	//glUniform1i(glGetUniformLocation(shader2D, "texFrameBuffer"), 0);
+
+	const GLchar * shaderSrc = LoadShader("test.txt");
 
 	GLuint texKitten = LoadImage("sample.png");
 	GLuint texPuppy = LoadImage("sample2.png");
@@ -447,8 +299,8 @@ int NewMain()
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rboDepthStencil);
 
 	// Setting input callbacks
-	glfwSetKeyCallback(window, key_callback);
-	glfwSetMouseButtonCallback(window, mouseCallback);
+	//glfwSetKeyCallback(window, key_callback);
+	//glfwSetMouseButtonCallback(window, mouseCallback);
 
 	// Loop until the window should close
 	while (!glfwWindowShouldClose(window))

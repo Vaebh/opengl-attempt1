@@ -4,20 +4,23 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <string>
 
 using std::string;
 
-GLFWwindow* InitialiseWindow(int width = 640, int height = 480);
+//GLFWwindow* InitialiseWindow(int width = 640, int height = 480);
 
 void ShaderCompilationCheck(GLuint shader, string shaderType);
 
 // Sets up the 3D and 2D shader variables
 void Setup3D(GLuint& shaderProgram);
-void Setup2D(GLuint& shaderProgram)
+void Setup2D(GLuint& shaderProgram);
 
 // Creates a shader program from the supplied vertex and fragment shaders
 // Includes compilation check
 GLuint CreateShaderProgram(const GLchar * vertexShaderSource, const GLchar * fragShaderSource);
+
+const GLchar* LoadShader(string path);
 
 // Loads an image using the SOIL library
 GLuint LoadImage(const GLchar * path);
