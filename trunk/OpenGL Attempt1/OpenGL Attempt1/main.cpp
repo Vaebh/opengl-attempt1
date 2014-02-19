@@ -230,9 +230,9 @@ int NewMain()
     glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
 
 	// Loading 3D Shader
-	GLuint shader3D = CreateShaderProgram(vertexSource, fragmentSource);
+	GLuint shader3D = CreateShaderProgram("3DVertexShader.txt", "3DFragShader.txt");
 	glUseProgram(shader3D);
-	GLuint shader2D = CreateShaderProgram(vertex2DSource, fragment2DSource);
+	GLuint shader2D = CreateShaderProgram("2DVertexShader.txt", "2DFragShader.txt");
 
 	// Specify the layout of the vertex data
     glBindVertexArray(vaoCube);
@@ -244,8 +244,6 @@ int NewMain()
     Setup2D(shader2D);
 
 	//glUniform1i(glGetUniformLocation(shader2D, "texFrameBuffer"), 0);
-
-	const GLchar * shaderSrc = LoadShader("test.txt");
 
 	GLuint texKitten = LoadImage("sample.png");
 	GLuint texPuppy = LoadImage("sample2.png");
