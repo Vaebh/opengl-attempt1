@@ -66,7 +66,7 @@ GLuint CreateShaderProgram(std::string vertexShaderSrc, std::string fragShaderSr
 	GLuint vertexShader = CreateShaderFromFile(vertexShaderSrc, GL_VERTEX_SHADER);
 	GLuint fragShader = CreateShaderFromFile(fragShaderSrc, GL_FRAGMENT_SHADER);
 
-	if(!ShaderCompilationCheck(vertexShader, "Vertex") || ShaderCompilationCheck(fragShader, "Fragment"))
+	if(!ShaderCompilationCheck(vertexShader, "Vertex") || !ShaderCompilationCheck(fragShader, "Fragment"))
 	{
 		return 0;
 	}
