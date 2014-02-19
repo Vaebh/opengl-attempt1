@@ -6,14 +6,20 @@
 using std::cout;
 using std::endl;
 
-void ShaderCompilationCheck(GLuint shader, string shaderType)
+bool ShaderCompilationCheck(GLuint shader, std::string shaderType)
 {
 	GLint status;
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
 	if(status == GL_TRUE)
+	{
 		cout << shaderType + " shader compilation SUCCESS" << endl;
+		return true;
+	}
 	else if(status == GL_FALSE)
+	{
 		cout << shaderType + " shader compilation FAILED" << endl;
+		return false;
+	}
 }
 
 void Setup3D(GLuint& shaderProgram)
@@ -55,29 +61,60 @@ void Setup2D(GLuint& shaderProgram)
 //
 // @return - The index for the shader program we've just created
 //-------------------------------------------------------------------------------------
-GLuint CreateShaderProgram(const GLchar * vertexShaderSource, const GLchar * fragShaderSource)
+GLuint CreateShaderProgram(std::string vertexShaderSrc, std::string fragShaderSrc)
 {
-	// Loading Vertex Shader
-	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-	glCompileShader(vertexShader);
-	ShaderCompilationCheck(vertexShader, "Vertex");
+	GLuint vertexShader = CreateShaderFromFile(vertexShaderSrc, GL_VERTEX_SHADER);
+	GLuint fragShader = CreateShaderFromFile(fragShaderSrc, GL_FRAGMENT_SHADER);
 
-	// Loading Fragment Shader
-	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragShaderSource, NULL);
-	glCompileShader(fragmentShader);
-	ShaderCompilationCheck(fragmentShader, "Fragment");
+	if(!ShaderCompilationCheck(vertexShader, "Vertex") || ShaderCompilationCheck(fragShader, "Fragment"))
+	{
+		return 0;
+	}
 
 	// Actually create the shader program
 	GLuint shaderProgram = glCreateProgram();
 	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
+	glAttachShader(shaderProgram, fragShader);
+
 	// Telling the program which buffer the fragment shader is writing to
 	glBindFragDataLocation(shaderProgram, 0, "outColor");
 	glLinkProgram(shaderProgram);
 
 	return shaderProgram;
+}
+
+std::string LoadShader(std::string path)
+{
+	std::string shaderSrc = "";
+	std::ifstream myFile;
+
+	myFile.open(path);
+	if(myFile.is_open() && !myFile.bad())
+	{
+		return shaderSrc.assign(std::istreambuf_iterator<char>(myFile), std::istreambuf_iterator<char>());
+	}
+
+	return "";
+}
+
+GLuint CreateShaderFromFile(std::string path, GLenum shaderType)
+{
+	// Get the shader
+	std::string shaderSrcString = LoadShader(path);
+
+	if(shaderSrcString.empty())
+	{
+		return 0;
+	}
+
+	const GLchar* shaderSrc = shaderSrcString.c_str();
+
+	// Loading Vertex Shader
+	GLuint shader = glCreateShader(shaderType);
+	glShaderSource(shader, 1, &shaderSrc, NULL);
+	glCompileShader(shader);
+
+	return shader;
 }
 
 //-------------------------------------------------------------------------------------
@@ -106,29 +143,6 @@ GLuint LoadImage(const GLchar * path)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	return texture;
-}
-
-const GLchar* LoadShader(string path)
-{
-	string shaderSrc = "";
-	std::ifstream myFile;
-
-	myFile.open(path);
-	if(myFile.is_open() && !myFile.bad())
-	{
-		shaderSrc = shaderSrc.assign(std::istreambuf_iterator<char>(myFile), std::istreambuf_iterator<char>());
-
-		const GLchar* shader = shaderSrc.c_str();
-		return shader;
-	}
-
-	return "";
-}
-
-GLuint CreateShaderFromFile(string path, GLenum shaderType)
-{
-  // Combine CreateShaderProgram and LoadShader
-  sdgb
 }
 
 

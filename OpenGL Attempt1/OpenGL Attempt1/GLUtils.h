@@ -6,11 +6,9 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <string>
 
-using std::string;
-
 //GLFWwindow* InitialiseWindow(int width = 640, int height = 480);
 
-void ShaderCompilationCheck(GLuint shader, string shaderType);
+bool ShaderCompilationCheck(GLuint shader, std::string shaderType);
 
 // Sets up the 3D and 2D shader variables
 void Setup3D(GLuint& shaderProgram);
@@ -18,9 +16,11 @@ void Setup2D(GLuint& shaderProgram);
 
 // Creates a shader program from the supplied vertex and fragment shaders
 // Includes compilation check
-GLuint CreateShaderProgram(const GLchar * vertexShaderSource, const GLchar * fragShaderSource);
+GLuint CreateShaderProgram(std::string vertexShaderSrc, std::string fragShaderSrc);
 
-const GLchar* LoadShader(string path);
+std::string LoadShader(std::string path);
+
+GLuint CreateShaderFromFile(std::string path, GLenum shaderType);
 
 // Loads an image using the SOIL library
 GLuint LoadImage(const GLchar * path);
