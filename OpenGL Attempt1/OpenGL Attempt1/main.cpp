@@ -159,17 +159,17 @@ int NewMain()
         glm::vec3(0.0f, 0.0f, 0.0f),
         glm::vec3(0.0f, 0.0f, 1.0f)
     );
-    GLint uniView = glGetUniformLocation(shader3D, "view");
+    GLint uniView = glGetUniformLocation(shader3DProgram, "view");
     glUniformMatrix4fv(uniView, 1, GL_FALSE, glm::value_ptr(view));
 
     glm::mat4 proj = glm::perspective(45.0f, 640.0f / 480.0f, 1.0f, 10.0f);
-    GLint uniProj = glGetUniformLocation(shader3D, "proj");
+    GLint uniProj = glGetUniformLocation(shader3DProgram, "proj");
     glUniformMatrix4fv(uniProj, 1, GL_FALSE, glm::value_ptr(proj));
 
-    GLint uniColor = glGetUniformLocation(shader3D, "tintColor");
+    GLint uniColor = glGetUniformLocation(shader3DProgram, "tintColor");
 
-	glUseProgram(shader2D);
-    glUniform1i(glGetUniformLocation(shader2D, "texFramebuffer"), 0);
+	glUseProgram(shader2DProgram);
+    glUniform1i(glGetUniformLocation(shader2DProgram, "texFramebuffer"), 0);
 
 	// Create frame buffer
     GLuint frameBuffer;
@@ -206,7 +206,7 @@ int NewMain()
         glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
         glBindVertexArray(vaoCube);
 		glEnable(GL_DEPTH_TEST);
-		glUseProgram(shader3D);
+		glUseProgram(shader3DProgram);
 
 		glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texKitten);
@@ -258,7 +258,7 @@ int NewMain()
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         glBindVertexArray(vaoQuad);
         glDisable(GL_DEPTH_TEST);
-        glUseProgram(shader2D);
+        glUseProgram(shader2DProgram);
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texColorBuffer);
