@@ -1,113 +1,9 @@
-#include <GL\glew.h>
-#include <GLFW\glfw3.h>
+#include "GLIncludes.h"
 #include "GLUtils.h"
+#include "Shader.h"
 #include <time.h>
 
 using namespace std;
-
-float moveHorz, moveVert = 0;
-
-double mouseX, mouseY = 0;
-
-int width, height;
-
-float ratio;
-
-// 3D Vertex Shader
-const GLchar * vertexSource = "#version 150\n"
-"in vec2 texcoord;"
-"in vec3 position;"
-"in vec3 color;"
-
-"out vec3 Color;"
-"out vec2 Texcoord;"
-
-"uniform mat4 move;"
-"uniform mat4 view;"
-"uniform mat4 proj;"
-
-"void main()"
-"{"
-	"Texcoord = texcoord;"
-	"Color = color;"
-	"gl_Position = proj * view * move * vec4(position, 1.0);"
-"}";
-
-// 3D Fragment Shader
-const GLchar * fragmentSource = "#version 150\n"
-"in vec3 Color;"
-"in vec2 Texcoord;"
-
-"out vec4 outColor;"
-
-"uniform sampler2D texKitten;"
-"uniform sampler2D texPuppy;"
-"uniform vec3 tintColor;"
-
-"void main()"
-"{"
-	"vec4 colKitten = texture(texKitten, Texcoord);"
-	"vec4 colPuppy = texture(texPuppy, vec2(Texcoord.x, 1- Texcoord.y));"
-	"outColor = vec4(tintColor, 1) * vec4(Color, 1.0) * mix(colPuppy, colKitten, 0.4);"
-"}";
-
-// 2D Vertex Shader
-const GLchar * vertex2DSource = "#version 150\n"
-"in vec2 texcoord;"
-"in vec2 position;"
-
-"out vec2 Texcoord;"
-
-"void main()"
-"{"
-	"Texcoord = texcoord;"
-	"gl_Position = vec4(position, 0, 1.0);"
-"}";
-
-// 2D Fragment Shader
-const GLchar * fragment2DSource = "#version 150\n"
-"in vec2 Texcoord;"
-
-"out vec4 outColor;"
-
-"uniform sampler2D texFrameBuffer;"
-
-"void main()"
-"{"
-	"const float blurSizeH = 1.0 / 300.0;"
-	"const float blurSizeV = 1.0 / 200.0;"
-	"vec4 sum = vec4(0.0,0.0,0.0,0.0);"
-    "for (int x = -4; x <= 4; x++)"
-	"{"
-        "for (int y = -4; y <= 4; y++)"
-		"{"
-            "sum += texture(texFrameBuffer, vec2(Texcoord.x + x * blurSizeH, Texcoord.y + y * blurSizeV)) / 81.0;"
-		"}"
-	"}"
-    "outColor = sum;"
-"}";
-
-// Fragment Shader
-// Upside down water cat shader
-/*const GLchar * fragmentSource = "#version 150\n"
-"in vec3 Color;"
-"in vec2 Texcoord;"
-
-"out vec4 outColor;"
-
-"uniform sampler2D texKitten;"
-"uniform sampler2D texPuppy;"
-"uniform float time;"
-
-"void main()"
-"{"
-	
-    "vec4 colPuppy = texture(texPuppy, Texcoord);"
-	"if(Texcoord.y < 0.5)"
-	"{outColor = texture(texKitten, Texcoord);}"
-	"else"
-	"{outColor = texture(texKitten, vec2(Texcoord.x + sin(Texcoord.y * 60.0 + time * 2.0) / 30.0, 1.0 - Texcoord.y));}"
-"}";*/
 
 GLfloat vertices[] = 
 {
@@ -229,30 +125,33 @@ int NewMain()
     glBindBuffer(GL_ARRAY_BUFFER, vboQuad);
     glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
 
+	Shader shader3D = Shader("3DVertexShader.txt", "3DFragShader.txt");
+	Shader shader2D = Shader("2DVertexShader.txt", "2DFragShader.txt");
+
 	// Loading 3D Shader
-	GLuint shader3D = CreateShaderProgram("3DVertexShader.txt", "3DFragShader.txt");
-	glUseProgram(shader3D);
-	GLuint shader2D = CreateShaderProgram("2DVertexShader.txt", "2DFragShader.txt");
+	GLuint shader3DProgram = shader3D.GetProgramID();
+	glUseProgram(shader3DProgram);
+	GLuint shader2DProgram = shader2D.GetProgramID();
 
 	// Specify the layout of the vertex data
     glBindVertexArray(vaoCube);
     glBindBuffer(GL_ARRAY_BUFFER, vboCube);
-	Setup3D(shader3D);
+	Setup3D(shader3DProgram);
 
 	glBindVertexArray(vaoQuad);
     glBindBuffer(GL_ARRAY_BUFFER, vboQuad);
-    Setup2D(shader2D);
+    Setup2D(shader2DProgram);
 
 	//glUniform1i(glGetUniformLocation(shader2D, "texFrameBuffer"), 0);
 
 	GLuint texKitten = LoadImage("sample.png");
 	GLuint texPuppy = LoadImage("sample2.png");
 
-	glUseProgram(shader3D);
-    glUniform1i(glGetUniformLocation(shader3D, "texKitten"), 0);
-    glUniform1i(glGetUniformLocation(shader3D, "texPuppy"), 1);
+	glUseProgram(shader3DProgram);
+    glUniform1i(glGetUniformLocation(shader3DProgram, "texKitten"), 0);
+    glUniform1i(glGetUniformLocation(shader3DProgram, "texPuppy"), 1);
 
-	GLint uniModel = glGetUniformLocation(shader3D, "move");
+	GLint uniModel = glGetUniformLocation(shader3DProgram, "move");
 
     // Set up projection
     glm::mat4 view = glm::lookAt(

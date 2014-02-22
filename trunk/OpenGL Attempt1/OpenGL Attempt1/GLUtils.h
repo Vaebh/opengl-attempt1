@@ -1,9 +1,4 @@
-#include <GL\glew.h>
-#include <GLFW\glfw3.h>
-#include <SOIL.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include "GLIncludes.h"
 #include <string>
 
 //GLFWwindow* InitialiseWindow(int width = 640, int height = 480);
