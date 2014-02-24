@@ -70,7 +70,6 @@ GLfloat quadVertices[] =
 	-1.0f,  1.0f,  0.0f, 1.0f
 };
 
-
 GLFWwindow* InitialiseWindow()
 {
 	if (!glfwInit())
@@ -101,8 +100,6 @@ GLFWwindow* InitialiseWindow()
 
 int NewMain()
 {
-	glfwInit();
-
 	// Initialise the window
 	GLFWwindow* window = InitialiseWindow();
 
