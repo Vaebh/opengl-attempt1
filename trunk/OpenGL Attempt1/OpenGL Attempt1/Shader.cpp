@@ -33,6 +33,11 @@ Shader::~Shader()
 	}
 }
 
+GLint Shader::GetAttributeLocation(const char * inAttributeName)
+{
+  return glGetAttribLocation(mShader.GetProgramID(), inAttributeName);
+}
+
 //-------------------------------------------------------------------------------------
 // CreateShaderProgram
 //
