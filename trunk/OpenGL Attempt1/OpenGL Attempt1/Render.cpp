@@ -1,5 +1,7 @@
 #include "Render.h"
 
+Render* Render::mRenderer = 0;
+
 Render::Render()
 {
 
@@ -8,6 +10,16 @@ Render::Render()
 Render::~Render()
 {
 
+}
+
+Render* Render::GetSingleton()
+{
+	if(!mRenderer)
+	{
+		mRenderer = new Render();
+	}
+
+	return mRenderer;
 }
 
 void Render::SetFrameBufferTarget(GLuint inFrameBuffer)
@@ -25,8 +37,14 @@ void Render::AddEntity(Entity* inEntity)
 
 void Render::Draw()
 {
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	for(int i = 0; i < mEntities.size() ; ++i)
 	{
-		mEntities[i]->Draw();
+		if(mEntities[i]->IsVisible())
+		{
+			mEntities[i]->Draw();
+		}
 	}
 }

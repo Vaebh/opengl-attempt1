@@ -1,8 +1,10 @@
 #include "GLIncludes.h"
 #include "GLUtils.h"
 #include "Shader.h"
+#include "Sprite.h"
+#include "Render.h"
 #include <time.h>
-
+#include <iostream>
 using namespace std;
 
 GLfloat vertices[] = 
@@ -127,6 +129,12 @@ int NewMain()
 
 	// Loading 3D Shader
 	GLuint shader3DProgram = shader3D.GetProgramID();
+
+	if(glIsProgram(shader3DProgram) == GL_TRUE)
+		cout << "isProgram success" << endl;
+	else
+		cout << "isProgram fail" << endl;
+
 	glUseProgram(shader3DProgram);
 	GLuint shader2DProgram = shader2D.GetProgramID();
 
@@ -258,7 +266,7 @@ int NewMain()
         glUseProgram(shader2DProgram);
 
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texColorBuffer);
+        glBindTexture(GL_TEXTURE_2D, texKitten);
 
         glDrawArrays(GL_TRIANGLES, 0, 6);
 
@@ -274,9 +282,38 @@ int NewMain()
 	return 0;
 }
 
+int NewNewMain()
+{
+	// Initialise the window
+	GLFWwindow* window = InitialiseWindow();
+
+	if(!window)
+		return 1;
+
+	Sprite kitten("sample.png", "2DVertexShader.txt", "2DFragShaderPlain.txt");
+	Sprite puppy("sample2.png", "2DVertexShader.txt", "2DFragShaderPlain.txt");
+
+	// Loop until the window should close
+	while (!glfwWindowShouldClose(window))
+	{
+		Render::GetSingleton()->Draw();
+
+		glfwSwapBuffers(window);
+
+		// Check for new events
+		glfwPollEvents();
+	}
+
+	glfwDestroyWindow(window);
+	glfwTerminate();
+
+	return 0;
+}
+
 int main(void)
 {
-	return NewMain();
+	return NewNewMain();
+	//return NewMain();
 	//return OldMain();
 
 	return 0;
