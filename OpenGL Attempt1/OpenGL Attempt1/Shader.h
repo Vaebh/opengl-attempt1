@@ -1,6 +1,9 @@
 #include "GLIncludes.h"
 #include <string>
 
+#ifndef SHADER
+#define SHADER
+
 class Shader
 {
 public:
@@ -10,6 +13,9 @@ public:
 	~Shader();
         
 	inline GLuint GetProgramID() {return mShaderProgram;}
+	GLint GetAttributeLocation(const char * inAttributeName);
+
+	GLuint mShaderProgram;
 
 private:
 
@@ -21,7 +27,8 @@ private:
 
 private:
 
-	GLuint mShaderProgram;
 	GLuint mVertexShader;
 	GLuint mFragmentShader;
 };
+
+#endif

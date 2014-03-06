@@ -35,7 +35,7 @@ Shader::~Shader()
 
 GLint Shader::GetAttributeLocation(const char * inAttributeName)
 {
-  return glGetAttribLocation(mShader.GetProgramID(), inAttributeName);
+  return glGetAttribLocation(GetProgramID(), inAttributeName);
 }
 
 //-------------------------------------------------------------------------------------
@@ -60,17 +60,34 @@ GLuint Shader::CreateShaderProgram(const std::string& vertexShaderSrc, const std
 	mFragmentShader = fragShader;
 
 	// Actually create the shader program
-	GLuint shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragShader);
+	mShaderProgram = glCreateProgram();
+	glAttachShader(mShaderProgram, vertexShader);
+	glAttachShader(mShaderProgram, fragShader);
 
 	// Telling the program which buffer the fragment shader is writing to
-	glBindFragDataLocation(shaderProgram, 0, "outColor");
-	glLinkProgram(shaderProgram);
+	glBindFragDataLocation(mShaderProgram, 0, "outColor");
+	glLinkProgram(mShaderProgram);
         
-	mShaderProgram = shaderProgram;
+	//mShaderProgram = shaderProgram;
 
-	return shaderProgram;
+	if(glIsProgram(mShaderProgram) == GL_TRUE)
+		cout << "isProgram success" << endl;
+	else
+		cout << "isProgram fail" << endl;
+
+	/*glUseProgram(mShaderProgram);
+
+	GLint posAttrib = glGetAttribLocation(mShaderProgram, "position");
+	std::cout << "PositionAttrib: " << posAttrib << std::endl;
+	glEnableVertexAttribArray(posAttrib);
+	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 4*sizeof(float), 0);
+                     
+	GLint texAttrib = glGetAttribLocation(mShaderProgram, "texcoord");
+	std::cout << "TexAttrib: " << texAttrib << std::endl;
+	glEnableVertexAttribArray(texAttrib);
+	glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 4*sizeof(float), (void*)(2*sizeof(float)));*/
+
+	return mShaderProgram;
 }
 
 bool Shader::ShaderCompilationCheck(const GLuint vertexShader, const GLuint fragmentShader, const std::string shaderName) const
