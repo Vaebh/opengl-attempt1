@@ -7,6 +7,24 @@
 #include <iostream>
 using namespace std;
 
+Sprite* kitten;
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GL_TRUE);
+
+	if(key == GLFW_KEY_D && (action == GLFW_PRESS || action == GLFW_REPEAT))
+		kitten->moveX += 0.01f;
+	if(key == GLFW_KEY_A && (action == GLFW_PRESS || action == GLFW_REPEAT))
+		kitten->moveX -= 0.01f;
+
+	if(key == GLFW_KEY_W && (action == GLFW_PRESS || action == GLFW_REPEAT))
+		kitten->moveY += 0.01f;
+	if(key == GLFW_KEY_S && (action == GLFW_PRESS || action == GLFW_REPEAT))
+		kitten->moveY -= 0.01f;
+}
+
 GLfloat vertices[] = 
 {
 	-0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
@@ -290,8 +308,11 @@ int NewNewMain()
 	if(!window)
 		return 1;
 
-	Sprite kitten("sample.png", "2DVertexShader.txt", "2DFragShaderPlain.txt");
-	Sprite puppy("sample2.png", "2DVertexShader.txt", "2DFragShaderPlain.txt");
+	kitten = new Sprite("sample.png", "2DVertexShaderMove.txt", "2DFragShaderPlain.txt");
+	//Sprite puppy("sample2.png", "2DVertexShader.txt", "2DFragShaderPlain.txt");
+
+	glfwSetKeyCallback(window, key_callback);
+	glfwSetMouseButtonCallback(window, mouseCallback);
 
 	// Loop until the window should close
 	while (!glfwWindowShouldClose(window))
@@ -303,6 +324,9 @@ int NewNewMain()
 		// Check for new events
 		glfwPollEvents();
 	}
+
+	delete kitten;
+	kitten = 0;
 
 	glfwDestroyWindow(window);
 	glfwTerminate();

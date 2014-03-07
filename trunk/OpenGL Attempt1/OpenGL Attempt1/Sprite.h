@@ -18,9 +18,14 @@ public:
 
 	Shader mShader;
 
+	float moveX;
+	float moveY;
+
 private:
 	
 	GLuint mTexture;
 	GLuint mVao;
 	GLuint mVbo;
+
+	GLint mMoveUniform;
 };
