@@ -6,6 +6,33 @@
 using std::cout;
 using std::endl;
 
+/*GLFWwindow* InitialiseWindow()
+{
+        if (!glfwInit())
+                return NULL;
+    
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+        glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+
+        GLFWwindow* window = glfwCreateWindow(640, 480, "Red Square Adventures", NULL, NULL);
+  
+        if (!window)
+        {
+                glfwTerminate();
+                        return NULL;
+        }
+  
+        glfwMakeContextCurrent(window);
+
+        glewExperimental = GL_TRUE;
+        glewInit();
+
+        return window;
+}*/
+
 bool ShaderCompilationCheck(GLuint shader, std::string shaderType)
 {
 	GLint status;
