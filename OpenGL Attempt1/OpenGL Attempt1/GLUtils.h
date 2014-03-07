@@ -24,7 +24,7 @@ GLuint LoadImage(const GLchar * path);
 void DrawSquare(double centerX, double centerY, float length, GLFWwindow * window);
 
 // Prints out mouse coordinates
-static void mouseCallback(GLFWwindow * window, int button, int action, int mods);
+void mouseCallback(GLFWwindow * window, int button, int action, int mods);
 
 // Keyboard controls, exit with Esc
-static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+//void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);

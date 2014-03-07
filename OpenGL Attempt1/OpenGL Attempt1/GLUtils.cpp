@@ -149,11 +149,11 @@ GLuint LoadImage(const GLchar * path)
 //-------------------------------------------------------------------------------------
 // Old stuff
 //-------------------------------------------------------------------------------------
-static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+/*void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GL_TRUE);
-}
+}*/
 
 void DrawSquare(double centerX, double centerY, float length, GLFWwindow * window)
 {
@@ -187,7 +187,7 @@ void DrawSquare(double centerX, double centerY, float length, GLFWwindow * windo
 	glfwSwapBuffers(window);
 }
 
-static void mouseCallback(GLFWwindow * window, int button, int action, int mods)
+void mouseCallback(GLFWwindow * window, int button, int action, int mods)
 {
 	if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
 	{
