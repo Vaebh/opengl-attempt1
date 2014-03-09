@@ -16,8 +16,11 @@ public:
 	inline bool IsVisible() const {return mbVisible;}
 	inline void SetVisible(bool inbVisible) {mbVisible = inbVisible;}
 
+	float x, y;
+
 private:
 
 	bool mbVisible;
+	std::string mName;
 };
 #endif
