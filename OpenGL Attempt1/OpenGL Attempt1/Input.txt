@@ -1,0 +1,4 @@
+MoveUp:W
+MoveLeft:A
+MoveDown:S
+MoveRight:D

@@ -18,7 +18,7 @@ const unsigned int kNumVertsForSprites = 4;
 
 using namespace std;
 
-Sprite::Sprite(const std::string inTexture, const std::string inVertexShaderSrc, const std::string inFragShaderSrc) : Entity(), moveX(0.f), moveY(0.f)
+Sprite::Sprite(const std::string inTexture, const std::string inVertexShaderSrc, const std::string inFragShaderSrc) : Entity()
 {
 	glGenVertexArrays(1, &mVao);
 	glGenBuffers(1, &mVbo);
@@ -80,7 +80,7 @@ void Sprite::Draw()
         90.f,
         glm::vec3(0.0f, 0.0f, 1.0f)
     );*/
-	model = glm::translate(model, glm::vec3(moveX, moveY, 0.f));
+	model = glm::translate(model, glm::vec3(x, y, 0.f));
     glUniformMatrix4fv(mMoveUniform, 1, GL_FALSE, glm::value_ptr(model));
 	
 	glDrawArrays(GL_TRIANGLES, 0, 6);

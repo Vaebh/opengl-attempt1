@@ -3,6 +3,7 @@
 #include "Shader.h"
 #include "Sprite.h"
 #include "Render.h"
+#include "Input.h"
 #include <time.h>
 #include <iostream>
 using namespace std;
@@ -14,15 +15,24 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GL_TRUE);
 
-	if(key == GLFW_KEY_D && (action == GLFW_PRESS || action == GLFW_REPEAT))
-		kitten->moveX += 0.01f;
-	if(key == GLFW_KEY_A && (action == GLFW_PRESS || action == GLFW_REPEAT))
-		kitten->moveX -= 0.01f;
+	//if(key == GLFW_KEY_D && (action == GLFW_PRESS || action == GLFW_REPEAT))
+		//kitten->moveX += 0.01f;
+	if(key == GLFW_KEY_A)
+	{
+		cout << "AAAA" << endl;
+		//kitten->moveX -= 0.01f;
+	}
 
 	if(key == GLFW_KEY_W && (action == GLFW_PRESS || action == GLFW_REPEAT))
-		kitten->moveY += 0.01f;
+	{
+		//kitten->moveY += 0.01f;
+		cout << "WWWWW" << endl;
+	}
 	if(key == GLFW_KEY_S && (action == GLFW_PRESS || action == GLFW_REPEAT))
-		kitten->moveY -= 0.01f;
+	{
+		cout << "SSSSS" << endl;
+		//kitten->moveY -= 0.01f;
+	}
 }
 
 GLfloat vertices[] = 
@@ -308,15 +318,53 @@ int NewNewMain()
 	if(!window)
 		return 1;
 
+	
+
 	kitten = new Sprite("sample.png", "2DVertexShaderMove.txt", "2DFragShaderPlain.txt");
+	Input inputHandler = Input(window, kitten);
+	//inputHandler.mKitten = kitten;
 	//Sprite puppy("sample2.png", "2DVertexShader.txt", "2DFragShaderPlain.txt");
 
-	glfwSetKeyCallback(window, key_callback);
+	//glfwSetKeyCallback(window, key_callback);
 	glfwSetMouseButtonCallback(window, mouseCallback);
+
+	double olddelta = 0;
+	double delta = 0;
+	double begin_time = glfwGetTime();
+
 
 	// Loop until the window should close
 	while (!glfwWindowShouldClose(window))
 	{
+		/*double now = glfwGetTime();
+		delta = now - begin_time;
+		cout << delta << endl;
+		begin_time = now;*/
+
+		delta = glfwGetTime() - olddelta;
+		olddelta = glfwGetTime();
+		//cout << "OLD delta: " << olddelta << endl;
+		//cout << "delta: " << delta << endl;
+
+		/*if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+			kitten->moveX += 0.001f;
+		if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+			kitten->moveX -= 0.001f;
+
+		if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+			kitten->moveY += 0.001f;
+		if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+			kitten->moveY -= 0.001f;*/
+
+		/*if(key == GLFW_KEY_A && (action == GLFW_PRESS || action == GLFW_REPEAT))
+			kitten->moveX -= 0.01f;
+
+		if(key == GLFW_KEY_W && (action == GLFW_PRESS || action == GLFW_REPEAT))
+			kitten->moveY += 0.01f;
+		if(key == GLFW_KEY_S && (action == GLFW_PRESS || action == GLFW_REPEAT))
+			kitten->moveY -= 0.01f;*/
+
+		inputHandler.Update(delta);
 		Render::GetSingleton()->Draw();
 
 		glfwSwapBuffers(window);

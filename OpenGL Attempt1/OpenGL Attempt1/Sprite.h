@@ -3,6 +3,9 @@
 #include "Shader.h"
 #include <string>
 
+#ifndef SPRITE
+#define SPRITE
+
 class Sprite : public Entity
 {
 public:
@@ -18,9 +21,6 @@ public:
 
 	Shader mShader;
 
-	float moveX;
-	float moveY;
-
 private:
 	
 	GLuint mTexture;
@@ -29,3 +29,5 @@ private:
 
 	GLint mMoveUniform;
 };
+
+#endif
