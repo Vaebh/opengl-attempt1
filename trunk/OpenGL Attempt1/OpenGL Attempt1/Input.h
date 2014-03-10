@@ -13,6 +13,7 @@ public:
 	Input(GLFWwindow* inWindow, Entity* inEntity);
 
 	void InitKeys();
+	void LoadKeys();
 
 	virtual void Update(float dt);
 
@@ -26,7 +27,7 @@ public:
 
 	Sprite* mKitten;
 	
-	std::map<int, Command*> mCommands;
+	static std::map<int, Command*> mCommands;
 
 private:
 	GLFWwindow* window;
@@ -35,7 +36,7 @@ private:
 
 	void ParseCommand(std::string inCommandName, std::string inCommandKey);
 
-	Entity* mEntity;
+	static Entity* mEntity;
 };
 
 #endif
