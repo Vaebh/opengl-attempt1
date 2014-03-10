@@ -3,17 +3,39 @@
 
 #include <fstream>
 
-Input::Input(GLFWwindow* inWindow, Entity* inEntity) : window(inWindow), mEntity(inEntity)
+Entity* Input::mEntity;
+std::map<int, Command*> Input::mCommands;
+
+Input::Input(GLFWwindow* inWindow, Entity* inEntity) : window(inWindow)
+{
+	glfwSetKeyCallback(window, key_callback);
+
+	InitKeys();
+	LoadKeys();
+
+	mEntity = inEntity;
+}
+
+void Input::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	if(glfwGetKey(window, key) == GLFW_PRESS)
+	{
+		if(mCommands[key])
+		{
+			mCommands[key]->Execute(mEntity);
+		}
+	}
+}
+
+void Input::InitKeys()
 {
 	mStringKeys["W"] = GLFW_KEY_W;
 	mStringKeys["A"] = GLFW_KEY_A;
 	mStringKeys["S"] = GLFW_KEY_S;
 	mStringKeys["D"] = GLFW_KEY_D;
-
-	InitKeys();
 }
 
-void Input::InitKeys()
+void Input::LoadKeys()
 {
 	std::string currentLine = "";
 	std::ifstream inputFile;
@@ -63,14 +85,20 @@ void Input::ParseCommand(std::string inCommandName, std::string inCommandKey)
 
 void Input::Update(float dt)
 {
-	if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+	/*if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	{
-		mCommands[GLFW_KEY_W]->Execute(mEntity);
+		if(mCommands[GLFW_KEY_W])
+		{
+			mCommands[GLFW_KEY_W]->Execute(mEntity);
+		}
 	}
 
 	if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 	{
-		mCommands[GLFW_KEY_A]->Execute(mEntity);
+		if(mCommands[GLFW_KEY_A])
+		{
+			mCommands[GLFW_KEY_A]->Execute(mEntity);
+		}
 	}
 
 	if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -81,7 +109,7 @@ void Input::Update(float dt)
 	if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 	{
 		mCommands[GLFW_KEY_D]->Execute(mEntity);
-	}
+	}*/
 
 	/*if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		mKitten->moveX += 0.0001f;
