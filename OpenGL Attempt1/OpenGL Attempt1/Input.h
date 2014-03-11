@@ -27,7 +27,7 @@ public:
 
 	Sprite* mKitten;
 	
-	static std::map<int, Command*> mCommands;
+	static std::map<int, Command*> mCommandKeys;
 
 private:
 	GLFWwindow* window;

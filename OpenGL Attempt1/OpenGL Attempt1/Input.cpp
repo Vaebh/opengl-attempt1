@@ -4,7 +4,7 @@
 #include <fstream>
 
 Entity* Input::mEntity;
-std::map<int, Command*> Input::mCommands;
+std::map<int, Command*> Input::mCommandKeys;
 
 Input::Input(GLFWwindow* inWindow, Entity* inEntity) : window(inWindow)
 {
@@ -20,7 +20,7 @@ void Input::key_callback(GLFWwindow* window, int key, int scancode, int action, 
 {
 	if(glfwGetKey(window, key) == GLFW_PRESS)
 	{
-		if(mCommands[key])
+		if(mCommandKeys[key])
 		{
 			mCommands[key]->Execute(mEntity);
 		}
@@ -49,6 +49,7 @@ void Input::LoadKeys()
 		{
 			std::string commandName = currentLine.substr(0, delimiterIndex);
 			std::string commandKey = currentLine.substr((delimiterIndex != currentLine.length()) ? delimiterIndex + 1 : 0, currentLine.length());
+			//std::string repeatingAction =  currentLine.substr((delimiterIndex != currentLine.length()) ? delimiterIndex + 1 : 0, currentLine.length());
 
 			ParseCommand(commandName, commandKey);
 		}
@@ -64,22 +65,22 @@ void Input::ParseCommand(std::string inCommandName, std::string inCommandKey)
 
 	if(inCommandName == "MoveUp")
 	{
-		mCommands[mStringKeys[inCommandKey]] = new MoveUpCommand();
+		mCommandKeys[mStringKeys[inCommandKey]] = new MoveUpCommand();
 	}
 
 	if(inCommandName == "MoveLeft")
 	{
-		mCommands[mStringKeys[inCommandKey]] = new MoveLeftCommand();
+		mCommandKeys[mStringKeys[inCommandKey]] = new MoveLeftCommand();
 	}
 
 	if(inCommandName == "MoveDown")
 	{
-		mCommands[mStringKeys[inCommandKey]] = new MoveDownCommand();
+		mCommandKeys[mStringKeys[inCommandKey]] = new MoveDownCommand();
 	}
 
 	if(inCommandName == "MoveRight")
 	{
-		mCommands[mStringKeys[inCommandKey]] = new MoveRightCommand();
+		mCommandKeys[mStringKeys[inCommandKey]] = new MoveRightCommand();
 	}
 }
 
