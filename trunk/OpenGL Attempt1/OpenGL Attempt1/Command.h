@@ -7,7 +7,7 @@ class Command
 {
 public:
   Command();
-	virtual void Execute(Entity* inEntity) = 0;
+	virtual void Execute(Entity* inEntity, float inDeltaTime) = 0;
    
 public:
   bool mRepeatingAction;
@@ -15,22 +15,22 @@ public:
 
 class MoveUpCommand : public Command
 {
-	void Execute(Entity* inEntity);
+	void Execute(Entity* inEntity, float inDeltaTime);
 };
 
 class MoveLeftCommand : public Command
 {
-	void Execute(Entity* inEntity);
+	void Execute(Entity* inEntity, float inDeltaTime);
 };
 
 class MoveDownCommand : public Command
 {
-	void Execute(Entity* inEntity);
+	void Execute(Entity* inEntity, float inDeltaTime);
 };
 
 class MoveRightCommand : public Command
 {
-	void Execute(Entity* inEntity);
+	void Execute(Entity* inEntity, float inDeltaTime);
 };
 
 #endif
