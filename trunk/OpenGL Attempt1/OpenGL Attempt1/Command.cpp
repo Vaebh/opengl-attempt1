@@ -1,21 +1,26 @@
 #include "Command.h"
 
-void MoveUpCommand::Execute(Entity* inEntity)
+Command::Command() : mRepeatingAction(false)
 {
-	inEntity->y += 0.0001f;
+
 }
 
-void MoveLeftCommand::Execute(Entity* inEntity)
+void MoveUpCommand::Execute(Entity* inEntity, float inDeltaTime)
 {
-	inEntity->x -= 0.0001f;
+	inEntity->y += 0.1f * inDeltaTime;
 }
 
-void MoveDownCommand::Execute(Entity* inEntity)
+void MoveLeftCommand::Execute(Entity* inEntity, float inDeltaTime)
 {
-	inEntity->y -= 0.0001f;
+	inEntity->x -= 0.1f * inDeltaTime;
 }
 
-void MoveRightCommand::Execute(Entity* inEntity)
+void MoveDownCommand::Execute(Entity* inEntity, float inDeltaTime)
 {
-	inEntity->x += 0.0001f;
+	inEntity->y -= 0.1f * inDeltaTime;
+}
+
+void MoveRightCommand::Execute(Entity* inEntity, float inDeltaTime)
+{
+	inEntity->x += 0.1f * inDeltaTime;
 }
