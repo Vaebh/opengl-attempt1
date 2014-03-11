@@ -6,7 +6,11 @@
 class Command
 {
 public:
+  Command();
 	virtual void Execute(Entity* inEntity) = 0;
+   
+public:
+  bool mRepeatingAction;
 };
 
 class MoveUpCommand : public Command
