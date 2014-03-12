@@ -4,6 +4,7 @@
 #include "GLIncludes.h"
 #include "Sprite.h"
 #include <map>
+#include <list>
 #include "Command.h"
 
 class Input
@@ -12,8 +13,10 @@ class Input
 public:
 	Input(GLFWwindow* inWindow, Entity* inEntity);
 
-	void InitKeys();
-	void LoadKeys();
+	void Init();
+  void InitKeys();
+  
+	void LoadInput();
 
 	virtual void Update(float dt);
 
@@ -37,6 +40,7 @@ private:
 	void ParseCommand(std::string inCommandName, std::string inCommandKey);
 
 	static Entity* mEntity;
+  list<Command*> mCommands;
 };
 
 #endif
