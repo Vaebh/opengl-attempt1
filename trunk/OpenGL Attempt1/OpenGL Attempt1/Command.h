@@ -11,6 +11,8 @@ public:
    
 public:
   bool mRepeatingAction;
+  int mInputState;
+  int mModifiers;
 };
 
 class MoveUpCommand : public Command
