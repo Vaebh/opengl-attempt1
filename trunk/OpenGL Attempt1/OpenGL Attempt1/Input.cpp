@@ -116,10 +116,60 @@ void Input::InitKeys()
 void Input::AddKey(const GLint inKeyCode)
 {
 	mKeys.push_back(inKeyCode);
+  
 
+  // Non single character keys
 	if(inKeyCode == GLFW_KEY_SPACE)
 	{
 		mStringKeys["Space"] = GLFW_KEY_SPACE;
+	}
+  else if(inKeyCode == GLFW_KEY_BACKSPACE)
+	{
+		mStringKeys["Backspace"] = GLFW_KEY_BACKSPACE;
+	}
+  else if(inKeyCode == GLFW_KEY_ENTER)
+	{
+		mStringKeys["Enter"] = GLFW_KEY_ENTER;
+	}
+  else if(inKeyCode == GLFW_KEY_LEFT_SHIFT)
+	{
+		mStringKeys["LShift"] = GLFW_KEY_LEFT_SHIFT;
+	}
+  else if(inKeyCode == GLFW_KEY_RIGHT_SHIFT)
+	{
+		mStringKeys["RShift"] = GLFW_KEY_RIGHT_SHIFT;
+	}
+  else if(inKeyCode == GLFW_KEY_LEFT_CONTROL)
+	{
+		mStringKeys["LCtrl"] = GLFW_KEY_LEFT_CONTROL;
+	}
+  else if(inKeyCode == GLFW_KEY_RIGHT_CONTROL)
+	{
+		mStringKeys["RCtrl"] = GLFW_KEY_RIGHT_CONTROL;
+	}
+  else if(inKeyCode == GLFW_KEY_LEFT_ALT)
+	{
+		mStringKeys["LAlt"] = GLFW_KEY_LEFT_ALT;
+	}
+  else if(inKeyCode == GLFW_KEY_RIGHT_ALT)
+	{
+		mStringKeys["RAlt"] = GLFW_KEY_RIGHT_ALT;
+	}
+  else if(inKeyCode == GLFW_KEY_LEFT)
+	{
+		mStringKeys["Left"] = GLFW_KEY_LEFT;
+	}
+  else if(inKeyCode == GLFW_KEY_DOWN)
+	{
+		mStringKeys["Down"] = GLFW_KEY_DOWN;
+	}
+  else if(inKeyCode == GLFW_KEY_RIGHT)
+	{
+		mStringKeys["Right"] = GLFW_KEY_RIGHT;
+	}
+  else if(inKeyCode == GLFW_KEY_UP)
+	{
+		mStringKeys["Up"] = GLFW_KEY_UP;
 	}
 	else
 	{
