@@ -14,7 +14,7 @@ public:
 	Input(GLFWwindow* inWindow, Entity* inEntity);
 
 	void Init();
-  void InitKeys();
+	void InitKeys();
   
 	void LoadInput();
 
@@ -33,14 +33,23 @@ public:
 	static std::map<int, Command*> mCommandKeys;
 
 private:
-	GLFWwindow* window;
+
+	GLFWwindow* mWindow;
 
 	std::map<std::string, int> mStringKeys;
+	std::vector<GLint> mKeys;
 
+private:
+	
 	void ParseCommand(std::string inCommandName, std::string inCommandKey);
 
+	void HandleKeyboardInput(const float inDeltaTime) const;
+	void HandleKeyInput(const GLint inKey, const float inDeltaTime) const;
+
+	void AddKey(const GLint inKeyCode);
+
 	static Entity* mEntity;
-  list<Command*> mCommands;
+	static std::list<Command*> mCommands;
 };
 
 #endif

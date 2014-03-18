@@ -1,26 +1,33 @@
 #include "Command.h"
 
-Command::Command() : mRepeatingAction(false)
+Command::Command() : mRepeatingAction(false), mInputState(0), mModifiers(0), mFinished(true), mSpeed(0.5f)
 {
 
 }
 
 void MoveUpCommand::Execute(Entity* inEntity, float inDeltaTime)
 {
-	inEntity->y += 0.1f * inDeltaTime;
+	//if(mInputState == GLFW_PRESS || mInputState == GLFW_REPEAT)
+	//{
+		inEntity->y += mSpeed * inDeltaTime;
+	/*}
+	else
+	{
+		mFinished = true;
+	}*/
 }
 
 void MoveLeftCommand::Execute(Entity* inEntity, float inDeltaTime)
 {
-	inEntity->x -= 0.1f * inDeltaTime;
+	inEntity->x -= mSpeed * inDeltaTime;
 }
 
 void MoveDownCommand::Execute(Entity* inEntity, float inDeltaTime)
 {
-	inEntity->y -= 0.1f * inDeltaTime;
+	inEntity->y -= mSpeed * inDeltaTime;
 }
 
 void MoveRightCommand::Execute(Entity* inEntity, float inDeltaTime)
 {
-	inEntity->x += 0.1f * inDeltaTime;
+	inEntity->x += mSpeed * inDeltaTime;
 }
