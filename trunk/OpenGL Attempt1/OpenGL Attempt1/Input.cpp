@@ -2,16 +2,18 @@
 #include "GLIncludes.h"
 
 #include <fstream>
+#include <iostream>
 
 Entity* Input::mEntity;
 std::map<int, Command*> Input::mCommandKeys;
+std::list<Command*> Input::mCommands;
 
-Input::Input(GLFWwindow* inWindow, Entity* inEntity) : window(inWindow)
+Input::Input(GLFWwindow* inWindow, Entity* inEntity) : mWindow(inWindow)
 {
-	glfwSetKeyCallback(window, key_callback);
+	//glfwSetKeyCallback(window, key_callback);
 
-	InitKeys();
-	LoadKeys();
+	Init();
+	LoadInput();
 
 	mEntity = inEntity;
 }
@@ -20,22 +22,114 @@ void Input::key_callback(GLFWwindow* window, int key, int scancode, int action, 
 {
 	if(glfwGetKey(window, key) == GLFW_PRESS)
 	{
-		if(mCommandKeys[key])
+		if(mCommandKeys[key] && mCommandKeys[key]->mFinished)
 		{
-			mCommands[key]->Execute(mEntity);
+			//mCommands[key]->Execute(mEntity);
+			mCommandKeys[key]->mInputState = action;
+			mCommandKeys[key]->mModifiers = mods;
+			mCommandKeys[key]->mRepeatingAction = true;
+			mCommands.push_back(mCommandKeys[key]);
 		}
 	}
 }
 
-void Input::InitKeys()
+void Input::Init()
 {
-	mStringKeys["W"] = GLFW_KEY_W;
-	mStringKeys["A"] = GLFW_KEY_A;
-	mStringKeys["S"] = GLFW_KEY_S;
-	mStringKeys["D"] = GLFW_KEY_D;
+	InitKeys();
 }
 
-void Input::LoadKeys()
+void Input::InitKeys()
+{
+	AddKey(GLFW_KEY_1);
+	AddKey(GLFW_KEY_2);
+	AddKey(GLFW_KEY_3);
+	AddKey(GLFW_KEY_4);
+
+	AddKey(GLFW_KEY_5);
+	AddKey(GLFW_KEY_6);
+	AddKey(GLFW_KEY_7);
+	AddKey(GLFW_KEY_8);
+
+	AddKey(GLFW_KEY_9);
+	AddKey(GLFW_KEY_MINUS);
+	AddKey(GLFW_KEY_EQUAL);
+	AddKey(GLFW_KEY_BACKSPACE);
+
+	AddKey(GLFW_KEY_Q);
+	AddKey(GLFW_KEY_W);
+	AddKey(GLFW_KEY_E);
+	AddKey(GLFW_KEY_R);
+
+	AddKey(GLFW_KEY_T);
+	AddKey(GLFW_KEY_Y);
+	AddKey(GLFW_KEY_U);
+	AddKey(GLFW_KEY_I);
+
+	AddKey(GLFW_KEY_O);
+	AddKey(GLFW_KEY_P);
+	AddKey(GLFW_KEY_LEFT_BRACKET);
+	AddKey(GLFW_KEY_RIGHT_BRACKET);
+	AddKey(GLFW_KEY_ENTER);
+
+	AddKey(GLFW_KEY_A);
+	AddKey(GLFW_KEY_S);
+	AddKey(GLFW_KEY_D);
+	AddKey(GLFW_KEY_F);
+
+	AddKey(GLFW_KEY_G);
+	AddKey(GLFW_KEY_H);
+	AddKey(GLFW_KEY_J);
+	AddKey(GLFW_KEY_K);
+
+	AddKey(GLFW_KEY_L);
+	AddKey(GLFW_KEY_SEMICOLON);
+	AddKey(GLFW_KEY_APOSTROPHE);
+
+	AddKey(GLFW_KEY_LEFT_SHIFT);
+	AddKey(GLFW_KEY_BACKSLASH);
+	AddKey(GLFW_KEY_Z);
+	AddKey(GLFW_KEY_X);
+	AddKey(GLFW_KEY_C);
+
+	AddKey(GLFW_KEY_V);
+	AddKey(GLFW_KEY_B);
+	AddKey(GLFW_KEY_N);
+	AddKey(GLFW_KEY_M);
+
+	AddKey(GLFW_KEY_COMMA);
+	AddKey(GLFW_KEY_PERIOD);
+	AddKey(GLFW_KEY_SLASH);
+	AddKey(GLFW_KEY_RIGHT_SHIFT);
+
+	AddKey(GLFW_KEY_LEFT_CONTROL);
+	AddKey(GLFW_KEY_LEFT_ALT);
+	AddKey(GLFW_KEY_SPACE);
+	AddKey(GLFW_KEY_RIGHT_ALT);
+	AddKey(GLFW_KEY_RIGHT_CONTROL);
+
+	AddKey(GLFW_KEY_LEFT);
+	AddKey(GLFW_KEY_DOWN);
+	AddKey(GLFW_KEY_RIGHT);
+	AddKey(GLFW_KEY_UP);
+}
+
+void Input::AddKey(const GLint inKeyCode)
+{
+	mKeys.push_back(inKeyCode);
+
+	if(inKeyCode == GLFW_KEY_SPACE)
+	{
+		mStringKeys["Space"] = GLFW_KEY_SPACE;
+	}
+	else
+	{
+		std::string keyString(1, (char)inKeyCode);
+
+		mStringKeys[keyString] = inKeyCode;
+	}
+}
+
+void Input::LoadInput()
 {
 	std::string currentLine = "";
 	std::ifstream inputFile;
@@ -84,32 +178,88 @@ void Input::ParseCommand(std::string inCommandName, std::string inCommandKey)
 	}
 }
 
+void Input::HandleKeyInput(const GLint inKey, const float inDeltaTime) const
+{
+	int keyInputState = glfwGetKey(mWindow, inKey);
+	if(keyInputState == GLFW_PRESS)
+	{
+		if(mCommandKeys[inKey])
+		{
+			mCommandKeys[inKey]->mInputState = keyInputState;
+			mCommandKeys[inKey]->Execute(mEntity, inDeltaTime);
+		}
+	}
+}
+
+void Input::HandleKeyboardInput(const float inDeltaTime) const
+{
+	for(int i = 0; i < mKeys.size(); ++i)
+	{
+		HandleKeyInput(mKeys[i], inDeltaTime);
+	}
+}
+
+using namespace std;
+
 void Input::Update(float dt)
 {
-	/*if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+	HandleKeyboardInput(dt);
+
+	//cout << (char)GLFW_KEY_LEFT_BRACKET << endl;
+
+	/*std::list<Command*> finishedCommands;
+
+	std::list<Command*>::iterator iter = mCommands.begin();
+	for(iter = mCommands.begin(); iter != mCommands.end(); ++iter)
 	{
-		if(mCommands[GLFW_KEY_W])
+		if(*iter)
 		{
-			mCommands[GLFW_KEY_W]->Execute(mEntity);
+			(*iter)->Execute(mEntity, dt);
+
+			if((*iter)->mFinished)
+			{
+				//mCommands.remove(*iter);
+				finishedCommands.push_back(*iter);
+			}
 		}
 	}
 
-	if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+	if(finishedCommands.size() != 0)
 	{
-		if(mCommands[GLFW_KEY_A])
+		std::list<Command*>::iterator iter2 = finishedCommands.begin();
+		for(iter2 = finishedCommands.begin(); iter2 != finishedCommands.end(); ++iter2)
 		{
-			mCommands[GLFW_KEY_A]->Execute(mEntity);
+			mCommands.remove(*iter2);
+		}
+
+		finishedCommands.clear();
+	}*/
+
+
+	//mCommands.clear();
+	/*if(glfwGetKey(mWindow, GLFW_KEY_W) == GLFW_PRESS)
+	{
+		if(mCommandKeys[GLFW_KEY_W])
+		{
+			mCommandKeys[GLFW_KEY_W]->Execute(mEntity, dt);
+		}
+	}
+	if(glfwGetKey(mWindow, GLFW_KEY_A) == GLFW_PRESS)
+	{
+		if(mCommandKeys[GLFW_KEY_A])
+		{
+			mCommandKeys[GLFW_KEY_A]->Execute(mEntity, dt);
 		}
 	}
 
-	if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+	if(glfwGetKey(mWindow, GLFW_KEY_S) == GLFW_PRESS)
 	{
-		mCommands[GLFW_KEY_S]->Execute(mEntity);
+		mCommandKeys[GLFW_KEY_S]->Execute(mEntity, dt);
 	}
 
-	if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+	if(glfwGetKey(mWindow, GLFW_KEY_D) == GLFW_PRESS)
 	{
-		mCommands[GLFW_KEY_D]->Execute(mEntity);
+		mCommandKeys[GLFW_KEY_D]->Execute(mEntity, dt);
 	}*/
 
 	/*if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)

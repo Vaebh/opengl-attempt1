@@ -13,6 +13,8 @@ public:
   bool mRepeatingAction;
   int mInputState;
   int mModifiers;
+  bool mFinished;
+  float mSpeed;
 };
 
 class MoveUpCommand : public Command
