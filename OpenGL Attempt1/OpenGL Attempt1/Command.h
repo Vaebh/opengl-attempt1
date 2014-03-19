@@ -6,7 +6,7 @@
 class Command
 {
 public:
-  Command();
+  Command(bool inOnceOff);
 	virtual void Execute(Entity* inEntity, float inDeltaTime) = 0;
    
 public:
@@ -14,25 +14,35 @@ public:
   int mInputState;
   int mModifiers;
   bool mFinished;
+};
+
+class MoveCommand : public Command
+{
+public:
+  MoveCommand();
+  ~MoveCommand();
+  virtual void Execute(Entity* inEntity, float inDeltaTime) = 0;
+  
+protected:
   float mSpeed;
 };
 
-class MoveUpCommand : public Command
+class MoveUpCommand : public MoveCommand
 {
 	void Execute(Entity* inEntity, float inDeltaTime);
 };
 
-class MoveLeftCommand : public Command
+class MoveLeftCommand : public MoveCommand
 {
 	void Execute(Entity* inEntity, float inDeltaTime);
 };
 
-class MoveDownCommand : public Command
+class MoveDownCommand : public MoveCommand
 {
 	void Execute(Entity* inEntity, float inDeltaTime);
 };
 
-class MoveRightCommand : public Command
+class MoveRightCommand : public MoveCommand
 {
 	void Execute(Entity* inEntity, float inDeltaTime);
 };
