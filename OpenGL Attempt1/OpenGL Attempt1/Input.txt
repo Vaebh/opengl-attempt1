@@ -2,3 +2,7 @@ MoveUp:W
 MoveLeft:A
 MoveDown:S
 MoveRight:D
+ScaleBiggerX:L
+ScaleSmallerX:J
+ScaleBiggerY:I
+ScaleSmallerY:K

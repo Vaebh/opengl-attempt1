@@ -6,14 +6,15 @@
 class Command
 {
 public:
-  Command(bool inOnceOff);
-	virtual void Execute(Entity* inEntity, float inDeltaTime) = 0;
+  Command();
+  virtual void Execute(Entity* inEntity, float inDeltaTime) = 0;
    
 public:
   bool mRepeatingAction;
   int mInputState;
   int mModifiers;
   bool mFinished;
+  float mSpeed;
 };
 
 class MoveCommand : public Command
@@ -27,24 +28,41 @@ protected:
   float mSpeed;
 };
 
-class MoveUpCommand : public MoveCommand
+class MoveUpCommand : public Command
 {
 	void Execute(Entity* inEntity, float inDeltaTime);
 };
 
-class MoveLeftCommand : public MoveCommand
+class MoveLeftCommand : public Command
 {
 	void Execute(Entity* inEntity, float inDeltaTime);
 };
 
-class MoveDownCommand : public MoveCommand
+class MoveDownCommand : public Command
 {
 	void Execute(Entity* inEntity, float inDeltaTime);
 };
 
-class MoveRightCommand : public MoveCommand
+class MoveRightCommand : public Command
 {
 	void Execute(Entity* inEntity, float inDeltaTime);
+};
+
+class ScaleCommand : public Command
+{
+public:
+	enum Axis
+	{
+		VERTICAL,
+		HORIZONTAL
+	};
+
+	ScaleCommand(Axis inAxis, int inDirection);
+	void Execute(Entity* inEntity, float inDeltaTime);
+
+private:
+	Axis mAxis;
+	int mDirection;
 };
 
 #endif
