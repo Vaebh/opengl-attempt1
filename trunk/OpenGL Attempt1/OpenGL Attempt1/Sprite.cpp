@@ -80,7 +80,7 @@ void Sprite::Draw()
         90.f,
         glm::vec3(0.0f, 0.0f, 1.0f)
     );*/
-	model = glm::translate(model, glm::vec3(x, y, 0.f));
+	model = glm::translate(model, glm::vec3(x, y, 0.f)) * glm::scale(model, glm::vec3(scaleX, scaleY, 1.f));
     glUniformMatrix4fv(mMoveUniform, 1, GL_FALSE, glm::value_ptr(model));
 	
 	glDrawArrays(GL_TRIANGLES, 0, 6);

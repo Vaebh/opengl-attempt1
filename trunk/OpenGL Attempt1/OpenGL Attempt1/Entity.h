@@ -17,6 +17,7 @@ public:
 	inline void SetVisible(bool inbVisible) {mbVisible = inbVisible;}
 
 	float x, y;
+	float scaleX, scaleY;
 
 private:
 

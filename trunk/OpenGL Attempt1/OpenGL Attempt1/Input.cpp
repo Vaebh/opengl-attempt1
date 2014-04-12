@@ -226,6 +226,26 @@ void Input::ParseCommand(std::string inCommandName, std::string inCommandKey)
 	{
 		mCommandKeys[mStringKeys[inCommandKey]] = new MoveRightCommand();
 	}
+
+	if(inCommandName == "ScaleBiggerX")
+	{
+		mCommandKeys[mStringKeys[inCommandKey]] = new ScaleCommand(ScaleCommand::HORIZONTAL, 1);
+	}
+
+	if(inCommandName == "ScaleBiggerY")
+	{
+		mCommandKeys[mStringKeys[inCommandKey]] = new ScaleCommand(ScaleCommand::VERTICAL, 1);
+	}
+
+	if(inCommandName == "ScaleSmallerX")
+	{
+		mCommandKeys[mStringKeys[inCommandKey]] = new ScaleCommand(ScaleCommand::HORIZONTAL, -1);
+	}
+
+	if(inCommandName == "ScaleSmallerY")
+	{
+		mCommandKeys[mStringKeys[inCommandKey]] = new ScaleCommand(ScaleCommand::VERTICAL, -1);
+	}
 }
 
 void Input::HandleKeyInput(const GLint inKey, const float inDeltaTime) const

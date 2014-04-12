@@ -31,3 +31,20 @@ void MoveRightCommand::Execute(Entity* inEntity, float inDeltaTime)
 {
 	inEntity->x += mSpeed * inDeltaTime;
 }
+
+ScaleCommand::ScaleCommand(Axis inAxis, int inDirection) : mAxis(inAxis), mDirection(inDirection)
+{
+
+}
+
+void ScaleCommand::Execute(Entity* inEntity, float inDeltaTime)
+{
+	if(mAxis == VERTICAL)
+	{
+		inEntity->scaleY += mDirection * 2 * inDeltaTime;
+	}
+	else
+	{
+		inEntity->scaleX += mDirection * 2 * inDeltaTime;
+	}
+}
