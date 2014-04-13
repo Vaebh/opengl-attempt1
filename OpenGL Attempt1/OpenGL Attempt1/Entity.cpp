@@ -3,10 +3,8 @@
 Entity::Entity() :
 mbVisible(true)
 ,mName("")
-,x(0)
-,y(0)
-,scaleX(1.f)
-,scaleY(1.f)
+,mPosition(0.0, 0.0, 0.0)
+,mScale(1.0, 1.0, 1.0)
 {
 	
 }
