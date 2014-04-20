@@ -1,8 +1,8 @@
-#include "GLIncludes.h"
-#include <string>
-
 #ifndef SHADER
 #define SHADER
+
+#include "GLIncludes.h"
+#include <string>
 
 class Shader
 {

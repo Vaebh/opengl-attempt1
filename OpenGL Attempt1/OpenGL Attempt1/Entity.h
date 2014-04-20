@@ -1,10 +1,12 @@
-
-#ifndef ENTITY
-#define ENTITY
+#ifndef ENTITY_SIMENGINE
+#define ENTITY_SIMENGINE
 
 #include "GLIncludes.h"
 #include "Vectors.h"
 #include <vector>
+#include "Input.h"
+
+class Input;
 
 class Entity
 {
@@ -24,11 +26,14 @@ public:
 
 	Vector3 mScale;
 
+	void Update(float inDeltaTime);
+
+	Input* mInput;
+
 protected:
 	Vector3 mPosition;
 
 private:
-
 	bool mbVisible;
 	std::string mName;
 };

@@ -1,5 +1,5 @@
 #include "Input.h"
-#include "GLIncludes.h"
+#include <string>
 
 #include <fstream>
 #include <iostream>
@@ -11,6 +11,8 @@ std::list<Command*> Input::mCommands;
 Input::Input(GLFWwindow* inWindow, Entity* inEntity) : mWindow(inWindow)
 {
 	//glfwSetKeyCallback(window, key_callback);
+
+	//Command::SetInput(this);
 
 	Init();
 	LoadInput();
@@ -123,51 +125,51 @@ void Input::AddKey(const GLint inKeyCode)
 	{
 		mStringKeys["Space"] = GLFW_KEY_SPACE;
 	}
-  else if(inKeyCode == GLFW_KEY_BACKSPACE)
+	else if(inKeyCode == GLFW_KEY_BACKSPACE)
 	{
 		mStringKeys["Backspace"] = GLFW_KEY_BACKSPACE;
 	}
-  else if(inKeyCode == GLFW_KEY_ENTER)
+	else if(inKeyCode == GLFW_KEY_ENTER)
 	{
 		mStringKeys["Enter"] = GLFW_KEY_ENTER;
 	}
-  else if(inKeyCode == GLFW_KEY_LEFT_SHIFT)
+	else if(inKeyCode == GLFW_KEY_LEFT_SHIFT)
 	{
 		mStringKeys["LShift"] = GLFW_KEY_LEFT_SHIFT;
 	}
-  else if(inKeyCode == GLFW_KEY_RIGHT_SHIFT)
+	else if(inKeyCode == GLFW_KEY_RIGHT_SHIFT)
 	{
 		mStringKeys["RShift"] = GLFW_KEY_RIGHT_SHIFT;
 	}
-  else if(inKeyCode == GLFW_KEY_LEFT_CONTROL)
+	else if(inKeyCode == GLFW_KEY_LEFT_CONTROL)
 	{
 		mStringKeys["LCtrl"] = GLFW_KEY_LEFT_CONTROL;
 	}
-  else if(inKeyCode == GLFW_KEY_RIGHT_CONTROL)
+	else if(inKeyCode == GLFW_KEY_RIGHT_CONTROL)
 	{
 		mStringKeys["RCtrl"] = GLFW_KEY_RIGHT_CONTROL;
 	}
-  else if(inKeyCode == GLFW_KEY_LEFT_ALT)
+	else if(inKeyCode == GLFW_KEY_LEFT_ALT)
 	{
 		mStringKeys["LAlt"] = GLFW_KEY_LEFT_ALT;
 	}
-  else if(inKeyCode == GLFW_KEY_RIGHT_ALT)
+	else if(inKeyCode == GLFW_KEY_RIGHT_ALT)
 	{
 		mStringKeys["RAlt"] = GLFW_KEY_RIGHT_ALT;
 	}
-  else if(inKeyCode == GLFW_KEY_LEFT)
+	else if(inKeyCode == GLFW_KEY_LEFT)
 	{
 		mStringKeys["Left"] = GLFW_KEY_LEFT;
 	}
-  else if(inKeyCode == GLFW_KEY_DOWN)
+	else if(inKeyCode == GLFW_KEY_DOWN)
 	{
 		mStringKeys["Down"] = GLFW_KEY_DOWN;
 	}
-  else if(inKeyCode == GLFW_KEY_RIGHT)
+	else if(inKeyCode == GLFW_KEY_RIGHT)
 	{
 		mStringKeys["Right"] = GLFW_KEY_RIGHT;
 	}
-  else if(inKeyCode == GLFW_KEY_UP)
+	else if(inKeyCode == GLFW_KEY_UP)
 	{
 		mStringKeys["Up"] = GLFW_KEY_UP;
 	}
@@ -209,42 +211,47 @@ void Input::ParseCommand(std::string inCommandName, std::string inCommandKey)
 
 	if(inCommandName == "MoveUp")
 	{
-		mCommandKeys[mStringKeys[inCommandKey]] = new MoveUpCommand();
+		mCommandKeys[mStringKeys[inCommandKey]] = new MoveCommand("MoveUp", inCommandKey, Y_UNIT_POSITIVE, 0.5f);
 	}
 
 	if(inCommandName == "MoveLeft")
 	{
-		mCommandKeys[mStringKeys[inCommandKey]] = new MoveLeftCommand();
+		mCommandKeys[mStringKeys[inCommandKey]] = new MoveCommand("MoveLeft", inCommandKey, X_UNIT_NEGATIVE, 0.5f);
 	}
 
 	if(inCommandName == "MoveDown")
 	{
-		mCommandKeys[mStringKeys[inCommandKey]] = new MoveDownCommand();
+		mCommandKeys[mStringKeys[inCommandKey]] = new MoveCommand("MoveDown", inCommandKey, Y_UNIT_NEGATIVE, 0.5f);
 	}
 
 	if(inCommandName == "MoveRight")
 	{
-		mCommandKeys[mStringKeys[inCommandKey]] = new MoveRightCommand();
+		mCommandKeys[mStringKeys[inCommandKey]] = new MoveCommand("MoveRight", inCommandKey, X_UNIT_POSITIVE, 0.5f);
 	}
 
 	if(inCommandName == "ScaleBiggerX")
 	{
-		mCommandKeys[mStringKeys[inCommandKey]] = new ScaleCommand(ScaleCommand::HORIZONTAL, 1);
+		mCommandKeys[mStringKeys[inCommandKey]] = new ScaleCommand("ScaleBiggerX", inCommandKey, X_UNIT_POSITIVE);
 	}
 
 	if(inCommandName == "ScaleBiggerY")
 	{
-		mCommandKeys[mStringKeys[inCommandKey]] = new ScaleCommand(ScaleCommand::VERTICAL, 1);
+		mCommandKeys[mStringKeys[inCommandKey]] = new ScaleCommand("ScaleBiggerY", inCommandKey, Y_UNIT_POSITIVE);
 	}
 
 	if(inCommandName == "ScaleSmallerX")
 	{
-		mCommandKeys[mStringKeys[inCommandKey]] = new ScaleCommand(ScaleCommand::HORIZONTAL, -1);
+		mCommandKeys[mStringKeys[inCommandKey]] = new ScaleCommand("ScaleSmallerX", inCommandKey, X_UNIT_NEGATIVE);
 	}
 
 	if(inCommandName == "ScaleSmallerY")
 	{
-		mCommandKeys[mStringKeys[inCommandKey]] = new ScaleCommand(ScaleCommand::VERTICAL, -1);
+		mCommandKeys[mStringKeys[inCommandKey]] = new ScaleCommand("ScaleSmallerY", inCommandKey, Y_UNIT_NEGATIVE);
+	}
+
+	if(inCommandName == "ReloadInput")
+	{
+		mCommandKeys[mStringKeys[inCommandKey]] = new ReloadInputCommand("ReloadInput", inCommandKey);
 	}
 }
 
@@ -268,8 +275,6 @@ void Input::HandleKeyboardInput(const float inDeltaTime) const
 		HandleKeyInput(mKeys[i], inDeltaTime);
 	}
 }
-
-using namespace std;
 
 void Input::Update(float dt)
 {

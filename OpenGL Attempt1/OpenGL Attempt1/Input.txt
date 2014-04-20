@@ -6,3 +6,4 @@ ScaleBiggerX:L
 ScaleSmallerX:J
 ScaleBiggerY:I
 ScaleSmallerY:K
+ReloadInput:G
