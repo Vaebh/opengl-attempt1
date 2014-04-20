@@ -249,6 +249,33 @@ void Input::ParseCommand(std::string inCommandName, std::string inCommandKey)
 		mCommandKeys[mStringKeys[inCommandKey]] = new ScaleCommand("ScaleSmallerY", inCommandKey, Y_UNIT_NEGATIVE);
 	}
 
+	if(inCommandName == "RotateLeftZ")
+	{
+		mCommandKeys[mStringKeys[inCommandKey]] = new RotationCommand("RotateLeftZ", inCommandKey, Z_UNIT_POSITIVE, 50);
+	}
+	if(inCommandName == "RotateRightZ")
+	{
+		mCommandKeys[mStringKeys[inCommandKey]] = new RotationCommand("RotateRightZ", inCommandKey, Z_UNIT_NEGATIVE, 50);
+	}
+
+	if(inCommandName == "RotateUpY")
+	{
+		mCommandKeys[mStringKeys[inCommandKey]] = new RotationCommand("RotateUpY", inCommandKey, Y_UNIT_POSITIVE, 50);
+	}
+	if(inCommandName == "RotateDownY")
+	{
+		mCommandKeys[mStringKeys[inCommandKey]] = new RotationCommand("RotateDownY", inCommandKey, Y_UNIT_NEGATIVE, 50);
+	}
+
+	if(inCommandName == "RotateLeftX")
+	{
+		mCommandKeys[mStringKeys[inCommandKey]] = new RotationCommand("RotateLeftX", inCommandKey, X_UNIT_POSITIVE, 50);
+	}
+	if(inCommandName == "RotateRightX")
+	{
+		mCommandKeys[mStringKeys[inCommandKey]] = new RotationCommand("RotateRightX", inCommandKey, X_UNIT_NEGATIVE, 50);
+	}
+
 	if(inCommandName == "ReloadInput")
 	{
 		mCommandKeys[mStringKeys[inCommandKey]] = new ReloadInputCommand("ReloadInput", inCommandKey);

@@ -53,5 +53,16 @@ private:
 	Vector3 mDirection;
 };
 
+class RotationCommand : public Command
+{
+public:
+	RotationCommand(std::string inName, std::string inKey, Vector3 inAxis, float inSpeed);
+	void Execute(Entity* inEntity, float inDeltaTime);
+
+private:
+	Vector3 mAxis;
+	float mSpeed;
+};
+
 #endif
 

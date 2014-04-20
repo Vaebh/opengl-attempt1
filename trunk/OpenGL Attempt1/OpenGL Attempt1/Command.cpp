@@ -34,3 +34,13 @@ void ScaleCommand::Execute(Entity* inEntity, float inDeltaTime)
 {
 	inEntity->mScale += mDirection * inDeltaTime;
 }
+
+RotationCommand::RotationCommand(std::string inName, std::string inKey, Vector3 inAxis, float inSpeed) : Command(inName, inKey), mAxis(inAxis), mSpeed(inSpeed)
+{
+
+}
+
+void RotationCommand::Execute(Entity* inEntity, float inDeltaTime)
+{
+	inEntity->mRotationAngle += mAxis * mSpeed * inDeltaTime;
+}
