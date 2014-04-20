@@ -1,21 +1,23 @@
-#ifndef INPUT
-#define INPUT
+#ifndef INPUT_SIMENGINE
+#define INPUT_SIMENGINE
 
 #include "GLIncludes.h"
-#include "Sprite.h"
+#include "Entity.h"
 #include <map>
 #include <list>
 #include "Command.h"
 
+class Entity;
+class Command;
+
 class Input
 {
-
 public:
 	Input(GLFWwindow* inWindow, Entity* inEntity);
 
 	void Init();
 	void InitKeys();
-  
+
 	void LoadInput();
 
 	virtual void Update(float dt);
@@ -27,9 +29,6 @@ public:
 	static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 public:
-
-	Sprite* mKitten;
-	
 	static std::map<int, Command*> mCommandKeys;
 
 private:

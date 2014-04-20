@@ -2,67 +2,56 @@
 #define COMMAND_SIMENGINE
 
 #include "Entity.h"
+#include "Vectors.h"
+
+class Input;
+class Entity;
 
 class Command
 {
 public:
-  Command();
-  virtual void Execute(Entity* inEntity, float inDeltaTime) = 0;
+	Command(std::string inName, std::string inKey);
+	virtual void Execute(Entity* inEntity, float inDeltaTime) = 0;
    
 public:
-  bool mRepeatingAction;
-  int mInputState;
-  int mModifiers;
-  bool mFinished;
-  float mSpeed;
+	bool mRepeatingAction;
+	int mInputState;
+	int mModifiers;
+	bool mFinished;
+	float mSpeed;
+
+	std::string mName;
+	std::string mKey;
+};
+
+class ReloadInputCommand : public Command
+{
+public:
+	ReloadInputCommand(std::string inName, std::string inKey);
+	void Execute(Entity* inEntity, float inDeltaTime);
 };
 
 class MoveCommand : public Command
 {
 public:
-  MoveCommand();
-  ~MoveCommand();
-  virtual void Execute(Entity* inEntity, float inDeltaTime) = 0;
+	MoveCommand(std::string inName, std::string inKey, Vector3 inDirection, float inSpeed);
+	~MoveCommand();
+	virtual void Execute(Entity* inEntity, float inDeltaTime);
   
 protected:
-  float mSpeed;
-};
-
-class MoveUpCommand : public Command
-{
-	void Execute(Entity* inEntity, float inDeltaTime);
-};
-
-class MoveLeftCommand : public Command
-{
-	void Execute(Entity* inEntity, float inDeltaTime);
-};
-
-class MoveDownCommand : public Command
-{
-	void Execute(Entity* inEntity, float inDeltaTime);
-};
-
-class MoveRightCommand : public Command
-{
-	void Execute(Entity* inEntity, float inDeltaTime);
+	float mSpeed;
+	Vector3 mDirection;
 };
 
 class ScaleCommand : public Command
 {
 public:
-	enum Axis
-	{
-		VERTICAL,
-		HORIZONTAL
-	};
-
-	ScaleCommand(Axis inAxis, int inDirection);
+	ScaleCommand(std::string inName, std::string inKey, Vector3 inDirection);
 	void Execute(Entity* inEntity, float inDeltaTime);
 
 private:
-	Axis mAxis;
-	int mDirection;
+	Vector3 mDirection;
 };
 
 #endif
+

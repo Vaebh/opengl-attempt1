@@ -1,3 +1,6 @@
+#ifndef RENDER_SIMENGINE
+#define RENDER_SIMENGINE
+
 #include "GLIncludes.h"
 #include "Entity.h"
 #include <vector>
@@ -20,3 +23,5 @@ public:
 private:
 	std::vector<Entity*> mEntities;
 };
+
+#endif

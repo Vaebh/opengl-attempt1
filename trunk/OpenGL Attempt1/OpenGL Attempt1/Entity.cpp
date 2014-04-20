@@ -18,3 +18,11 @@ void Entity::Draw()
 {
 
 }
+
+void Entity::Update(float inDeltaTime)
+{
+	if(mInput)
+	{
+		mInput->Update(inDeltaTime);
+	}
+}

@@ -1,3 +1,6 @@
+#ifndef MATERIAL_SIMENGINE
+#define MATERIAL_SIMENGINE
+
 #include "GLUtils.h"
 #include "Shader.h"
 
@@ -16,3 +19,5 @@ private:
 
 	Shader mShader;
 };
+
+#endif

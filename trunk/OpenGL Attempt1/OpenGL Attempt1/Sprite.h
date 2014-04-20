@@ -1,10 +1,10 @@
+#ifndef SPRITE
+#define SPRITE
+
 #include "GLIncludes.h"
 #include "Entity.h"
 #include "Shader.h"
 #include <string>
-
-#ifndef SPRITE
-#define SPRITE
 
 class Sprite : public Entity
 {

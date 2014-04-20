@@ -1,52 +1,36 @@
 #include "Command.h"
-#include "Vectors.h"
 
-Command::Command() : mRepeatingAction(false), mInputState(0), mModifiers(0), mFinished(true), mSpeed(0.5f)
+Command::Command(std::string inName, std::string inKey) : mRepeatingAction(false), mInputState(0), mModifiers(0), mFinished(true), mSpeed(0.5f), mName(inName), mKey(inKey)
 {
 
 }
 
-void MoveUpCommand::Execute(Entity* inEntity, float inDeltaTime)
+ReloadInputCommand::ReloadInputCommand(std::string inName, std::string inKey) : Command(inName, inKey)
 {
-	//if(mInputState == GLFW_PRESS || mInputState == GLFW_REPEAT)
-	//{
 
-	inEntity->MovePosition(Vector3(0.0, mSpeed * inDeltaTime, 0.0));
-	/*}
-	else
-	{
-		mFinished = true;
-	}*/
 }
 
-void MoveLeftCommand::Execute(Entity* inEntity, float inDeltaTime)
+void ReloadInputCommand::Execute(Entity* inEntity, float inDeltaTime)
 {
-	inEntity->MovePosition(-Vector3(mSpeed * inDeltaTime, 0.0, 0.0));
+	inEntity->mInput->LoadInput();
 }
 
-void MoveDownCommand::Execute(Entity* inEntity, float inDeltaTime)
+MoveCommand::MoveCommand(std::string inName, std::string inKey, Vector3 inDirection, float inSpeed) : Command(inName, inKey), mDirection(inDirection), mSpeed(inSpeed)
 {
-	inEntity->MovePosition(-Vector3(0.0, mSpeed * inDeltaTime, 0.0));
+
 }
 
-void MoveRightCommand::Execute(Entity* inEntity, float inDeltaTime)
+void MoveCommand::Execute(Entity* inEntity, float inDeltaTime)
 {
-	inEntity->MovePosition(Vector3(mSpeed * inDeltaTime, 0.0, 0.0));
+	inEntity->MovePosition(mSpeed * inDeltaTime * mDirection);
 }
 
-ScaleCommand::ScaleCommand(Axis inAxis, int inDirection) : mAxis(inAxis), mDirection(inDirection)
+ScaleCommand::ScaleCommand(std::string inName, std::string inKey, Vector3 inDirection) : Command(inName, inKey), mDirection(inDirection)
 {
 
 }
 
 void ScaleCommand::Execute(Entity* inEntity, float inDeltaTime)
 {
-	if(mAxis == VERTICAL)
-	{
-		inEntity->mScale.y += mDirection * 2 * inDeltaTime;
-	}
-	else
-	{
-		inEntity->mScale.x += mDirection * 2 * inDeltaTime;
-	}
+	inEntity->mScale += mDirection * inDeltaTime;
 }

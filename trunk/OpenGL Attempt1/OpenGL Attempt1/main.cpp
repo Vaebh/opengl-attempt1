@@ -321,7 +321,8 @@ int NewNewMain()
 	
 
 	kitten = new Sprite("sample.png", "2DVertexShaderMove.txt", "2DFragShaderPlain.txt");
-	Input inputHandler = Input(window, kitten);
+	Input* inputHandler = new Input(window, kitten);
+	kitten->mInput = inputHandler;
 	//inputHandler.mKitten = kitten;
 	//Sprite puppy("sample2.png", "2DVertexShader.txt", "2DFragShaderPlain.txt");
 
@@ -364,7 +365,8 @@ int NewNewMain()
 		if(key == GLFW_KEY_S && (action == GLFW_PRESS || action == GLFW_REPEAT))
 			kitten->moveY -= 0.01f;*/
 
-		inputHandler.Update(delta);
+		kitten->Update(delta);
+		//inputHandler.Update(delta);
 		Render::GetSingleton()->Draw();
 
 		glfwSwapBuffers(window);
