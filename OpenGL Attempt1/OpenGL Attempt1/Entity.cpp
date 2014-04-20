@@ -5,6 +5,7 @@ mbVisible(true)
 ,mName("")
 ,mPosition(0.0, 0.0, 0.0)
 ,mScale(1.0, 1.0, 1.0)
+,mRotationAngle(0)
 {
 	
 }

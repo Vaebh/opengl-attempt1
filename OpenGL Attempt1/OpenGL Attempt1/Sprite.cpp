@@ -80,7 +80,7 @@ void Sprite::Draw()
         90.f,
         glm::vec3(0.0f, 0.0f, 1.0f)
     );*/
-	model = glm::translate(model, mPosition) * glm::scale(model, mScale);
+	model = glm::translate(model, mPosition) * glm::scale(model, mScale) * glm::rotate(model, mRotationAngle.x, X_UNIT_POSITIVE) * glm::rotate(model, mRotationAngle.y, Y_UNIT_POSITIVE) * glm::rotate(model, mRotationAngle.z, Z_UNIT_POSITIVE);
     glUniformMatrix4fv(mMoveUniform, 1, GL_FALSE, glm::value_ptr(model));
 	
 	glDrawArrays(GL_TRIANGLES, 0, 6);

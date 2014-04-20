@@ -19,12 +19,13 @@ public:
 	inline bool IsVisible() const {return mbVisible;}
 	inline void SetVisible(bool inbVisible) {mbVisible = inbVisible;}
 
-	inline Vector3 GetPosition() {return mPosition;}
+	const inline Vector3 GetPosition() const {return mPosition;}
 	inline void SetPosition(Vector3 inPosition) {mPosition = inPosition;}
 
 	inline void MovePosition(Vector3 inMovement) {mPosition += inMovement;}
 
 	Vector3 mScale;
+	Vector3 mRotationAngle;
 
 	void Update(float inDeltaTime);
 
