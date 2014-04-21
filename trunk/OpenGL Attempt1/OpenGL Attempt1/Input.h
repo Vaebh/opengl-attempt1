@@ -20,37 +20,29 @@ public:
 
 	void LoadInput();
 
-	virtual void Update(float dt);
+	virtual void Update(const float inDT);
 
 	// Prints out mouse coordinates
 	static void mouseCallback(GLFWwindow * window, int button, int action, int mods);
 
-	// Keyboard controls, exit with Esc
-	static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
-
-public:
-	static std::map<int, Command*> mCommandKeys;
-
 private:
+	void AssignCommand(Command* inCommand, const std::string inCommandName, const std::string inCommandKey);
+	void ParseCommand(const std::string inCommandName, const std::string inCommandKey);
 
-	GLFWwindow* mWindow;
-
-	std::map<std::string, int> mStringKeys;
-	std::vector<GLint> mKeys;
-
-	void AssignCommand(Command* inCommand, std::string inCommandName, std::string inCommandKey);
-
-private:
-	
-	void ParseCommand(std::string inCommandName, std::string inCommandKey);
-
-	void HandleKeyboardInput(const float inDeltaTime) const;
-	void HandleKeyInput(const GLint inKey, const float inDeltaTime) const;
+	void HandleKeyboardInput(const float inDT);
+	void HandleKeyInput(const GLint inKey, const float inDT);
 
 	void AddKey(const GLint inKeyCode);
 
-	static Entity* mEntity;
-	static std::list<Command*> mCommands;
+private:
+	GLFWwindow* mWindow;
+
+	Entity* mEntity;
+
+	std::vector<GLint> mKeys;
+	std::map<std::string, int> mStringKeys;
+
+	std::map<int, Command*> mCommandKeys;
 };
 
 #endif

@@ -4,35 +4,12 @@
 #include <fstream>
 #include <iostream>
 
-Entity* Input::mEntity;
-std::map<int, Command*> Input::mCommandKeys;
-std::list<Command*> Input::mCommands;
-
-Input::Input(GLFWwindow* inWindow, Entity* inEntity) : mWindow(inWindow)
+Input::Input(GLFWwindow* inWindow, Entity* inEntity) : mWindow(inWindow), mEntity(inEntity)
 {
-	//glfwSetKeyCallback(window, key_callback);
-
-	//Command::SetInput(this);
+	inEntity->mInput = this;
 
 	Init();
 	LoadInput();
-
-	mEntity = inEntity;
-}
-
-void Input::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-	if(glfwGetKey(window, key) == GLFW_PRESS)
-	{
-		if(mCommandKeys[key] && mCommandKeys[key]->mFinished)
-		{
-			//mCommands[key]->Execute(mEntity);
-			mCommandKeys[key]->mInputState = action;
-			mCommandKeys[key]->mModifiers = mods;
-			mCommandKeys[key]->mRepeatingAction = true;
-			mCommands.push_back(mCommandKeys[key]);
-		}
-	}
 }
 
 void Input::Init()
@@ -202,7 +179,7 @@ void Input::LoadInput()
 	}
 }
 
-void Input::ParseCommand(std::string inCommandName, std::string inCommandKey)
+void Input::ParseCommand(const std::string inCommandName, const std::string inCommandKey)
 {
 	if(inCommandName == "")
 	{
@@ -289,7 +266,7 @@ void Input::ParseCommand(std::string inCommandName, std::string inCommandKey)
 	}
 }
 
-void Input::AssignCommand(Command* inCommand, std::string inCommandName, std::string inCommandKey)
+void Input::AssignCommand(Command* inCommand, const std::string inCommandName, const std::string inCommandKey)
 {
 	if(mCommandKeys[mStringKeys[inCommandName]] != NULL)
 	{
@@ -305,7 +282,7 @@ void Input::AssignCommand(Command* inCommand, std::string inCommandName, std::st
 	mStringKeys[inCommandName] = mStringKeys[inCommandKey];
 }
 
-void Input::HandleKeyInput(const GLint inKey, const float inDeltaTime) const
+void Input::HandleKeyInput(const GLint inKey, const float inDT)
 {
 	int keyInputState = glfwGetKey(mWindow, inKey);
 	if(keyInputState == GLFW_PRESS)
@@ -313,87 +290,20 @@ void Input::HandleKeyInput(const GLint inKey, const float inDeltaTime) const
 		if(mCommandKeys[inKey])
 		{
 			mCommandKeys[inKey]->mInputState = keyInputState;
-			mCommandKeys[inKey]->Execute(mEntity, inDeltaTime);
+			mCommandKeys[inKey]->Execute(mEntity, inDT);
 		}
 	}
 }
 
-void Input::HandleKeyboardInput(const float inDeltaTime) const
+void Input::HandleKeyboardInput(const float inDT)
 {
 	for(int i = 0; i < mKeys.size(); ++i)
 	{
-		HandleKeyInput(mKeys[i], inDeltaTime);
+		HandleKeyInput(mKeys[i], inDT);
 	}
 }
 
-void Input::Update(float dt)
+void Input::Update(const float inDT)
 {
-	HandleKeyboardInput(dt);
-
-	//cout << (char)GLFW_KEY_LEFT_BRACKET << endl;
-
-	/*std::list<Command*> finishedCommands;
-
-	std::list<Command*>::iterator iter = mCommands.begin();
-	for(iter = mCommands.begin(); iter != mCommands.end(); ++iter)
-	{
-		if(*iter)
-		{
-			(*iter)->Execute(mEntity, dt);
-
-			if((*iter)->mFinished)
-			{
-				//mCommands.remove(*iter);
-				finishedCommands.push_back(*iter);
-			}
-		}
-	}
-
-	if(finishedCommands.size() != 0)
-	{
-		std::list<Command*>::iterator iter2 = finishedCommands.begin();
-		for(iter2 = finishedCommands.begin(); iter2 != finishedCommands.end(); ++iter2)
-		{
-			mCommands.remove(*iter2);
-		}
-
-		finishedCommands.clear();
-	}*/
-
-
-	//mCommands.clear();
-	/*if(glfwGetKey(mWindow, GLFW_KEY_W) == GLFW_PRESS)
-	{
-		if(mCommandKeys[GLFW_KEY_W])
-		{
-			mCommandKeys[GLFW_KEY_W]->Execute(mEntity, dt);
-		}
-	}
-	if(glfwGetKey(mWindow, GLFW_KEY_A) == GLFW_PRESS)
-	{
-		if(mCommandKeys[GLFW_KEY_A])
-		{
-			mCommandKeys[GLFW_KEY_A]->Execute(mEntity, dt);
-		}
-	}
-
-	if(glfwGetKey(mWindow, GLFW_KEY_S) == GLFW_PRESS)
-	{
-		mCommandKeys[GLFW_KEY_S]->Execute(mEntity, dt);
-	}
-
-	if(glfwGetKey(mWindow, GLFW_KEY_D) == GLFW_PRESS)
-	{
-		mCommandKeys[GLFW_KEY_D]->Execute(mEntity, dt);
-	}*/
-
-	/*if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		mKitten->moveX += 0.0001f;
-	if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		mKitten->moveX -= 0.0001f;
-
-	if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		mKitten->moveY += 0.0001f;
-	if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		mKitten->moveY -= 0.0001f;*/
+	HandleKeyboardInput(inDT);
 }
