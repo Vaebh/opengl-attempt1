@@ -38,6 +38,8 @@ private:
 	std::map<std::string, int> mStringKeys;
 	std::vector<GLint> mKeys;
 
+	void AssignCommand(Command* inCommand, std::string inCommandName, std::string inCommandKey);
+
 private:
 	
 	void ParseCommand(std::string inCommandName, std::string inCommandKey);

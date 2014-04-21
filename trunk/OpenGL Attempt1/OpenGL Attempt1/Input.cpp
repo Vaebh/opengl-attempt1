@@ -120,7 +120,7 @@ void Input::AddKey(const GLint inKeyCode)
 	mKeys.push_back(inKeyCode);
   
 
-  // Non single character keys
+	// Non single character keys
 	if(inKeyCode == GLFW_KEY_SPACE)
 	{
 		mStringKeys["Space"] = GLFW_KEY_SPACE;
@@ -209,77 +209,100 @@ void Input::ParseCommand(std::string inCommandName, std::string inCommandKey)
 		return;
 	}
 
+	Command* command = NULL;
+
 	if(inCommandName == "MoveUp")
 	{
-		mCommandKeys[mStringKeys[inCommandKey]] = new MoveCommand("MoveUp", inCommandKey, Y_UNIT_POSITIVE, 0.5f);
+		command = new MoveCommand("MoveUp", inCommandKey, Y_UNIT_POSITIVE, 0.5f);
 	}
 
 	if(inCommandName == "MoveLeft")
 	{
-		mCommandKeys[mStringKeys[inCommandKey]] = new MoveCommand("MoveLeft", inCommandKey, X_UNIT_NEGATIVE, 0.5f);
+		command = new MoveCommand("MoveLeft", inCommandKey, X_UNIT_NEGATIVE, 0.5f);
 	}
 
 	if(inCommandName == "MoveDown")
 	{
-		mCommandKeys[mStringKeys[inCommandKey]] = new MoveCommand("MoveDown", inCommandKey, Y_UNIT_NEGATIVE, 0.5f);
+		command = new MoveCommand("MoveDown", inCommandKey, Y_UNIT_NEGATIVE, 0.5f);
 	}
 
 	if(inCommandName == "MoveRight")
 	{
-		mCommandKeys[mStringKeys[inCommandKey]] = new MoveCommand("MoveRight", inCommandKey, X_UNIT_POSITIVE, 0.5f);
+		command = new MoveCommand("MoveRight", inCommandKey, X_UNIT_POSITIVE, 0.5f);
 	}
 
 	if(inCommandName == "ScaleBiggerX")
 	{
-		mCommandKeys[mStringKeys[inCommandKey]] = new ScaleCommand("ScaleBiggerX", inCommandKey, X_UNIT_POSITIVE);
+		command = new ScaleCommand("ScaleBiggerX", inCommandKey, X_UNIT_POSITIVE);
 	}
 
 	if(inCommandName == "ScaleBiggerY")
 	{
-		mCommandKeys[mStringKeys[inCommandKey]] = new ScaleCommand("ScaleBiggerY", inCommandKey, Y_UNIT_POSITIVE);
+		command = new ScaleCommand("ScaleBiggerY", inCommandKey, Y_UNIT_POSITIVE);
 	}
 
 	if(inCommandName == "ScaleSmallerX")
 	{
-		mCommandKeys[mStringKeys[inCommandKey]] = new ScaleCommand("ScaleSmallerX", inCommandKey, X_UNIT_NEGATIVE);
+		command = new ScaleCommand("ScaleSmallerX", inCommandKey, X_UNIT_NEGATIVE);
 	}
 
 	if(inCommandName == "ScaleSmallerY")
 	{
-		mCommandKeys[mStringKeys[inCommandKey]] = new ScaleCommand("ScaleSmallerY", inCommandKey, Y_UNIT_NEGATIVE);
+		command = new ScaleCommand("ScaleSmallerY", inCommandKey, Y_UNIT_NEGATIVE);
 	}
 
 	if(inCommandName == "RotateLeftZ")
 	{
-		mCommandKeys[mStringKeys[inCommandKey]] = new RotationCommand("RotateLeftZ", inCommandKey, Z_UNIT_POSITIVE, 50);
+		command = new RotationCommand("RotateLeftZ", inCommandKey, Z_UNIT_POSITIVE, 50);
 	}
 	if(inCommandName == "RotateRightZ")
 	{
-		mCommandKeys[mStringKeys[inCommandKey]] = new RotationCommand("RotateRightZ", inCommandKey, Z_UNIT_NEGATIVE, 50);
+		command = new RotationCommand("RotateRightZ", inCommandKey, Z_UNIT_NEGATIVE, 50);
 	}
 
 	if(inCommandName == "RotateUpY")
 	{
-		mCommandKeys[mStringKeys[inCommandKey]] = new RotationCommand("RotateUpY", inCommandKey, Y_UNIT_POSITIVE, 50);
+		command = new RotationCommand("RotateUpY", inCommandKey, Y_UNIT_POSITIVE, 50);
 	}
 	if(inCommandName == "RotateDownY")
 	{
-		mCommandKeys[mStringKeys[inCommandKey]] = new RotationCommand("RotateDownY", inCommandKey, Y_UNIT_NEGATIVE, 50);
+		command = new RotationCommand("RotateDownY", inCommandKey, Y_UNIT_NEGATIVE, 50);
 	}
 
 	if(inCommandName == "RotateLeftX")
 	{
-		mCommandKeys[mStringKeys[inCommandKey]] = new RotationCommand("RotateLeftX", inCommandKey, X_UNIT_POSITIVE, 50);
+		command = new RotationCommand("RotateLeftX", inCommandKey, X_UNIT_POSITIVE, 50);
 	}
 	if(inCommandName == "RotateRightX")
 	{
-		mCommandKeys[mStringKeys[inCommandKey]] = new RotationCommand("RotateRightX", inCommandKey, X_UNIT_NEGATIVE, 50);
+		command = new RotationCommand("RotateRightX", inCommandKey, X_UNIT_NEGATIVE, 50);
 	}
 
 	if(inCommandName == "ReloadInput")
 	{
-		mCommandKeys[mStringKeys[inCommandKey]] = new ReloadInputCommand("ReloadInput", inCommandKey);
+		command = new ReloadInputCommand("ReloadInput", inCommandKey);
 	}
+
+	if(command)
+	{
+		AssignCommand(command, inCommandName, inCommandKey);
+	}
+}
+
+void Input::AssignCommand(Command* inCommand, std::string inCommandName, std::string inCommandKey)
+{
+	if(mCommandKeys[mStringKeys[inCommandName]] != NULL)
+	{
+		delete mCommandKeys[mStringKeys[inCommandName]];
+		mCommandKeys[mStringKeys[inCommandName]] = NULL;
+	}
+
+	// Assign the command to the correct keyboard key
+	mCommandKeys[mStringKeys[inCommandKey]] = inCommand;
+
+	// Make the name of the command into a mapKey that points at the keyboard key
+	// This is so we can look up the command with its name
+	mStringKeys[inCommandName] = mStringKeys[inCommandKey];
 }
 
 void Input::HandleKeyInput(const GLint inKey, const float inDeltaTime) const
