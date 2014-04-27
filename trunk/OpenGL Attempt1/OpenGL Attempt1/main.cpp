@@ -6,6 +6,7 @@
 #include "Input.h"
 #include <time.h>
 #include <iostream>
+#include "Scene.h"
 using namespace std;
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -319,10 +320,15 @@ int NewNewMain()
 	Sprite* puppy = NULL;
 	Sprite* kitten = NULL;
 
+	Scene* theScene = new Scene();
+
 	kitten = new Sprite("bros.png", "2DVertexShaderMove.txt", "2DFragShaderPlain.txt");
-	//Input* inputHandler = new Input(window, kitten);
+	Input* inputHandler = new Input(window, kitten);
 	puppy = new Sprite("sample2.png", "2DVertexShaderMove.txt", "2DFragShaderPlain.txt");
-	Input* inputHandler = new Input(window, puppy);
+	//Input* inputHandler = new Input(window, puppy);
+
+	theScene->AddToScene(kitten);
+	theScene->AddToScene(puppy);
 
 	//glfwSetKeyCallback(window, key_callback);
 	glfwSetMouseButtonCallback(window, mouseCallback);
@@ -338,11 +344,13 @@ int NewNewMain()
 		delta = glfwGetTime() - olddelta;
 		olddelta = glfwGetTime();
 
-		if(kitten)
-			kitten->Update(delta);
+		theScene->Update(delta);
 
-		if(puppy)
-			puppy->Update(delta);
+		//if(kitten)
+			//kitten->Update(delta);
+
+		//if(puppy)
+			//puppy->Update(delta);
 
 		Render::GetSingleton()->Draw();
 
