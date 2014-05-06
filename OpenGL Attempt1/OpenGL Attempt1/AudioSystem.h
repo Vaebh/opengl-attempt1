@@ -9,9 +9,11 @@ public:
 	~AudioSystem();
 	void PlaySound(const std::string& inSoundName);
 
+	static bool FMODErrorCheck(FMOD_RESULT inResult);
+
 private:
 	void Initialise();
-	bool FMODErrorCheck(FMOD_RESULT inResult);
+	
 	void CheckSoundcards();
 
 private:
