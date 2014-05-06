@@ -7,6 +7,9 @@
 #include <time.h>
 #include <iostream>
 #include "Scene.h"
+
+#include <fmod.hpp>
+#include <fmod_errors.h>
 using namespace std;
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -338,6 +341,48 @@ int NewNewMain()
 	double begin_time = glfwGetTime();
 
 
+	FMOD_RESULT result;
+	FMOD::System *system = NULL;
+
+	result = FMOD::System_Create(&system);      // Create the main system object.
+	if (result != FMOD_OK)
+	{
+		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+		exit(-1);
+	}
+
+	int numDrivers;
+	result = system->getNumDrivers(&numDrivers);
+ 
+	// No sound cards (disable sound)
+	if (numDrivers == 0)
+	{
+		result = system->setOutput(FMOD_OUTPUTTYPE_NOSOUND);
+	}
+
+	result = system->init(512, FMOD_INIT_NORMAL, 0);    // Initialize FMOD.
+	if (result != FMOD_OK)
+	{
+		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+		exit(-1);
+	}
+
+	FMOD::Sound *audio;
+	result = system->createSound("Tank.mp3", FMOD_DEFAULT, 0, &audio);
+	if (result != FMOD_OK)
+	{
+		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+	}
+
+	FMOD::Channel* channel;
+	result = system->playSound(audio, NULL, false, &channel);
+	if (result != FMOD_OK)
+	{
+		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+	}
+
+	bool pausePressed = false;
+
 	// Loop until the window should close
 	while (!glfwWindowShouldClose(window))
 	{
@@ -351,6 +396,22 @@ int NewNewMain()
 
 		//if(puppy)
 			//puppy->Update(delta);
+
+		if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS && !pausePressed)
+		{
+			pausePressed = true;
+
+			bool isPaused;
+			channel->getPaused(&isPaused);
+			channel->setPaused(!isPaused);
+		}
+		else if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE)
+		{
+			pausePressed = false;
+		}
+
+		//Update fmod
+		system->update();
 
 		Render::GetSingleton()->Draw();
 
