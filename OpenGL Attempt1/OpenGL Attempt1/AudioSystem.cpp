@@ -1,7 +1,8 @@
 #include "AudioSystem.h"
+#include "Sound.h"
 #include <iostream>
 
-AudioSystem::AudioSystem() : mNumDrivers(0), mSystem(NULL)
+AudioSystem::AudioSystem() : mNumDrivers(0), mSystem(NULL), mMusicChannelGroup(NULL), mSoundFXChannelGroup(NULL)
 {
 
 }
@@ -15,19 +16,18 @@ void AudioSystem::Initialise()
 {
 	FMODErrorCheck(FMOD::System_Create(&mSystem));
 
+	mSystem->init(512, FMOD_INIT_NORMAL, 0);
+
+	FMODErrorCheck(mSystem->createChannelGroup("musicChannelGroup", &mMusicChannelGroup));
+	FMODErrorCheck(mSystem->createChannelGroup("soundFXChannelGroup", &mSoundFXChannelGroup));
+
 	CheckSoundcards();
 }
 
 void AudioSystem::PlaySound(const std::string& inSoundName)
 {
-	FMOD::Sound *soundEffect;
-
-	bool* isPlaying;
-	soundFXChannel->isPlaying(isPlaying);
-	if(FMODErrorCheck(mSystem->createSound(inSoundName.c_str() , FMOD_DEFAULT, 0, &soundEffect)))
-	{
-		FMODErrorCheck(mSystem->playSound(soundEffect, NULL, false, &soundFXChannel));
-	}
+	Sound* soundEffect = new Sound(inSoundName, mSystem, mSoundFXChannelGroup);
+	soundEffect->PlaySound();
 }
 
 void AudioSystem::CheckSoundcards()
@@ -46,5 +46,13 @@ bool AudioSystem::FMODErrorCheck(FMOD_RESULT inResult)
 	if (inResult != FMOD_OK)
     {
         std::cout << "FMOD error! (" << inResult << ") " << FMOD_ErrorString(inResult) << std::endl;
+		return false;
     }
+
+	return true;
+}
+
+void AudioSystem::Update(float inDT)
+{
+	FMODErrorCheck(mSystem->update());
 }
