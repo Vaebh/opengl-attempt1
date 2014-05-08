@@ -6,10 +6,15 @@ public:
 	Sound(const std::string& inFilename, FMOD::System* inFMODSystem, FMOD::ChannelGroup* inChannelGroup);
 	~Sound();
 
-	void PlaySound();
+	void Play();
+  void Stop();
 
-	bool IsSoundPlaying();
-	bool IsSoundEnabled();
+	bool IsPlaying();
+  bool IsPaused();
+	bool IsMuted();
+   
+  float GetVolume();
+  float GetLength();
 
 private:
 	FMOD::Sound* mSound;
