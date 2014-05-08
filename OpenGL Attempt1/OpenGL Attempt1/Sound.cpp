@@ -2,18 +2,18 @@
 
 Sound::Sound(const std::string& inFilename, FMOD::System* inFMODSystem, FMOD::ChannelGroup* inChannelGroup) : mFMODSystem(inFMODSystem)
 {
-	AudioSystem::FMODErrorCheck(mFMODSystem->createSound(inFilename.c_str(), FMOD_DEFAULT, 0, &mSound));
-	AudioSystem::FMODErrorCheck(mFMODSystem->playSound(mSound, NULL, true, &mChannel));
+	if(AudioSystem::FMODErrorCheck(mFMODSystem->createSound(inFilename.c_str(), FMOD_DEFAULT, 0, &mSound)))
+     AudioSystem::FMODErrorCheck(mFMODSystem->playSound(mSound, NULL, true, &mChannel));
 
 	mChannel->setChannelGroup(inChannelGroup);
 }
 
 Sound::~Sound()
 {
-
+  AudioSystem::FMODErrorCheck(mpSound->release());
 }
 
-void Sound::PlaySound()
+void Sound::Play()
 {
 	if(!IsSoundPlaying())
 	{
@@ -21,20 +21,33 @@ void Sound::PlaySound()
 	}
 }
 
-bool Sound::IsSoundPlaying()
+void Sound::Stop()
 {
-	bool isPlaying;
-	AudioSystem::FMODErrorCheck(mChannel->isPlaying(&isPlaying));
-
-	bool isPaused;
-	AudioSystem::FMODErrorCheck(mChannel->getPaused(&isPaused));
-
-	return isPlaying && !isPaused;
+  if(mChannel)
+  {
+    mChannel->stop();
+  }
 }
 
-bool Sound::IsSoundEnabled()
+bool Sound::IsPlaying()
 {
-	bool isMuted;
+	bool isPlaying = false;
+	AudioSystem::FMODErrorCheck(mChannel->isPlaying(&isPlaying));
+
+	return isPlaying && !IsPaused();
+}
+
+bool Sound::IsPaused()
+{
+	bool isPaused = false;
+	AudioSystem::FMODErrorCheck(mChannel->getPaused(&isPaused));
+
+	return isPaused;
+}
+
+bool Sound::IsMuted()
+{
+	bool isMuted = false;
 	AudioSystem::FMODErrorCheck(mChannel->getMute(&isMuted));
 
 	return isMuted;
