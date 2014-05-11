@@ -326,10 +326,14 @@ int NewNewMain()
 
 	Scene* theScene = new Scene();
 
-	kitten = new Sprite("bros.png", "2DVertexShaderMove.txt", "2DFragShaderPlain.txt");
+	kitten = new Sprite("bros.png");
 	Input* inputHandler = new Input(window, kitten);
-	puppy = new Sprite("sample2.png", "2DVertexShaderMove.txt", "2DFragShaderPlain.txt");
+	kitten->SetPosition(Vector3(-0.2, 0, 0));
+
+	puppy = new Sprite("sample2.png");
 	//Input* inputHandler = new Input(window, puppy);
+	puppy->SetPosition(Vector3(0.8, 0.5, 0));
+	puppy->mScale = Vector3(0.5, 0.5, 0);
 
 	theScene->AddToScene(kitten);
 	theScene->AddToScene(puppy);
