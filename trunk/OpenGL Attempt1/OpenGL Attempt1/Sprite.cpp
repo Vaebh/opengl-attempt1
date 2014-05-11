@@ -16,49 +16,18 @@ const GLfloat vertices[] =
 
 const unsigned int kNumVertsForSprites = 4;
 
+const std::string defaultVertexShader = "2DVertexShaderMove.txt";
+const std::string defaultFragShader = "2DFragShaderPlain.txt";
+
 using namespace std;
 
-Sprite::Sprite(const std::string inTexture, const std::string inVertexShaderSrc, const std::string inFragShaderSrc) : Entity()
+Sprite::Sprite(const std::string inTexture) : Entity(), mShader(NULL)
 {
-	glGenVertexArrays(1, &mVao);
-	glGenBuffers(1, &mVbo);
-
-	glBindBuffer(GL_ARRAY_BUFFER, mVbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	Shader aShader = Shader(inVertexShaderSrc, inFragShaderSrc);
-	mShader = aShader;
-
-	if(glIsProgram(mShader.mShaderProgram) == GL_TRUE)
-		cout << "sprite isProgram success" << endl;
-	else
-		cout << "sprite isProgram fail" << endl;
-
-	glUseProgram(mShader.mShaderProgram);
-	cout << "shaderID:" << mShader.GetProgramID() << endl;
-
-	glBindVertexArray(mVao);
-    glBindBuffer(GL_ARRAY_BUFFER, mVbo);
-
-	//Setup2D(mShader.GetProgramID());
-
-	GLint posAttrib = glGetAttribLocation(mShader.GetProgramID(), "position");
-	std::cout << "PositionAttrib: " << posAttrib << std::endl;
-	glEnableVertexAttribArray(posAttrib);
-	glVertexAttribPointer(posAttrib, 4, GL_FLOAT, GL_FALSE, 6*sizeof(float), 0);
-                     
-	GLint texAttrib = glGetAttribLocation(mShader.GetProgramID(), "texcoord");
-	std::cout << "TexAttrib: " << texAttrib << std::endl;
-	glEnableVertexAttribArray(texAttrib);
-	glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)(4*sizeof(float)));
-
-	glUniform1i(glGetUniformLocation(mShader.GetProgramID(), "textureSprite"), 0);
+	Initialise();
+	SetShader(defaultVertexShader, defaultFragShader);
 
 	mTexture = LoadImage(inTexture.c_str());
-
 	Render::GetSingleton()->AddEntity(static_cast<Entity*>(this));
-
-	mMoveUniform = glGetUniformLocation(mShader.GetProgramID(), "move");
 }
 
 Sprite::~Sprite()
@@ -66,20 +35,62 @@ Sprite::~Sprite()
 
 }
 
+void Sprite::Initialise()
+{
+	glGenVertexArrays(1, &mVao);
+	glGenBuffers(1, &mVbo);
+
+	glBindBuffer(GL_ARRAY_BUFFER, mVbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+}
+
+void Sprite::SetShader(const std::string inVertexShaderSrc, const std::string inFragShaderSrc)
+{
+	if(inVertexShaderSrc.empty() || inFragShaderSrc.empty())
+		return;
+
+	if(mShader)
+		delete mShader;
+
+	mShader = new Shader(inVertexShaderSrc, inFragShaderSrc);
+
+	if(glIsProgram(mShader->mShaderProgram) == GL_TRUE)
+		cout << "sprite isProgram success" << endl;
+	else
+		cout << "sprite isProgram fail" << endl;
+
+	glUseProgram(mShader->mShaderProgram);
+
+	glBindVertexArray(mVao);
+    glBindBuffer(GL_ARRAY_BUFFER, mVbo);
+
+	GLint posAttrib = glGetAttribLocation(mShader->GetProgramID(), "position");
+	glEnableVertexAttribArray(posAttrib);
+	glVertexAttribPointer(posAttrib, 4, GL_FLOAT, GL_FALSE, 6*sizeof(float), 0);
+                     
+	GLint texAttrib = glGetAttribLocation(mShader->GetProgramID(), "texcoord");
+	glEnableVertexAttribArray(texAttrib);
+	glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)(4*sizeof(float)));
+
+	glUniform1i(glGetUniformLocation(mShader->GetProgramID(), "textureSprite"), 0);
+
+	mMoveUniform = glGetUniformLocation(mShader->GetProgramID(), "move");
+}
+
+void Sprite::Update(float inDT)
+{
+	Entity::Update(inDT);
+}
+
 void Sprite::Draw()
 {
 	glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, mTexture);
 
-	glUseProgram(mShader.GetProgramID());
+	glUseProgram(mShader->GetProgramID());
 
 	// Calculate transformation
     glm::mat4 model;
-    /*model = glm::rotate(
-        model,
-        90.f,
-        glm::vec3(0.0f, 0.0f, 1.0f)
-    );*/
 	model = glm::translate(model, mPosition) * glm::scale(model, mScale) * glm::rotate(model, mRotationAngle.x, X_UNIT_POSITIVE) * glm::rotate(model, mRotationAngle.y, Y_UNIT_POSITIVE) * glm::rotate(model, mRotationAngle.z, Z_UNIT_POSITIVE);
     glUniformMatrix4fv(mMoveUniform, 1, GL_FALSE, glm::value_ptr(model));
 	

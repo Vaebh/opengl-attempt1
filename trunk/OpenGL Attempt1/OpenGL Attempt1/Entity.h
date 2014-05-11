@@ -5,8 +5,11 @@
 #include "Vectors.h"
 #include <vector>
 #include "Input.h"
+#include "Scene.h"
+#include "Rectangle.h"
 
 class Input;
+class Scene;
 
 class Entity
 {
@@ -22,14 +25,20 @@ public:
 	const inline Vector3 GetPosition() const {return mPosition;}
 	inline void SetPosition(Vector3 inPosition) {mPosition = inPosition;}
 
-	inline void MovePosition(Vector3 inMovement) {mPosition += inMovement;}
+	void MovePosition(Vector3 inMovement);
+
+	inline void SetOwningScene(Scene* inScene) {mScene = inScene;}
+
+	Rectangle mBoundingBox;
 
 	Vector3 mScale;
 	Vector3 mRotationAngle;
 
-	void Update(float inDeltaTime);
+	virtual void Update(float inDeltaTime);
 
 	Input* mInput;
+
+	Rectangle CreateBoundingBox(Vector3 inPosition);
 
 protected:
 	Vector3 mPosition;
@@ -37,5 +46,7 @@ protected:
 private:
 	bool mbVisible;
 	std::string mName;
+
+	Scene* mScene;
 };
 #endif

@@ -9,20 +9,27 @@
 class Sprite : public Entity
 {
 public:
-	Sprite(const std::string inTexture = "sample.png", const std::string inVertexShaderSrc = "2DVertexShader.txt", const std::string inFragShaderSrc = "2DFragShader.txt");
+	Sprite(const std::string inTexture = "sample.png");
 	~Sprite();
 
 	inline GLuint GetVAO() const {return mVao;}
 	inline GLuint GetVBO() const {return mVbo;}
 
 	virtual void Draw();
+	void SetShader(const std::string inVertexShaderSrc, const std::string inFragShaderSrc);
 
-public:
+	float mWidth;
+	float mHeight;
 
-	Shader mShader;
+	virtual void Update(float inDT);
 
 private:
-	
+	void Initialise();
+
+public:
+	Shader* mShader;
+
+private:
 	GLuint mTexture;
 	GLuint mVao;
 	GLuint mVbo;
