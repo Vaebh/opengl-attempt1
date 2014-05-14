@@ -29,12 +29,14 @@ public:
 
 	inline void SetOwningScene(Scene* inScene) {mScene = inScene;}
 
+	virtual void OnCollision();
+
 	Rectangle mBoundingBox;
 
 	Vector3 mScale;
 	Vector3 mRotationAngle;
 
-	virtual void Update(float inDeltaTime);
+	virtual void Update(float inDT);
 
 	Input* mInput;
 

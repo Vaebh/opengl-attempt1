@@ -27,7 +27,6 @@ Sprite::Sprite(const std::string inTexture) : Entity(), mShader(NULL)
 	SetShader(defaultVertexShader, defaultFragShader);
 
 	mTexture = LoadImage(inTexture.c_str());
-	Render::GetSingleton()->AddEntity(static_cast<Entity*>(this));
 }
 
 Sprite::~Sprite()

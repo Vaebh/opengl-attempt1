@@ -16,6 +16,7 @@ public:
 	bool IsColliding(Rectangle inBoundingBox, Entity* inEntity);
 
 	void AddToScene(Entity* inEntity);
+	void RemoveFromScene(Entity* inEntity);
 	void Update(float inDT);
 
 private:
