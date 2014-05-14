@@ -8,6 +8,8 @@
 #include <iostream>
 #include "Scene.h"
 #include "AudioSystem.h"
+#include "Ball.h"
+#include "Block.h"
 
 #include <fmod.hpp>
 #include <fmod_errors.h>
@@ -55,7 +57,7 @@ int main(void)
 
 	kitten = new Sprite("bros.png");
 	Input* inputHandler = new Input(window, kitten);
-	kitten->SetPosition(Vector3(-0.2, -0.4, 0));
+	kitten->SetPosition(Vector3(0.4, -0.4, 0));
 	kitten->mScale = Vector3(0.5, 0.5, 0);
 
 	puppy = new Sprite("sample2.png");
@@ -74,13 +76,17 @@ int main(void)
 	double delta = 0;
 	double begin_time = glfwGetTime();
 
-	Sprite* ball = new Sprite("ball.png");
+	Ball* ball = new Ball();
 	ball->SetPosition(Vector3(-0.2, 0.5, 0));
 	ball->mScale = Vector3(0.1, 0.1, 0);
 
 	theScene->AddToScene(ball);
 
-	float ballSpeed = 0.0002f;
+	Block* block = new Block();
+	block->SetPosition(Vector3(-0.2, -0.5, 0));
+	block->mScale = Vector3(0.3, 0.15, 0);
+
+	theScene->AddToScene(block);
 
 	// Loop until the window should close
 	while (!glfwWindowShouldClose(window))
@@ -88,12 +94,11 @@ int main(void)
 		delta = glfwGetTime() - olddelta;
 		olddelta = glfwGetTime();
 
-		if(ball->GetPosition().y <= -0.95 || ball->GetPosition().y >= 0.95)
+		if(block && block->mHealth <= 0)
 		{
-			ballSpeed = -ballSpeed;
+			delete block;
+			block = 0;
 		}
-
-		ball->MovePosition(Vector3(0, ballSpeed, 0) * Y_UNIT_NEGATIVE);
 
 		theScene->Update(delta);
 

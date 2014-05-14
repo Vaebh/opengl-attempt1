@@ -11,6 +11,8 @@ bool Scene::IsColliding(Rectangle inBoundingBox, Entity* inEntity)
 	{
 		if(theEntity != inEntity && IsIntersecting(inBoundingBox, theEntity->mBoundingBox))
 		{
+			theEntity->OnCollision();
+			inEntity->OnCollision();
 			return true;
 		}
 	}
@@ -35,6 +37,23 @@ void Scene::AddToScene(Entity* inEntity)
 	{
 		mEntities.push_back(inEntity);
 		inEntity->SetOwningScene(const_cast<Scene*>(this));
+	}
+}
+
+void Scene::RemoveFromScene(Entity* inEntity)
+{
+	if(inEntity)
+	{
+		std::vector<Entity*>::const_iterator iter;
+
+		for(iter = mEntities.begin(); iter != mEntities.end(); ++iter)
+		{
+			if(*iter == inEntity)
+			{
+				mEntities.erase(iter);
+				break;
+			}
+		}
 	}
 }
 

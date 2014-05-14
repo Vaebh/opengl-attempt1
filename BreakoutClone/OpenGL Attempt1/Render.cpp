@@ -35,6 +35,23 @@ void Render::AddEntity(Entity* inEntity)
 	}
 }
 
+void Render::RemoveEntity(Entity* inEntity)
+{
+	if(inEntity)
+	{
+		std::vector<Entity*>::const_iterator iter;
+
+		for(iter = mEntities.begin(); iter != mEntities.end(); ++iter)
+		{
+			if(*iter == inEntity)
+			{
+				mEntities.erase(iter);
+				break;
+			}
+		}
+	}
+}
+
 void Render::Draw()
 {
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);

@@ -1,4 +1,5 @@
 #include "Entity.h"
+#include "Render.h"
 
 Entity::Entity() :
 mbVisible(true)
@@ -7,13 +8,15 @@ mbVisible(true)
 ,mScale(1.0, 1.0, 1.0)
 ,mRotationAngle(0)
 ,mInput(NULL)
+,mScene(NULL)
 {
-	
+	Render::GetSingleton()->AddEntity(this);
 }
 
 Entity::~Entity()
 {
-
+	Render::GetSingleton()->RemoveEntity(this);
+	mScene->RemoveFromScene(this);
 }
 
 void Entity::MovePosition(Vector3 inMovement)
@@ -21,7 +24,7 @@ void Entity::MovePosition(Vector3 inMovement)
 	Vector3 nextPosition = mPosition + inMovement;
 	Rectangle nextPosBox = CreateBoundingBox(nextPosition);
 
-	if(!mScene->IsColliding(nextPosBox, this))
+	if(mScene && !mScene->IsColliding(nextPosBox, this))
 	{
 		mPosition += inMovement;
 	}
@@ -40,17 +43,22 @@ Rectangle Entity::CreateBoundingBox(Vector3 inPosition)
 	return theBoundingBox;
 }
 
+void Entity::OnCollision()
+{
+
+}
+
 void Entity::Draw()
 {
 
 }
 
-void Entity::Update(float inDeltaTime)
+void Entity::Update(float inDT)
 {
 	mBoundingBox = CreateBoundingBox(mPosition);
 
 	if(mInput)
 	{
-		mInput->Update(inDeltaTime);
+		mInput->Update(inDT);
 	}
 }
