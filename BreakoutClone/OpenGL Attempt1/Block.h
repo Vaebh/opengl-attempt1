@@ -1,3 +1,6 @@
+#ifndef BLOCK_SIMENGINE
+#define BLOCK_SIMENGINE
+
 #include "Sprite.h"
 
 class Block : public Sprite
@@ -10,3 +13,5 @@ public:
 
 	int mHealth;
 };
+
+#endif

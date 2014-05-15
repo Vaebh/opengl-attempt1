@@ -1,3 +1,6 @@
+#ifndef BALL_SIMENGINE
+#define BALL_SIMENGINE
+
 #include "Sprite.h"
 
 class Ball : public Sprite
@@ -11,3 +14,5 @@ public:
 
 	float mSpeed;
 };
+
+#endif

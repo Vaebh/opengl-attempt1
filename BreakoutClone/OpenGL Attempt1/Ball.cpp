@@ -1,8 +1,13 @@
 #include "Ball.h"
 
-Ball::Ball() : Sprite("ball.png"), mSpeed(0.0002f)
+Ball::Ball() : Sprite("ball.png"), mSpeed(0.9f)
 {
 	
+}
+
+Ball::~Ball()
+{
+
 }
 
 void Ball::OnCollision()
@@ -19,5 +24,5 @@ void Ball::Update(float inDT)
 		mSpeed = -mSpeed;
 	}
 
-	MovePosition(Vector3(0, mSpeed, 0) * Y_UNIT_NEGATIVE);
+	MovePosition(Vector3(0, mSpeed, 0) * Y_UNIT_NEGATIVE * inDT);
 }
