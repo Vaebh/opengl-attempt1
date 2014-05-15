@@ -2,7 +2,7 @@
 
 Block::Block() : Sprite("sample.png"), mHealth(2)
 {
-	
+	mName = "Block";
 }
 
 void Block::OnCollision()

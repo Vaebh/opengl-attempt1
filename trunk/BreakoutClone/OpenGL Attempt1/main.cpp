@@ -10,12 +10,13 @@
 #include "AudioSystem.h"
 #include "Ball.h"
 #include "Block.h"
+#include "StateLevelOne.h"
 
 #include <fmod.hpp>
 #include <fmod_errors.h>
 using namespace std;
 
-GLFWwindow* InitialiseWindow()
+/*GLFWwindow* InitialiseWindow()
 {
 	if (!glfwInit())
 		return NULL;
@@ -40,22 +41,22 @@ GLFWwindow* InitialiseWindow()
 	glewInit();
 
 	return window;
-}
+}*/
 
 int main(void)
 {
 	// Initialise the window
-	GLFWwindow* window = InitialiseWindow();
+	//GLFWwindow* window = InitialiseWindow();
 
-	if(!window)
-		return 1;
+	//if(!window)
+		//return 1;
 
 	Sprite* puppy = NULL;
 	Sprite* kitten = NULL;
 
 	Scene* theScene = new Scene();
 
-	kitten = new Sprite("bros.png");
+	/*kitten = new Sprite("bros.png");
 	Input* inputHandler = new Input(window, kitten);
 	kitten->SetPosition(Vector3(0.4, -0.4, 0));
 	kitten->mScale = Vector3(0.5, 0.5, 0);
@@ -65,18 +66,20 @@ int main(void)
 	puppy->mScale = Vector3(0.5, 0.5, 0);
 
 	theScene->AddToScene(kitten);
-	theScene->AddToScene(puppy);
+	theScene->AddToScene(puppy);*/
 
 	AudioSystem* audioSystem = new AudioSystem();
 	audioSystem->Initialise();
 
 	//audioSystem->PlaySound("Tank.mp3");
 
+	StateLevelOne* levelOne = new StateLevelOne(theScene);
+
 	double olddelta = 0;
 	double delta = 0;
 	double begin_time = glfwGetTime();
 
-	Ball* ball = new Ball();
+	/*Ball* ball = new Ball();
 	ball->SetPosition(Vector3(-0.2, 0.5, 0));
 	ball->mScale = Vector3(0.1, 0.1, 0);
 
@@ -86,25 +89,27 @@ int main(void)
 	block->SetPosition(Vector3(-0.2, -0.5, 0));
 	block->mScale = Vector3(0.3, 0.15, 0);
 
-	theScene->AddToScene(block);
+	theScene->AddToScene(block);*/
 
 	// Loop until the window should close
-	while (!glfwWindowShouldClose(window))
+	while (!glfwWindowShouldClose(Render::GetSingleton()->mWindow))
 	{
 		delta = glfwGetTime() - olddelta;
 		olddelta = glfwGetTime();
 
-		if(block && block->mHealth <= 0)
+		levelOne->Update(delta);
+
+		/*if(block && block->mHealth <= 0)
 		{
 			delete block;
 			block = 0;
-		}
+		}*/
 
 		theScene->Update(delta);
 
 		Render::GetSingleton()->Draw();
 
-		glfwSwapBuffers(window);
+		glfwSwapBuffers(Render::mWindow);
 
 		// Check for new events
 		glfwPollEvents();
@@ -113,7 +118,7 @@ int main(void)
 	//delete kitten;
 	//kitten = 0;
 
-	glfwDestroyWindow(window);
+	glfwDestroyWindow(Render::GetSingleton()->mWindow);
 	glfwTerminate();
 
 	return 0;

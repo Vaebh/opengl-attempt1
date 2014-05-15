@@ -21,6 +21,8 @@ public:
 
 	static Render* mRenderer;
 
+	static GLFWwindow* mWindow;
+
 private:
 	std::vector<Entity*> mEntities;
 };

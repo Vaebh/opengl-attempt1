@@ -45,9 +45,10 @@ public:
 protected:
 	Vector3 mPosition;
 
+	std::string mName;
+
 private:
 	bool mbVisible;
-	std::string mName;
 
 	Scene* mScene;
 };
