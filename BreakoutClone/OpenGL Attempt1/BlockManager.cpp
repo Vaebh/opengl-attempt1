@@ -4,10 +4,13 @@ BlockManager::BlockManager(Scene* inScene, std::string instrLevelLayout)
 {
 	for(int i = 0; i < 3; ++i)
 	{
+   //std::vector<Block*> newVector;
+   //mBlocks.push_back(newVector);
 		for(int j = 0; j < 3; ++j)
 		{
 			Block* newBlock = new Block();
 			mBlocks[i][j] = newBlock;
+      //newVector.push_back(newBlock);
 			inScene->AddToScene(newBlock);
 
 			newBlock->mScale = Vector3(0.3, 0.15, 0);
@@ -22,8 +25,11 @@ BlockManager::~BlockManager()
 	{
 		for(int j = 0; j < 3; ++j)
 		{
+      //if(mBlocks[i][j] != NULL)
+      //{
 			delete mBlocks[i][j];
 			mBlocks[i][j] = 0;
+         //}
 		}
 	}
 }
@@ -36,7 +42,6 @@ void BlockManager::Update(float inDT)
 		{
 			if(mBlocks[i][j] != NULL)
 			{
-				mBlocks[i][j]->Update(inDT);
 				if(mBlocks[i][j]->mHealth <= 0)
 				{
 					delete mBlocks[i][j];
