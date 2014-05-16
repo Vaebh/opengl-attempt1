@@ -16,7 +16,11 @@ mbVisible(true)
 Entity::~Entity()
 {
 	Render::GetSingleton()->RemoveEntity(this);
+   
+   if(mScene)
+   {
 	mScene->RemoveFromScene(this);
+   }
 }
 
 void Entity::MovePosition(Vector3 inMovement)
