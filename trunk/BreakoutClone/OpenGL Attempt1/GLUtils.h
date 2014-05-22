@@ -1,7 +1,18 @@
+#ifndef GLUTILS_SIMENGINE
+#define GLUTILS_SIMENGINE
+
 #include "GLIncludes.h"
 #include <string>
 
 //GLFWwindow* InitialiseWindow(int width = 640, int height = 480);
+
+struct TextureData
+{
+	//TextureData(GLuint inTexID, float inWidth, float inHeight) {textureID = inTexID; width = inWidth; height = inHeight;}
+	GLuint textureID;
+	float width;
+	float height;
+};
 
 bool ShaderCompilationCheck(GLuint shader, std::string shaderType);
 
@@ -18,7 +29,7 @@ std::string LoadShader(std::string path);
 GLuint CreateShaderFromFile(std::string path, GLenum shaderType);
 
 // Loads an image using the SOIL library
-GLuint LoadImage(const GLchar * path);
+TextureData LoadImage(const GLchar * path);
 
 // Draws a square in direct mode (glBegin and glEnd)
 void DrawSquare(double centerX, double centerY, float length, GLFWwindow * window);
@@ -28,3 +39,5 @@ void mouseCallback(GLFWwindow * window, int button, int action, int mods);
 
 // Keyboard controls, exit with Esc
 //void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+
+#endif

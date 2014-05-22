@@ -151,7 +151,7 @@ GLuint CreateShaderFromFile(std::string path, GLenum shaderType)
 //
 // @return - The index for the image
 //-------------------------------------------------------------------------------------
-GLuint LoadImage(const GLchar * path)
+TextureData LoadImage(const GLchar * path)
 {
 	GLuint texture;
 	glGenTextures(1, &texture);
@@ -169,7 +169,13 @@ GLuint LoadImage(const GLchar * path)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	return texture;
+	//TextureData newTexData(texture, width, height);
+	TextureData newTexData;
+	newTexData.textureID = texture;
+	newTexData.width = width;
+	newTexData.height = height;
+
+	return newTexData;
 }
 
 

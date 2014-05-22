@@ -1,4 +1,5 @@
 #include "Command.h"
+#include "Paddle.h"
 
 Command::Command(std::string inName, std::string inKey) : mRepeatingAction(false), mInputState(0), mModifiers(0), mFinished(true), mSpeed(0.5f), mName(inName), mKey(inKey)
 {
@@ -43,4 +44,18 @@ RotationCommand::RotationCommand(std::string inName, std::string inKey, Vector3 
 void RotationCommand::Execute(Entity* inEntity, float inDeltaTime)
 {
 	inEntity->mRotationAngle += mAxis * mSpeed * inDeltaTime;
+}
+
+LaunchBallCommand::LaunchBallCommand(std::string inName, std::string inKey) : Command(inName, inKey)
+{
+
+}
+
+void LaunchBallCommand::Execute(Entity* inEntity, float inDeltaTime)
+{
+	Paddle* thePaddle = dynamic_cast<Paddle*>(inEntity);
+	if(thePaddle)
+	{
+		thePaddle->LaunchBall();
+	}
 }

@@ -7,6 +7,7 @@
 #include "Input.h"
 #include "Scene.h"
 #include "Rectangle.h"
+#include "Shader.h"
 
 class Input;
 class Scene;
@@ -27,9 +28,13 @@ public:
 
 	void MovePosition(Vector3 inMovement);
 
+	void ScaleBy(Vector3 inScale) {mScale += inScale;}
+
 	inline void SetOwningScene(Scene* inScene) {mScene = inScene;}
 
-	virtual void OnCollision();
+	virtual void OnCollision(Entity* inEntity, Vector3& inCollisionVector, Rectangle inSimulatedBoundingBox);
+
+	virtual glm::mat4 CalculateMatrix() = 0;
 
 	Rectangle mBoundingBox;
 
@@ -41,6 +46,10 @@ public:
 	Input* mInput;
 
 	Rectangle CreateBoundingBox(Vector3 inPosition);
+
+	Shader* mShader;
+
+	bool mCollidable;
 
 protected:
 	Vector3 mPosition;

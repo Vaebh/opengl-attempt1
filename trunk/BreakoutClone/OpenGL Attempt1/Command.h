@@ -64,5 +64,12 @@ private:
 	float mSpeed;
 };
 
+class LaunchBallCommand : public Command
+{
+public:
+	LaunchBallCommand(std::string inName, std::string inKey);
+	void Execute(Entity* inEntity, float inDeltaTime);
+};
+
 #endif
 

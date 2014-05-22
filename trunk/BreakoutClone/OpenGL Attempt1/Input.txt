@@ -20,3 +20,5 @@ RotateDownY:H
 
 RotateLeftX:E
 RotateRightX:R
+
+LaunchBall:Space

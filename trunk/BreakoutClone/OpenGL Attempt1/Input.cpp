@@ -260,6 +260,11 @@ void Input::ParseCommand(const std::string inCommandName, const std::string inCo
 		command = new ReloadInputCommand("ReloadInput", inCommandKey);
 	}
 
+	if(inCommandName == "LaunchBall")
+	{
+		command = new LaunchBallCommand("LaunchBall", inCommandKey);
+	}
+
 	if(command)
 	{
 		AssignCommand(command, inCommandName, inCommandKey);
