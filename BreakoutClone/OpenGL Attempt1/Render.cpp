@@ -1,4 +1,5 @@
 #include "Render.h"
+#include "Shader.h"
 
 Render* Render::mRenderer = 0;
 
@@ -92,11 +93,29 @@ void Render::Draw()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 
+	int numVertices = 0;
+
+	Shader* spriteShader = NULL;
+
+	glActiveTexture(GL_TEXTURE0);
+
 	for(int i = 0; i < mEntities.size() ; ++i)
 	{
 		if(mEntities[i]->IsVisible())
 		{
+			if(spriteShader == NULL)
+			{
+				spriteShader = mEntities[i]->mShader;
+				glUseProgram(spriteShader->GetProgramID());
+			}
+
 			mEntities[i]->Draw();
+
+			glDrawArrays(GL_TRIANGLES, 0, 6);
+
+			numVertices += 6;
 		}
 	}
+
+	//glDrawArrays(GL_TRIANGLES, 0, numVertices);
 }
