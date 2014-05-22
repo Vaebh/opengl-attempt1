@@ -9,6 +9,8 @@ mbVisible(true)
 ,mRotationAngle(0)
 ,mInput(NULL)
 ,mScene(NULL)
+,mShader(NULL)
+,mCollidable(true)
 {
 	Render::GetSingleton()->AddEntity(this);
 }
@@ -47,7 +49,7 @@ Rectangle Entity::CreateBoundingBox(Vector3 inPosition)
 	return theBoundingBox;
 }
 
-void Entity::OnCollision()
+void Entity::OnCollision(Entity* inEntity, Vector3& inCollisionVector, Rectangle inSimulatedBoundingBox)
 {
 
 }

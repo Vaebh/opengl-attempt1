@@ -90,12 +90,21 @@ int main(void)
 	block->mScale = Vector3(0.3, 0.15, 0);
 
 	theScene->AddToScene(block);*/
+	float time = 0;
 
 	// Loop until the window should close
 	while (!glfwWindowShouldClose(Render::GetSingleton()->mWindow))
 	{
 		delta = glfwGetTime() - olddelta;
 		olddelta = glfwGetTime();
+
+		time += delta;
+
+		if(time > 1)
+		{
+			time = 0;
+			cout << "DeltaTime: " << delta << endl;
+		}
 
 		levelOne->Update(delta);
 

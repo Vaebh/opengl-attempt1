@@ -2,8 +2,8 @@
 #define SPRITE
 
 #include "GLIncludes.h"
+#include "GLUtils.h"
 #include "Entity.h"
-#include "Shader.h"
 #include <string>
 
 class Sprite : public Entity
@@ -18,16 +18,17 @@ public:
 	virtual void Draw();
 	void SetShader(const std::string inVertexShaderSrc, const std::string inFragShaderSrc);
 
+	glm::mat4 CalculateMatrix();
+
 	float mWidth;
 	float mHeight;
+
+	TextureData mTextureData;
 
 	virtual void Update(float inDT);
 
 private:
 	void Initialise();
-
-public:
-	Shader* mShader;
 
 private:
 	GLuint mTexture;

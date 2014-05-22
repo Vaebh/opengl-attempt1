@@ -21,12 +21,12 @@ const std::string defaultFragShader = "2DFragShaderPlain.txt";
 
 using namespace std;
 
-Sprite::Sprite(const std::string inTexture) : Entity(), mShader(NULL)
+Sprite::Sprite(const std::string inTexture) : Entity()
 {
 	Initialise();
 	SetShader(defaultVertexShader, defaultFragShader);
 
-	mTexture = LoadImage(inTexture.c_str());
+	mTextureData = LoadImage(inTexture.c_str());
 }
 
 Sprite::~Sprite()
@@ -76,6 +76,15 @@ void Sprite::SetShader(const std::string inVertexShaderSrc, const std::string in
 	mMoveUniform = glGetUniformLocation(mShader->GetProgramID(), "move");
 }
 
+glm::mat4 Sprite::CalculateMatrix()
+{
+	glm::mat4 model;
+	model = glm::translate(model, mPosition) * glm::scale(model, mScale) * glm::rotate(model, mRotationAngle.x, X_UNIT_POSITIVE) * glm::rotate(model, mRotationAngle.y, Y_UNIT_POSITIVE) * glm::rotate(model, mRotationAngle.z, Z_UNIT_POSITIVE);
+    glUniformMatrix4fv(mMoveUniform, 1, GL_FALSE, glm::value_ptr(model));
+
+	return model;
+}
+
 void Sprite::Update(float inDT)
 {
 	Entity::Update(inDT);
@@ -83,15 +92,15 @@ void Sprite::Update(float inDT)
 
 void Sprite::Draw()
 {
-	glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, mTexture);
+	//glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, mTextureData.textureID);
 
-	glUseProgram(mShader->GetProgramID());
+	//glUseProgram(mShader->GetProgramID());
 
 	// Calculate transformation
     glm::mat4 model;
 	model = glm::translate(model, mPosition) * glm::scale(model, mScale) * glm::rotate(model, mRotationAngle.x, X_UNIT_POSITIVE) * glm::rotate(model, mRotationAngle.y, Y_UNIT_POSITIVE) * glm::rotate(model, mRotationAngle.z, Z_UNIT_POSITIVE);
     glUniformMatrix4fv(mMoveUniform, 1, GL_FALSE, glm::value_ptr(model));
 	
-	glDrawArrays(GL_TRIANGLES, 0, 6);
+	//glDrawArrays(GL_TRIANGLES, 0, 6);
 }

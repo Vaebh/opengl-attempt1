@@ -9,10 +9,17 @@ bool Scene::IsColliding(Rectangle inBoundingBox, Entity* inEntity)
 {
 	for each(Entity* theEntity in mEntities)
 	{
-		if(theEntity != inEntity && IsIntersecting(inBoundingBox, theEntity->mBoundingBox))
+		if(theEntity != inEntity && theEntity->mCollidable && IsIntersecting(inBoundingBox, theEntity->mBoundingBox))
 		{
-			theEntity->OnCollision();
-			inEntity->OnCollision();
+			Vector3 entity1Center = Vector3(inEntity->GetPosition().x + inEntity->mScale.x / 2, inEntity->GetPosition().y + inEntity->mScale.y / 2, 0.f);
+			Vector3 entity2Center = Vector3(theEntity->GetPosition().x + theEntity->mScale.x / 2, theEntity->GetPosition().y + theEntity->mScale.y / 2, 0.f);
+
+			Vector3 collisionVector = inEntity->GetPosition() - theEntity->GetPosition();//entity1Center - entity2Center;
+
+			//collisionVector *= 4;
+
+			theEntity->OnCollision(inEntity, collisionVector, theEntity->mBoundingBox);
+			inEntity->OnCollision(theEntity, collisionVector, inBoundingBox);
 			return true;
 		}
 	}

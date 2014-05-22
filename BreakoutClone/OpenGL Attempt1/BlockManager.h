@@ -5,6 +5,9 @@
 #include "Scene.h"
 #include <vector>
 
+const int BLOCK_COLS = 6;
+const int BLOCK_ROWS = 4;
+
 class BlockManager
 {
 public:
@@ -14,7 +17,7 @@ public:
 	void Update(float inDT);
 
 private:
-	Block* mBlocks[3][3];
+	Block* mBlocks[BLOCK_COLS][BLOCK_ROWS];
 };
 
 #endif
