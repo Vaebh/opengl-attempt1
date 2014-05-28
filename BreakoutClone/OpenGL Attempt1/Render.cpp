@@ -26,6 +26,15 @@ GLFWwindow* InitialiseWindow()
   
 	glfwMakeContextCurrent(window);
 
+	glViewport(0, 0, 640, 480);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0, 640, 480, 0, -640, 640);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
 	glewExperimental = GL_TRUE;
 	glewInit();
 
