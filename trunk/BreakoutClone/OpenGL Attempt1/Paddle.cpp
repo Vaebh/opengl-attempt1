@@ -21,20 +21,27 @@ void Paddle::Update(float inDT)
 	double mouseX, mouseY;
 
 	glfwGetCursorPos(Render::mWindow, &mouseX, &mouseY);
-	std::cout << "XPos: " << mouseX << " YPos: " << mouseY << std::endl;
+	//std::cout << "XPos: " << mouseX << " YPos: " << mouseY << std::endl;
 
-	int width, height;
+	/*int width, height;
 	glfwGetFramebufferSize(Render::mWindow, &width, &height);
 
 	float screenRatioW = (width / (float)height);
 	float screenRatioH = (height / (float)width) * screenRatioW;
 
 	mouseX = ((mouseX * (screenRatioW * 2)) / width) - screenRatioW;
-	mouseY = ((mouseY * (screenRatioH * 2)) / height) - screenRatioH;
+	mouseY = ((mouseY * (screenRatioH * 2)) / height) - screenRatioH;*/
+
+	//OldRange = (OldMax - OldMin)  
+	//NewRange = (NewMax - NewMin)  
+	//NewValue = (((OldValue - OldMin) * NewRange) / OldRange) + NewMin
+
+	float xPos = ((mouseX * 2) / 640) - 1;
+	std::cout << "XPos: " << xPos << std::endl;
 
 	//Vector3 pos = glm::ortho * glm::vec4(GetPosition().x, GetPosition().y, GetPosition().z, 1.f);
 
-	SetPosition(Vector3(mouseX, GetPosition().y, GetPosition().z));
+	SetPosition(Vector3(xPos, GetPosition().y, GetPosition().z));
 
 	if(!mBall->mMovementEnabled)
 	{
