@@ -9,5 +9,5 @@ uniform mat4 move;
 void main()
 {
 	Texcoord = texcoord;
-	gl_Position = move * position;
+	gl_Position = move * position * gl_ModelViewProjectionMatrix;
 }
