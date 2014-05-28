@@ -10,12 +10,12 @@ Sound::Sound(const std::string& inFilename, FMOD::System* inFMODSystem, FMOD::Ch
 
 Sound::~Sound()
 {
-  AudioSystem::FMODErrorCheck(mpSound->release());
+  AudioSystem::FMODErrorCheck(mSound->release());
 }
 
 void Sound::Play()
 {
-	if(!IsSoundPlaying())
+	if(!IsPlaying())
 	{
 		AudioSystem::FMODErrorCheck(mFMODSystem->playSound(mSound, NULL, false, &mChannel));
 	}

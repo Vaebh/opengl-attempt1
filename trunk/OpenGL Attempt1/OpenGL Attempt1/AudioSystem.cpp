@@ -27,7 +27,7 @@ void AudioSystem::Initialise()
 void AudioSystem::PlaySound(const std::string& inSoundName)
 {
 	Sound* soundEffect = new Sound(inSoundName, mSystem, mSoundFXChannelGroup);
-	soundEffect->PlaySound();
+	soundEffect->Play();
 }
 
 void AudioSystem::CheckSoundcards()
