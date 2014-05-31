@@ -16,15 +16,15 @@ const GLfloat vertices[] =
 
 const unsigned int kNumVertsForSprites = 4;
 
-const std::string defaultVertexShader = "2DVertexShaderMove.txt";
-const std::string defaultFragShader = "2DFragShaderPlain.txt";
+const std::string DEFAULT_VERT_SHADER = "2DVertexShaderMove.txt";
+const std::string DEFAULT_FRAG_SHADER = "2DFragShaderPlain.txt";
 
 using namespace std;
 
-Sprite::Sprite(const std::string inTexture) : Entity()
+Sprite::Sprite(const std::string inTexture, int inNumFrames) : Entity(), mAnimTimer(2.f), mNumFrames(inNumFrames), mCurrentFrame(0)
 {
 	Initialise();
-	SetShader(defaultVertexShader, defaultFragShader);
+	SetShader(DEFAULT_VERT_SHADER, DEFAULT_FRAG_SHADER);
 
 	mTextureData = LoadImage(inTexture.c_str());
 }
@@ -74,6 +74,17 @@ void Sprite::SetShader(const std::string inVertexShaderSrc, const std::string in
 	glUniform1i(glGetUniformLocation(mShader->GetProgramID(), "textureSprite"), 0);
 
 	mMoveUniform = glGetUniformLocation(mShader->GetProgramID(), "move");
+	mSpriteCoord = glGetUniformLocation(mShader->GetProgramID(), "spriteOffset");
+	mUniformSpriteIndex = glGetUniformLocation(mShader->GetProgramID(), "currentFrame");
+
+	//glUniform2f(mSpriteCoord, 1.f, 1.f);
+	//glUniform1i(mUniformSpriteIndex, 0);
+
+	float spriteFrameDivisorX = 1.f / mNumFrames;
+
+	//Vector2 spriteIndexMult(0.5f, 1.f);
+	glUniform2f(mSpriteCoord, spriteFrameDivisorX, 1.f);
+	glUniform1i(mUniformSpriteIndex, mCurrentFrame);
 }
 
 glm::mat4 Sprite::CalculateMatrix()
@@ -87,6 +98,7 @@ glm::mat4 Sprite::CalculateMatrix()
 
 void Sprite::Update(float inDT)
 {
+	mAnimTimer += inDT;
 	Entity::Update(inDT);
 }
 
@@ -101,6 +113,33 @@ void Sprite::Draw()
     glm::mat4 model;
 	model = glm::translate(model, mPosition) * glm::scale(model, mScale) * glm::rotate(model, mRotationAngle.x, X_UNIT_POSITIVE) * glm::rotate(model, mRotationAngle.y, Y_UNIT_POSITIVE) * glm::rotate(model, mRotationAngle.z, Z_UNIT_POSITIVE);
     glUniformMatrix4fv(mMoveUniform, 1, GL_FALSE, glm::value_ptr(model));
+
+	float spriteFrameDivisorX = 1.f / mNumFrames;
+
+	//Vector2 spriteIndexMult(0.5f, 1.f);
+	glUniform2f(mSpriteCoord, spriteFrameDivisorX, 1.f);
+	glUniform1i(mUniformSpriteIndex, mCurrentFrame);
+
+	/*if(mAnimTimer >= 5.f)
+	{
+		mAnimTimer = 0.f;
+		if(mCurrentFrame <= mNumFrames)
+			mCurrentFrame += 1;
+		else
+			mCurrentFrame = 0;
+
+		float spriteFrameDivisorX = 1.f / mNumFrames;
+
+		//Vector2 spriteIndexMult(0.5f, 1.f);
+		glUniform2f(mSpriteCoord, spriteFrameDivisorX, 1.f);
+		glUniform1i(mUniformSpriteIndex, mCurrentFrame);
+
+		/*GLint texAttrib = glGetAttribLocation(mShader->GetProgramID(), "texcoord");
+		glEnableVertexAttribArray(texAttrib);
+		glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)(4*sizeof(float)));
+
+		glTexCoordPointer(2, GL_FLOAT, sizeof(float)*6, (GLvoid*)(sizeof(float)*4));
+	}*/
 	
 	//glDrawArrays(GL_TRIANGLES, 0, 6);
 }

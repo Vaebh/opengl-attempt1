@@ -2,7 +2,7 @@
 #include "Render.h"
 #include <iostream>
 
-Ball::Ball(Vector3 inPosition) : Sprite("ball.png"),
+Ball::Ball(Vector3 inPosition) : Sprite("ball2.png", 2),
 mVelocity(Vector3(0.f, 1.f, 0.f)),
 mInitialPosition(inPosition),
 mMovementEnabled(false),
@@ -89,5 +89,26 @@ void Ball::Update(float inDT)
 	if(mMovementEnabled)
 	{
 		MovePosition(glm::normalize(mVelocity) * mSpeed * inDT);
+	}
+}
+
+void Ball::Draw()
+{
+	Sprite::Draw();
+	
+	if(mAnimTimer >= 1.f)
+	{
+		mAnimTimer = 0.f;
+
+		if(mCurrentFrame < mNumFrames - 1)
+			mCurrentFrame += 1;
+		else
+			mCurrentFrame = 0;
+
+		float spriteFrameDivisorX = 1.f / mNumFrames;
+
+		//Vector2 spriteIndexMult(0.5f, 1.f);
+		glUniform2f(mSpriteCoord, spriteFrameDivisorX, 1.f);
+		glUniform1i(mUniformSpriteIndex, mCurrentFrame);
 	}
 }

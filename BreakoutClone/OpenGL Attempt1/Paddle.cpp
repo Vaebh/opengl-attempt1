@@ -36,8 +36,10 @@ void Paddle::Update(float inDT)
 	//NewRange = (NewMax - NewMin)  
 	//NewValue = (((OldValue - OldMin) * NewRange) / OldRange) + NewMin
 
-	float xPos = ((mouseX * 2) / 640) - 1;
-	std::cout << "XPos: " << xPos << std::endl;
+	int width, height;
+	glfwGetFramebufferSize(Render::mWindow, &width, &height);
+
+	float xPos = ((mouseX * 2) / width) - 1;
 
 	//Vector3 pos = glm::ortho * glm::vec4(GetPosition().x, GetPosition().y, GetPosition().z, 1.f);
 
@@ -45,7 +47,7 @@ void Paddle::Update(float inDT)
 
 	if(!mBall->mMovementEnabled)
 	{
-		Vector3 ballPosition = Vector3(GetPosition().x, GetPosition().y + mScale.y*1.2f, GetPosition().z);
+		Vector3 ballPosition = Vector3(GetPosition().x, GetPosition().y + mScale.y * 1.2f, GetPosition().z);
 		mBall->SetPosition(ballPosition);
 	}
 }

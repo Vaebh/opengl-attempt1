@@ -5,9 +5,11 @@ in vec4 position;
 out vec2 Texcoord;
 
 uniform mat4 move;
+uniform vec2 spriteOffset;
+uniform int currentFrame;
 
 void main()
 {
-	Texcoord = texcoord;
+	Texcoord = texcoord * spriteOffset + vec2(min(spriteOffset.x * currentFrame, 1.0f), min(spriteOffset.y * currentFrame, 1.0f));
 	gl_Position = move * position;
 }

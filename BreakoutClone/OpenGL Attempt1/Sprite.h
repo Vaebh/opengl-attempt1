@@ -9,7 +9,7 @@
 class Sprite : public Entity
 {
 public:
-	Sprite(const std::string inTexture = "sample.png");
+	Sprite(const std::string inTexture = "sample.png", int inNumFrames = 1);
 	~Sprite();
 
 	inline GLuint GetVAO() const {return mVao;}
@@ -26,6 +26,13 @@ public:
 	TextureData mTextureData;
 
 	virtual void Update(float inDT);
+
+	int mNumFrames;
+	int mCurrentFrame;
+
+	float mAnimTimer;
+	GLuint mSpriteCoord;
+	GLuint mUniformSpriteIndex;
 
 private:
 	void Initialise();
