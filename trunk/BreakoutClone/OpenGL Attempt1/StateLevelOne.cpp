@@ -4,11 +4,11 @@
 
 StateLevelOne::StateLevelOne(Scene* inScene) : IState(inScene)
 {
-	mBlockManager = new BlockManager(inScene, "");
-
 	mBall = new Ball(Vector3(-0.2, -0.7, 0));
 	mBall->mScale = Vector3(0.1, 0.1, 0);
 	inScene->AddToScene(mBall);
+
+	mBlockManager = new BlockManager(inScene, "");
 
 	/*mPlayer = new Sprite();
 	Input* inputHandler = new Input(Render::mWindow, mBall);

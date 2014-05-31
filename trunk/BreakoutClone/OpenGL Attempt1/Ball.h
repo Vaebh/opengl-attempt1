@@ -11,6 +11,7 @@ public:
 
 	virtual void OnCollision(Entity* inEntity, Vector3& inCollisionVector, Rectangle inSimulatedBoundingBox);
 	virtual void Update(float inDT);
+	virtual void Draw();
 
 	Vector3 mVelocity;
 
