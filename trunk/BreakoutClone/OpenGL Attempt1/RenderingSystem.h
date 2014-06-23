@@ -1,7 +1,7 @@
-#ifndef SYSTEM_SIMENGINE
-#define SYSTEM_SIMENGINE
+#ifndef RENDERINGSYSTEM_SIMENGINE
+#define RENDERINGSYSTEM_SIMENGINE
 
-#include "Component.h"
+#include "System.h"
 #include <string>
 #include <vector>
 
@@ -13,7 +13,7 @@ public:
 
 	void Update(float inDT);
 
-	virtual std::string GetSystemID() = 0;
+	virtual std::string GetSystemID();
 
 private:
 	std::vector<IComponent*> mComponents;
