@@ -8,7 +8,7 @@ class GameObject;
 class IComponent
 {
 public:
-	IComponent();
+	//IComponent();
 	virtual void Update(float inDT) = 0;
 
 	inline GameObject* GetOwner() const {return mOwner;}

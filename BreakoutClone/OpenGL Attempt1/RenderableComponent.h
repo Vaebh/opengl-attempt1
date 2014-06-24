@@ -7,11 +7,13 @@
 class IRenderableComponent : public IComponent
 {
 public:
-	IRenderableComponent();
-	~IRenderableComponent();
+	//IRenderableComponent();
+	//~IRenderableComponent();
 
-	void Update(float inDT) = 0;
-	void Draw() = 0;
+	inline Shader* GetShader() const {return mShader;}
+
+	virtual void Update(float inDT) = 0;
+	virtual void Draw() = 0;
 
 protected:
 	Shader* mShader;

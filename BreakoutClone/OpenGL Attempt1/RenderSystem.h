@@ -12,11 +12,15 @@ public:
 	RenderSystem();
 	~RenderSystem();
 
+	//const std::string GetSystemID();
+
 	static RenderSystem* GetSingleton();
 
 	void AddComponent(IRenderableComponent* inRenderableComponent);
-	void RemoveEntity(IRenderableComponent* inRenderableComponent);
+	void RemoveComponent(IRenderableComponent* inRenderableComponent);
 	void SetFrameBufferTarget(GLuint inFrameBuffer = 0);
+
+	virtual void Update(float inDT);
 
 	void Draw();
 
@@ -24,7 +28,7 @@ private:
 	static RenderSystem* mRenderer;
 	static GLFWwindow* mWindow;
 
-	std::vector<IRenderableComponent*> mEntities;
+	std::vector<IRenderableComponent*> mComponents;
 };
 
 #endif
