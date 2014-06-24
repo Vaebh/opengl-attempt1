@@ -1,45 +1,48 @@
 #include "RenderSystem.h"
 #include "Shader.h"
 
-RenderSystem* RenderSystem::mRenderer = 0;
+RenderSystem* RenderSystem::mRenderer = NULL;
 
 GLFWwindow* RenderSystem::mWindow;
 
-// Should move this to somewhere more appropriate, Application.cpp maybe?
-GLFWwindow* InitialiseWindow()
+namespace
 {
-	if (!glfwInit())
-		return NULL;
-    
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-
-	GLFWwindow* window = glfwCreateWindow(640, 480, "Breakout Clone", NULL, NULL);
-  
-	if (!window)
+	// Should move this to somewhere more appropriate, Application.cpp maybe?
+	GLFWwindow* InitialiseWindow()
 	{
-		glfwTerminate();
+		if (!glfwInit())
 			return NULL;
-	}
+    
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+		glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+
+		GLFWwindow* window = glfwCreateWindow(640, 480, "Breakout Clone", NULL, NULL);
   
-	glfwMakeContextCurrent(window);
+		if (!window)
+		{
+			glfwTerminate();
+				return NULL;
+		}
+  
+		glfwMakeContextCurrent(window);
 
-	glViewport(0, 0, 640, 480);
+		glViewport(0, 0, 640, 480);
 
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0, 640, 480, 0, -640, 640);
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glOrtho(0, 640, 480, 0, -640, 640);
 
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
 
-	glewExperimental = GL_TRUE;
-	glewInit();
+		glewExperimental = GL_TRUE;
+		glewInit();
 
-	return window;
+		return window;
+	}
 }
 
 RenderSystem::RenderSystem()
@@ -98,6 +101,11 @@ void RenderSystem::RemoveComponent(IRenderableComponent* inRenderableComponent)
 	}
 }
 
+void RenderSystem::Update(float inDT)
+{
+
+}
+
 void RenderSystem::Draw()
 {
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -114,11 +122,11 @@ void RenderSystem::Draw()
 
 	for(int i = 0; i < mComponents.size() ; ++i)
 	{
-		if(mComponents[i]->IsVisible())
-		{
+		//if(mComponents[i]->IsVisible())
+		//{
 			if(spriteShader == NULL)
 			{
-				spriteShader = mComponents[i]->mShader;
+				spriteShader = mComponents[i]->GetShader();
 				glUseProgram(spriteShader->GetProgramID());
 			}
 
@@ -127,7 +135,7 @@ void RenderSystem::Draw()
 			glDrawArrays(GL_TRIANGLES, 0, 6);
 
 			numVertices += 6;
-		}
+		//}
 	}
 
 	//glDrawArrays(GL_TRIANGLES, 0, numVertices);

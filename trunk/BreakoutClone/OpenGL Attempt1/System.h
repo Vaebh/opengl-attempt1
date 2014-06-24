@@ -8,15 +8,15 @@
 class ISystem
 {
 public:
-	ISystem();
-	virtual ~ISystem();
+	//ISystem();
+	//virtual ~ISystem();
 
-	void Update(float inDT);
+	virtual void Update(float inDT) = 0;
 
-	virtual std::string GetSystemID() = 0;
+	//virtual std::string GetSystemID() = 0;
 
-private:
-	std::vector<IComponent*> mComponents;
+//protected:
+	//std::vector<IComponent*> mComponents;
 };
 
 #endif
