@@ -73,6 +73,7 @@ void RenderSystem::SetFrameBufferTarget(GLuint inFrameBuffer)
     glBindFramebuffer(GL_FRAMEBUFFER, inFrameBuffer);
 }
 
+// These two methods should be abstract in System.h
 void RenderSystem::AddComponent(IRenderableComponent* inRenderableComponent)
 {
 	if(inRenderableComponent)
@@ -91,7 +92,7 @@ void RenderSystem::RemoveComponent(IRenderableComponent* inRenderableComponent)
 		{
 			if((*it) == inRenderableComponent)
 			{
-				mComponents.erase(it);
+				mComponents.erase((*it);
 
 				// Downsize the vector
 				std::vector<IRenderableComponent*>(mComponents).swap(mComponents);
@@ -120,10 +121,10 @@ void RenderSystem::Draw()
 
 	glActiveTexture(GL_TEXTURE0);
 
-	for(int i = 0; i < mComponents.size() ; ++i)
+	for(int i = 0; i < mComponents.size(); ++i)
 	{
-		//if(mComponents[i]->IsVisible())
-		//{
+		if(mComponents[i]->IsVisible())
+		{
 			if(spriteShader == NULL)
 			{
 				spriteShader = mComponents[i]->GetShader();
@@ -135,7 +136,7 @@ void RenderSystem::Draw()
 			glDrawArrays(GL_TRIANGLES, 0, 6);
 
 			numVertices += 6;
-		//}
+		}
 	}
 
 	//glDrawArrays(GL_TRIANGLES, 0, numVertices);
