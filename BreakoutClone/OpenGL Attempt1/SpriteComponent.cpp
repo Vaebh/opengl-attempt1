@@ -22,7 +22,7 @@ const std::string DEFAULT_FRAG_SHADER = "2DFragShaderPlain.txt";
 
 using namespace std;
 
-SpriteComponent::SpriteComponent(const std::string inTexture, int inNumFrames) : mAnimTimer(2.f), mNumFrames(inNumFrames), mCurrentFrame(0)
+SpriteComponent::SpriteComponent(const std::string inTexture, int inNumFrames) : IRenderableComponent(), mAnimTimer(2.f), mNumFrames(inNumFrames), mCurrentFrame(0)
 {
 	Initialise();
 	SetShader(DEFAULT_VERT_SHADER, DEFAULT_FRAG_SHADER);
