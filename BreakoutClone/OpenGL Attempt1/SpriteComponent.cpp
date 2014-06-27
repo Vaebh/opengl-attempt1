@@ -78,6 +78,9 @@ void SpriteComponent::SetShader(const std::string inVertexShaderSrc, const std::
 	mSpriteCoord = glGetUniformLocation(mShader->GetProgramID(), "spriteOffset");
 	mUniformSpriteIndex = glGetUniformLocation(mShader->GetProgramID(), "currentFrame");
 
+
+	// TODO - REMOVE ALL STATEMENTS BELOW THIS WHEN THIS HAS BEEN TESTED
+
 	//glUniform2f(mSpriteCoord, 1.f, 1.f);
 	//glUniform1i(mUniformSpriteIndex, 0);
 
@@ -113,7 +116,7 @@ void SpriteComponent::Draw()
 	// Calculate transformation
     glm::mat4 model;
 	model = glm::translate(model, GetOwner()->mPosition) * glm::scale(model, GetOwner()->mScale) * glm::rotate(model, GetOwner()->mRotationAngle.x, X_UNIT_POSITIVE) * glm::rotate(model, GetOwner()->mRotationAngle.y, Y_UNIT_POSITIVE) * glm::rotate(model, GetOwner()->mRotationAngle.z, Z_UNIT_POSITIVE);
-    glUniformMatrix4fv(mMoveUniform, 1, GL_FALSE, glm::value_ptr(model));
+    glUniformMatrix4fv(mMoveUniform, 1, GL_FALSE, glm::value_ptr(CalculateMatrix()));
 
 	float spriteFrameDivisorX = 1.f / mNumFrames;
 
