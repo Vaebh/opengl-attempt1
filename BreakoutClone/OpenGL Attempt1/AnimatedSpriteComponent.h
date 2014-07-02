@@ -22,6 +22,7 @@ private:
 	int mCurrentFrame;
 
 	float mAnimTimer;
+	float mAnimSpeed;
 	GLuint mSpriteWidth;
 	GLuint mUniformCurrentFrame;
 

@@ -10,6 +10,6 @@ uniform int currentFrame;
 
 void main()
 {
-	Texcoord = texcoord * spriteOffset + vec2(min(spriteOffset.x * currentFrame, 1.0f), min(spriteOffset.y * currentFrame, 1.0f));
+	Texcoord = texcoord * spriteOffset + vec2(min(spriteOffset.x * currentFrame, 1.0f), 0.f);
 	gl_Position = move * position;
 }

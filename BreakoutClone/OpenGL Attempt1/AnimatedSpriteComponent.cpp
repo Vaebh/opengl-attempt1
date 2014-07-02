@@ -12,13 +12,13 @@ mLooping(inbLooping)
 
 void AnimatedSpriteComponent::Play(bool inbLooping)
 {
-    mbLooping = inbLooping;
-    mbAnimating = true;
+    mLooping = inbLooping;
+    mAnimating = true;
 }
 
 void AnimatedSpriteComponent::Stop()
 {
-    mbAnimating = false;
+    mAnimating = false;
 }
  
 void AnimatedSpriteComponent::ChangeFrame()
