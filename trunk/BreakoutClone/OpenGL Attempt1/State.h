@@ -1,3 +1,6 @@
+#ifndef STATE_SIMENGINE
+#define STATE_SIMENGINE
+
 #include "Scene.h"
 
 class IState
@@ -9,3 +12,5 @@ public:
 protected:
 	Scene* mScene;
 };
+
+#endif

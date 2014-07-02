@@ -92,7 +92,7 @@ void RenderSystem::RemoveComponent(IRenderableComponent* inRenderableComponent)
 		{
 			if((*it) == inRenderableComponent)
 			{
-				mComponents.erase((*it);
+				mComponents.erase(it);
 
 				// Downsize the vector
 				std::vector<IRenderableComponent*>(mComponents).swap(mComponents);

@@ -1,6 +1,6 @@
 #include "SpriteComponent.h"
 
-#include "Render.h"
+#include "RenderSystem.h"
 #include "GLUtils.h"
 #include <iostream>
 
