@@ -2,15 +2,15 @@
 #define STATE_SIMENGINE
 
 #include "Scene.h"
+#include "GameObject.h"
 
 class IState
 {
 public:
-	IState(Scene* inScene) {mScene = inScene;}
 	virtual void Update(float inDT) = 0;
 
 protected:
-	Scene* mScene;
+	std::vector<GameObject*> mGameObjects;
 };
 
 #endif

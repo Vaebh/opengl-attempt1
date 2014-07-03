@@ -2,11 +2,18 @@
 #include "Render.h"
 #include "Paddle.h"
 
-StateLevelOne::StateLevelOne(Scene* inScene) : IState(inScene)
+// TODO - CONVERT THIS OVER ONCE NEW STUFF IS DONE
+
+StateLevelOne::StateLevelOne()
 {
 	mBall = new Ball(Vector3(-0.2, -0.7, 0));
 	mBall->mScale = Vector3(0.1, 0.1, 0);
-	inScene->AddToScene(mBall);
+
+	mBall = new GameObject();
+	BounceComponent ballComp = new BounceComponent();
+	mBall->Attach(ballComp);
+
+	mGameObjects.push_back(mBall);
 
 	mBlockManager = new BlockManager(inScene, "");
 

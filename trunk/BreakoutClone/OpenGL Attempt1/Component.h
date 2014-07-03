@@ -8,13 +8,14 @@ class GameObject;
 class IComponent
 {
 public:
-	//IComponent();
 	virtual void Update(float inDT) = 0;
 
 	inline GameObject* GetOwner() const {return mOwner;}
 	inline void SetOwner(GameObject* inNewOwner) {mOwner = inNewOwner;}
 
-private:
+	virtual void OnAttached(GameObject* inGameObject) {}
+
+public:
 	GameObject* mOwner;
 };
 
