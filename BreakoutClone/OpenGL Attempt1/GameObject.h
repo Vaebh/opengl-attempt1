@@ -24,6 +24,10 @@ public:
 	Vector3 mScale;
 	Vector3 mRotationAngle;
 
+	// TODO USE VELOCITY FOR MOVEMENT IN UPDATE
+
+	Vector3 mVelocity;
+
 private:
 	static unsigned int mNumGameObjects;
 	std::vector<IComponent*> mComponents;

@@ -2,9 +2,8 @@
 #define SCENE_SIMENGINE
 
 #include "GLIncludes.h"
-#include "Entity.h"
+#include "GameObject.h"
 #include "Vectors.h"
-#include "Rectangle.h"
 
 class Entity;
 
@@ -13,17 +12,12 @@ class Scene
 public:
 	Scene();
 
-	bool IsColliding(Rectangle inBoundingBox, Entity* inEntity);
-
-	void AddToScene(Entity* inEntity);
-	void RemoveFromScene(Entity* inEntity);
+	void AddToScene(GameObject* inGameObject);
+	void RemoveFromScene(GameObject* inGameObject);
 	void Update(float inDT);
 
 private:
-	bool IsIntersecting(Rectangle inA, Rectangle inB);
-
-private:
-	std::vector<Entity*> mEntities;
+	std::vector<GameObject*> mGameObjects;
 };
 
 #endif

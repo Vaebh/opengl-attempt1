@@ -104,7 +104,13 @@ void RenderSystem::RemoveComponent(IRenderableComponent* inRenderableComponent)
 
 void RenderSystem::Update(float inDT)
 {
-
+	for(std::vector<IRenderableComponent*>::const_iterator it = mComponents.begin(); it != mComponents.end(); ++it)
+	{
+		if(*it)
+		{
+			(*it)->Update(inDT);
+		}
+	}
 }
 
 void RenderSystem::Draw()

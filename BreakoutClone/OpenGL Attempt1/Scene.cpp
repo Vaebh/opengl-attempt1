@@ -1,5 +1,7 @@
 #include "Scene.h"
 
+// TODO - PROBABLY GET RID OF THIS< BUT COMMENT IT OUT FOR NOW
+
 Scene::Scene()
 {
 

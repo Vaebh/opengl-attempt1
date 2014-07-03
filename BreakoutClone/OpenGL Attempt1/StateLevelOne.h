@@ -1,3 +1,6 @@
+#ifndef STATE_LEVEL_ONE_SIMENGINE
+#define STATE_LEVEL_ONE_SIMENGINE
+
 #include "State.h"
 #include "Sprite.h"
 #include "BlockManager.h"
@@ -8,14 +11,16 @@
 class StateLevelOne : public IState
 {
 public:
-	StateLevelOne(Scene* inScene);
+	StateLevelOne();
 	~StateLevelOne();
 
 	virtual void Update(float inDT);
 
 private:
 	BlockManager* mBlockManager;
-	Ball* mBall;
+	GameObject* mBall;
 
-	Sprite* mPlayer;
+	GameObject* mPlayer;
 };
+
+#endif

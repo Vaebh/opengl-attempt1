@@ -73,7 +73,7 @@ int main(void)
 
 	//audioSystem->PlaySound("Tank.mp3");
 
-	StateLevelOne* levelOne = new StateLevelOne(theScene);
+	StateLevelOne* levelOne = new StateLevelOne();
 
 	double olddelta = 0;
 	double delta = 0;
