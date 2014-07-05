@@ -30,10 +30,10 @@ void Entity::MovePosition(Vector3 inMovement)
 	Vector3 nextPosition = mPosition + inMovement;
 	Rectangle nextPosBox = CreateBoundingBox(nextPosition);
 
-	if(mScene && !mScene->IsColliding(nextPosBox, this))
+	/*if(mScene && !mScene->IsColliding(nextPosBox, this))
 	{
 		mPosition += inMovement;
-	}
+	}*/
 }
 
 Rectangle Entity::CreateBoundingBox(Vector3 inPosition)

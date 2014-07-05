@@ -2,7 +2,7 @@
 #define SCENE_SIMENGINE
 
 #include "GLIncludes.h"
-#include "GameObject.h"
+#include "Entity.h"
 #include "Vectors.h"
 
 class Entity;
@@ -12,12 +12,12 @@ class Scene
 public:
 	Scene();
 
-	void AddToScene(GameObject* inGameObject);
-	void RemoveFromScene(GameObject* inGameObject);
+	void AddToScene(Entity* inEntity);
+	void RemoveFromScene(Entity* inEntity);
 	void Update(float inDT);
 
 private:
-	std::vector<GameObject*> mGameObjects;
+	std::vector<Entity*> mEntitys;
 };
 
 #endif

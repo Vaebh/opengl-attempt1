@@ -1,4 +1,15 @@
 #include "CollisionComponent.h"
+#include "CollisionSystem.h"
+
+CollisionComponent::CollisionComponent()
+{
+
+}
+
+CollisionComponent::~CollisionComponent()
+{
+	CollisionSystem::GetSingleton()->RemoveComponent(this);
+}
 
 bool CollisionComponent::IsIntersecting(Rectangle inA)
 {
@@ -13,21 +24,46 @@ bool CollisionComponent::IsIntersecting(Rectangle inA)
 	return false;
 }
 
-void CollisionComponent::OnAttached()
+void CollisionComponent::PrePositionSet(Vector3 inNewPosition)
 {
-	CreateBoundingBox(mOwner->mPosition);
+	Rectangle newBoundingBox = CreateBoundingBox(inNewPosition);
+
+	if(CollisionSystem::GetSingleton()->IsColliding(newBoundingBox, this))
+	{
+		inNewPosition = mOwner->GetPosition();
+	}
+	else
+	{
+		mBoundingBox = newBoundingBox;
+	}
 }
 
-void CollisionComponent::CreateBoundingBox(Vector3 inPosition)
+void CollisionComponent::OnAttached(GameObject* inGameObject)
 {
-	mBoundingBox.left = inPosition.x - mOwner->mScale.x / 2;
-	mBoundingBox.right = inPosition.x + mOwner->mScale.x / 2;
+	mBoundingBox = CreateBoundingBox(inGameObject->GetPosition());
 
-	mBoundingBox.top = inPosition.y + mOwner->mScale.y / 2;
-	mBoundingBox.bottom = inPosition.y - mOwner->mScale.y / 2;
+	CollisionSystem::GetSingleton()->AddComponent(this);
 }
 
-void CollisionComponent::OnCollision(GameObject* inGameObject, Vector3& inCollisionVector, Rectangle inSimulatedBoundingBox)
+Rectangle CollisionComponent::CreateBoundingBox(Vector3 inPosition)
+{
+	Rectangle newBoundingBox;
+
+	newBoundingBox.left = inPosition.x - mOwner->mScale.x / 2;
+	newBoundingBox.right = inPosition.x + mOwner->mScale.x / 2;
+
+	newBoundingBox.top = inPosition.y + mOwner->mScale.y / 2;
+	newBoundingBox.bottom = inPosition.y - mOwner->mScale.y / 2;
+
+	return newBoundingBox;
+}
+
+void CollisionComponent::OnCollision(CollisionComponent* inComponent, Vector3 inCollisionVector)
+{
+
+}
+
+void CollisionComponent::Update(float inDT)
 {
 
 }

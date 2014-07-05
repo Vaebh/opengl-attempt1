@@ -5,6 +5,7 @@ mAnimSpeed(inAnimationSpeed),
 mNumFrames(inNumFrames),
 mCurrentFrame(0),
 mAnimating(true),
+mAnimTimer(0),
 mLooping(inbLooping)
 {
     SendAnimInfo();
@@ -23,41 +24,41 @@ void AnimatedSpriteComponent::Stop()
  
 void AnimatedSpriteComponent::ChangeFrame()
 {
-    if(mCurrentFrame < mNumFrames - 1)
-      mCurrentFrame += 1;
-    else
-    {
-      mCurrentFrame = 0;
-      
-      if(!mLooping)
-      {
-          Stop();
-      }
-    }
+	if(mCurrentFrame < mNumFrames - 1)
+		mCurrentFrame += 1;
+	else
+	{
+		mCurrentFrame = 0;
 
-    SendAnimInfo();
+		if(!mLooping)
+		{
+			Stop();
+		}
+	}
+
+	SendAnimInfo();
 }
  
 void AnimatedSpriteComponent::SendAnimInfo()
 {
     float spriteFrameDivisorX = 1.f / mNumFrames;
       
-    glUniform2f(mSpriteWidth, spriteFrameDivisorX, 1.f);
-    glUniform1i(mUniformCurrentFrame, mCurrentFrame);
+    glUniform2f(mSpriteCoord, spriteFrameDivisorX, 1.f);
+    glUniform1i(mUniformSpriteIndex, mCurrentFrame);
 }
  
 void AnimatedSpriteComponent::Update(float inDT)
 {
-  SpriteComponent::Update(inDT);
+	SpriteComponent::Update(inDT);
 
-  if(mAnimating)
-  {
-      mAnimTimer += inDT;
+	if(mAnimating)
+	{
+		mAnimTimer += inDT;
       
-      if(mAnimTimer >= mAnimSpeed)
-      {
-          mAnimTimer = 0;
-          ChangeFrame();
-      }
-  }
+		if(mAnimTimer >= mAnimSpeed)
+		{
+			mAnimTimer = 0;
+			ChangeFrame();
+		}
+	}
 }

@@ -1,3 +1,6 @@
+#ifndef COLLISION_SYSTEM_SIMENGINE
+#define COLLISION_SYSTEM_SIMENGINE
+
 #include "System.h"
 #include "CollisionComponent.h"
 
@@ -12,6 +15,12 @@ public:
 
 	bool IsColliding(Rectangle inBoundingBox, CollisionComponent* inCollisionComponent);
 
+	static CollisionSystem* GetSingleton();
+
 private:
 	std::vector<CollisionComponent*> mComponents;
+
+	static CollisionSystem* mColSystem;
 };
+
+#endif
