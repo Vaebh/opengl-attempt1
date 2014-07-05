@@ -4,10 +4,23 @@
 unsigned int GameObject::mNumGameObjects = 0;
 
 GameObject::GameObject() :
-mIndex(mNumGameObjects++)
-,mVelocity()
+mIndex(mNumGameObjects++),
+mPosition(0),
+mScale(1.0, 1.0, 1.0),
+mRotationAngle(0),
+mVelocity(0)
 {
 
+}
+
+GameObject::~GameObject()
+{
+	for each(IComponent* theComponent in mComponents)
+	{
+		delete theComponent;
+	}
+
+	mComponents.clear();
 }
 
 void GameObject::Attach(IComponent* inComponent)
@@ -22,6 +35,7 @@ void GameObject::Attach(IComponent* inComponent)
 	}
 
 	inComponent->SetOwner(this);
+	inComponent->OnAttached(this);
 	mComponents.push_back(inComponent);
 }
 
@@ -42,13 +56,27 @@ void GameObject::Detach(IComponent* inComponent)
 	}
 }
 
+void GameObject::MovePosition(Vector3 inPosition)
+{
+	inPosition = GetPosition() + inPosition;
+
+	for each(IComponent* theComponent in mComponents)
+	{
+		theComponent->PrePositionSet(inPosition);
+	}
+
+	SetPosition(inPosition);
+}
+
 void GameObject::Update(float inDT)
 {
-	/*for(std::vector<IComponent*>::const_iterator it = mComponents.begin(); it != mComponents.end(); ++it)
+	MovePosition(mVelocity * inDT);
+
+	for(std::vector<IComponent*>::const_iterator it = mComponents.begin(); it != mComponents.end(); ++it)
 	{
 		if(*it)
 		{
 			(*it)->Update(inDT);
 		}
-	}*/
+	}
 }

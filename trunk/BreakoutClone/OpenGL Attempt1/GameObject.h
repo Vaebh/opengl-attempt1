@@ -12,15 +12,21 @@ class GameObject
 {
 public:
 	GameObject();
+	~GameObject();
 
 	void Attach(IComponent* inComponent);
 	void Detach(IComponent* inComponent);
+
+	inline Vector3 GetPosition() const {return mPosition;}
+	inline void SetPosition(Vector3 inPosition) {mPosition = inPosition;}
+	void MovePosition(Vector3 inPosition);
+
+	void ScaleBy(Vector3 inScale) {mScale += inScale;}
 
 	void Update(float inDT);
 
 public:
 	unsigned const int mIndex;
-	Vector3 mPosition;
 	Vector3 mScale;
 	Vector3 mRotationAngle;
 
@@ -28,9 +34,14 @@ public:
 
 	Vector3 mVelocity;
 
+	std::vector<IComponent*> mComponents;
+
+	std::string mName;
+
 private:
 	static unsigned int mNumGameObjects;
-	std::vector<IComponent*> mComponents;
+
+	Vector3 mPosition;
 };
 
 #endif

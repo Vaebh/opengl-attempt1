@@ -4,7 +4,7 @@
 #include "GameObject.h"
 
 GameObject* CreateBall();
-GameObject* CreateBlock();
 GameObject* CreatePaddle();
+GameObject* CreateBlock();
 
 #endif

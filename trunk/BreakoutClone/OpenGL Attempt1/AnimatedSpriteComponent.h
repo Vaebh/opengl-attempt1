@@ -6,7 +6,7 @@
 class AnimatedSpriteComponent : public SpriteComponent
 {
 public:
-	AnimatedSpriteComponent(const std::string inTexture = "sample.png", int inNumFrames = 1, float inAnimationSpeed = 1.f, bool inbLooping = false);
+	AnimatedSpriteComponent(const std::string inTexture = "sample.png", int inNumFrames = 1, float inAnimationSpeed = 1.f, bool inbLooping = true);
 	virtual void Update(float inDT);
 
 	void Play(bool inbLooping);
@@ -23,8 +23,6 @@ private:
 
 	float mAnimTimer;
 	float mAnimSpeed;
-	GLuint mSpriteWidth;
-	GLuint mUniformCurrentFrame;
 
 	bool mAnimating;
 	bool mLooping;

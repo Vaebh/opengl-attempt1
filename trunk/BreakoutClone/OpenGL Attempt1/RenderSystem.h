@@ -24,9 +24,11 @@ public:
 
 	void Draw();
 
+public:
+	static GLFWwindow* mWindow;
+
 private:
 	static RenderSystem* mRenderer;
-	static GLFWwindow* mWindow;
 
 	std::vector<IRenderableComponent*> mComponents;
 };

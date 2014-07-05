@@ -30,9 +30,10 @@ public:
 	int mNumFrames;
 	int mCurrentFrame;
 
-	float mAnimTimer;
 	GLuint mSpriteCoord;
 	GLuint mUniformSpriteIndex;
+
+	float speed;
 
 private:
 	void Initialise();

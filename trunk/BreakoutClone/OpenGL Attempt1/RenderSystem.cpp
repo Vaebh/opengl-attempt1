@@ -104,13 +104,13 @@ void RenderSystem::RemoveComponent(IRenderableComponent* inRenderableComponent)
 
 void RenderSystem::Update(float inDT)
 {
-	for(std::vector<IRenderableComponent*>::const_iterator it = mComponents.begin(); it != mComponents.end(); ++it)
+	/*for(std::vector<IRenderableComponent*>::const_iterator it = mComponents.begin(); it != mComponents.end(); ++it)
 	{
 		if(*it)
 		{
 			(*it)->Update(inDT);
 		}
-	}
+	}*/
 }
 
 void RenderSystem::Draw()
@@ -131,11 +131,11 @@ void RenderSystem::Draw()
 	{
 		if(mComponents[i]->IsVisible())
 		{
-			if(spriteShader == NULL)
-			{
-				spriteShader = mComponents[i]->GetShader();
-				glUseProgram(spriteShader->GetProgramID());
-			}
+			//if(spriteShader == NULL)
+			//{
+				//spriteShader = mComponents[i]->GetShader();
+			glUseProgram(mComponents[i]->GetShader()->GetProgramID());
+			//}
 
 			mComponents[i]->Draw();
 

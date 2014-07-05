@@ -20,7 +20,7 @@ private:
 	BlockManager* mBlockManager;
 	GameObject* mBall;
 
-	GameObject* mPlayer;
+	GameObject* mPaddle;
 };
 
 #endif

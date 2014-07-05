@@ -22,7 +22,7 @@ const std::string DEFAULT_FRAG_SHADER = "2DFragShaderPlain.txt";
 
 using namespace std;
 
-SpriteComponent::SpriteComponent(const std::string inTexture, int inNumFrames) : IRenderableComponent(), mAnimTimer(2.f), mNumFrames(inNumFrames), mCurrentFrame(0)
+SpriteComponent::SpriteComponent(const std::string inTexture, int inNumFrames) : IRenderableComponent(), mNumFrames(inNumFrames), mCurrentFrame(0)
 {
 	Initialise();
 	SetShader(DEFAULT_VERT_SHADER, DEFAULT_FRAG_SHADER);
@@ -49,7 +49,7 @@ void SpriteComponent::SetShader(const std::string inVertexShaderSrc, const std::
 	if(inVertexShaderSrc.empty() || inFragShaderSrc.empty())
 		return;
 
-	if(mShader)
+	if(mShader != NULL)
 		delete mShader;
 
 	mShader = new Shader(inVertexShaderSrc, inFragShaderSrc);
@@ -94,7 +94,7 @@ void SpriteComponent::SetShader(const std::string inVertexShaderSrc, const std::
 glm::mat4 SpriteComponent::CalculateMatrix()
 {
 	glm::mat4 model;
-	model = glm::translate(model, GetOwner()->mPosition) * glm::scale(model, GetOwner()->mScale) * glm::rotate(model, GetOwner()->mRotationAngle.x, X_UNIT_POSITIVE) * glm::rotate(model, GetOwner()->mRotationAngle.y, Y_UNIT_POSITIVE) * glm::rotate(model, GetOwner()->mRotationAngle.z, Z_UNIT_POSITIVE);
+	model = glm::translate(model, GetOwner()->GetPosition()) * glm::scale(model, GetOwner()->mScale) * glm::rotate(model, GetOwner()->mRotationAngle.x, X_UNIT_POSITIVE) * glm::rotate(model, GetOwner()->mRotationAngle.y, Y_UNIT_POSITIVE) * glm::rotate(model, GetOwner()->mRotationAngle.z, Z_UNIT_POSITIVE);
     glUniformMatrix4fv(mMoveUniform, 1, GL_FALSE, glm::value_ptr(model));
 
 	return model;
@@ -102,7 +102,7 @@ glm::mat4 SpriteComponent::CalculateMatrix()
 
 void SpriteComponent::Update(float inDT)
 {
-	mAnimTimer += inDT;
+	//mAnimTimer += inDT;
 	//IRenderableComponent::Update(inDT);
 }
 
@@ -115,35 +115,6 @@ void SpriteComponent::Draw()
 
 	// Calculate transformation
     glm::mat4 model;
-	model = glm::translate(model, GetOwner()->mPosition) * glm::scale(model, GetOwner()->mScale) * glm::rotate(model, GetOwner()->mRotationAngle.x, X_UNIT_POSITIVE) * glm::rotate(model, GetOwner()->mRotationAngle.y, Y_UNIT_POSITIVE) * glm::rotate(model, GetOwner()->mRotationAngle.z, Z_UNIT_POSITIVE);
+	model = glm::translate(model, GetOwner()->GetPosition()) * glm::scale(model, GetOwner()->mScale) * glm::rotate(model, GetOwner()->mRotationAngle.x, X_UNIT_POSITIVE) * glm::rotate(model, GetOwner()->mRotationAngle.y, Y_UNIT_POSITIVE) * glm::rotate(model, GetOwner()->mRotationAngle.z, Z_UNIT_POSITIVE);
     glUniformMatrix4fv(mMoveUniform, 1, GL_FALSE, glm::value_ptr(CalculateMatrix()));
-
-	float spriteFrameDivisorX = 1.f / mNumFrames;
-
-	//Vector2 spriteIndexMult(0.5f, 1.f);
-	glUniform2f(mSpriteCoord, spriteFrameDivisorX, 1.f);
-	glUniform1i(mUniformSpriteIndex, mCurrentFrame);
-
-	/*if(mAnimTimer >= 5.f)
-	{
-		mAnimTimer = 0.f;
-		if(mCurrentFrame <= mNumFrames)
-			mCurrentFrame += 1;
-		else
-			mCurrentFrame = 0;
-
-		float spriteFrameDivisorX = 1.f / mNumFrames;
-
-		//Vector2 spriteIndexMult(0.5f, 1.f);
-		glUniform2f(mSpriteCoord, spriteFrameDivisorX, 1.f);
-		glUniform1i(mUniformSpriteIndex, mCurrentFrame);
-
-		/*GLint texAttrib = glGetAttribLocation(mShader->GetProgramID(), "texcoord");
-		glEnableVertexAttribArray(texAttrib);
-		glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)(4*sizeof(float)));
-
-		glTexCoordPointer(2, GL_FLOAT, sizeof(float)*6, (GLvoid*)(sizeof(float)*4));
-	}*/
-	
-	//glDrawArrays(GL_TRIANGLES, 0, 6);
 }

@@ -7,26 +7,26 @@ Scene::Scene()
 
 }
 
-void Scene::AddToScene(GameObject* inGameObject)
+void Scene::AddToScene(Entity* inEntity)
 {
-	if(inGameObject)
+	if(inEntity)
 	{
-		mGameObjects.push_back(inGameObject);
-		inGameObject->SetOwningScene(const_cast<Scene*>(this));
+		mEntitys.push_back(inEntity);
+		inEntity->SetOwningScene(const_cast<Scene*>(this));
 	}
 }
 
-void Scene::RemoveFromScene(inGameObject* ininGameObject)
+void Scene::RemoveFromScene(Entity* inEntity)
 {
-	if(inGameObject)
+	if(inEntity)
 	{
-		std::vector<inGameObject*>::const_iterator iter;
+		std::vector<Entity*>::const_iterator iter;
 
-		for(iter = mGameObjects.begin(); iter != mGameObjects.end(); ++iter)
+		for(iter = mEntitys.begin(); iter != mEntitys.end(); ++iter)
 		{
-			if(*iter == inGameObject)
+			if(*iter == inEntity)
 			{
-				mGameObjects.erase(iter);
+				mEntitys.erase(iter);
 				break;
 			}
 		}
@@ -35,8 +35,8 @@ void Scene::RemoveFromScene(inGameObject* ininGameObject)
 
 void Scene::Update(float inDT)
 {
-	for each(GameObject* theGameObject in mGameObjects)
+	for each(Entity* theEntity in mEntitys)
 	{
-		theGameObject->Update(inDT);
+		theEntity->Update(inDT);
 	}
 }

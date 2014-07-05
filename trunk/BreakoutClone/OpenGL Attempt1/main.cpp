@@ -2,14 +2,11 @@
 #include "GLUtils.h"
 #include "Shader.h"
 #include "Sprite.h"
-#include "Render.h"
+#include "RenderSystem.h"
 #include "Input.h"
 #include <time.h>
 #include <iostream>
-#include "Scene.h"
 #include "AudioSystem.h"
-#include "Ball.h"
-#include "Block.h"
 #include "StateLevelOne.h"
 
 #include <fmod.hpp>
@@ -51,10 +48,10 @@ int main(void)
 	//if(!window)
 		//return 1;
 
-	Sprite* puppy = NULL;
-	Sprite* kitten = NULL;
+	//Sprite* puppy = NULL;
+	//Sprite* kitten = NULL;
 
-	Scene* theScene = new Scene();
+	//Scene* theScene = new Scene();
 
 	/*kitten = new Sprite("bros.png");
 	Input* inputHandler = new Input(window, kitten);
@@ -67,6 +64,8 @@ int main(void)
 
 	theScene->AddToScene(kitten);
 	theScene->AddToScene(puppy);*/
+
+	RenderSystem::GetSingleton();
 
 	AudioSystem* audioSystem = new AudioSystem();
 	audioSystem->Initialise();
@@ -93,7 +92,7 @@ int main(void)
 	float time = 0;
 
 	// Loop until the window should close
-	while (!glfwWindowShouldClose(Render::GetSingleton()->mWindow))
+	while (!glfwWindowShouldClose(RenderSystem::GetSingleton()->mWindow))
 	{
 		delta = glfwGetTime() - olddelta;
 		olddelta = glfwGetTime();
@@ -114,11 +113,11 @@ int main(void)
 			block = 0;
 		}*/
 
-		theScene->Update(delta);
+		//theScene->Update(delta);
 
-		Render::GetSingleton()->Draw();
+		RenderSystem::GetSingleton()->Draw();
 
-		glfwSwapBuffers(Render::mWindow);
+		glfwSwapBuffers(RenderSystem::mWindow);
 
 		// Check for new events
 		glfwPollEvents();
@@ -127,7 +126,7 @@ int main(void)
 	//delete kitten;
 	//kitten = 0;
 
-	glfwDestroyWindow(Render::GetSingleton()->mWindow);
+	glfwDestroyWindow(RenderSystem::GetSingleton()->mWindow);
 	glfwTerminate();
 
 	return 0;

@@ -8,20 +8,26 @@ class CollisionComponent : public IComponent
 {
 public:
 	CollisionComponent();
+	~CollisionComponent();
 	virtual void Update(float inDT);
+
+	void AddComponent(CollisionComponent* inCollisionComponent);
+	void RemoveComponent(CollisionComponent* inCollisionComponent);
 
 	bool IsColliding(Rectangle inBoundingBox, GameObject* inGameObject);
 
-	virtual void OnAttached();
-	void OnCollision(GameObject* inGameObject, Vector3& inCollisionVector, Rectangle inSimulatedBoundingBox);
+	virtual void OnAttached(GameObject* inGameObject);
+	virtual void OnCollision(CollisionComponent* inComponent, Vector3 inCollisionVector);
 
 	bool IsIntersecting(Rectangle inA);
+
+	void PrePositionSet(Vector3 inNewPosition);
 
 public:
 	Rectangle mBoundingBox;
 
 private:
-	void CreateBoundingBox(Vector3 inPosition);
+	Rectangle CreateBoundingBox(Vector3 inPosition);
 };
 
 #endif
