@@ -25,6 +25,22 @@ public:
 
 	void Update(float inDT);
 
+	template<class ComponentType>
+	ComponentType* GetComponent()
+	{
+		for each(IComponent* theComponent in mComponents)
+		{
+			ComponentType* soughtComp = dynamic_cast<ComponentType*>(theComponent);
+
+			if(soughtComp != NULL)
+			{
+				return soughtComp;
+			}
+		}
+
+		return NULL;
+	}
+
 public:
 	unsigned const int mIndex;
 	Vector3 mScale;

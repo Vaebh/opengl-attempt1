@@ -26,7 +26,7 @@ public:
 public:
 	Rectangle mBoundingBox;
 
-private:
+protected:
 	Rectangle CreateBoundingBox(Vector3 inPosition);
 };
 

@@ -17,6 +17,8 @@ public:
 
 	void Update(float inDT);
 
+	inline AXIS GetAxis() const {return mAxis;}
+
 private:
 	AXIS mAxis;
 };
