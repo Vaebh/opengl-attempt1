@@ -27,6 +27,7 @@ void FragileCollisionComponent::Update(float inDT)
 	if(mDying)
 	{
 		mOwner->ScaleBy(Vector3(-0.1f * inDT, -0.1f * inDT, 0.f));
+		mBoundingBox = CreateBoundingBox(mOwner->GetPosition());
 	}
 
 	if(mOwner->mScale.x <= 0.001f)
