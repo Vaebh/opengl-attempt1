@@ -9,6 +9,8 @@ enum EventTypes
 	NUM_EVENTS
 };
 
+typedef void (*MessageDelegate)(std::string) MessageDelegate;
+
 // Have things able to just #include this file and then subscribe themselves to specific events
 // They supply a function pointer to a function that the event messaging system will call when an event of that type shows up
 // Will likely declare this function pointer as a virtual function in either GameObject or Component, though any file
@@ -23,12 +25,13 @@ class IEventMessenger
 {
 public:
 	// Might not need this one
-	void SendMessage(std::string inMessage) = 0;
+	virtual void SendMessage(const std::string& inMessage) = 0;
 
 	// Loop through list of events and call function pointers for ones that match the recorded event - possibly 2d vector?
 	void RecordEvent(EventTypes inEventType, float inEventNotificationDelay = 0.f);
 
-	static SubscribeToEvent(EventTypes inEventType, FunctionPointer inFunctionPointer);
+	static void SubscribeToEvent(EventTypes inEventType, MessageDelegate inMsgDel);
+	static void UnsubscribeToEvent(EventTypes inEventType, MessageDelegate inMsgDel);
 
 	void Update(float inDT);
 
