@@ -9,7 +9,7 @@ enum EventTypes
 	NUM_EVENTS
 };
 
-typedef void (*MessageDelegate)(std::string) MessageDelegate;
+typedef void (*MessageDelegate)(std::string);
 
 // Have things able to just #include this file and then subscribe themselves to specific events
 // They supply a function pointer to a function that the event messaging system will call when an event of that type shows up
