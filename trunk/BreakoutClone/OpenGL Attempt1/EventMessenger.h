@@ -9,6 +9,12 @@ enum EventTypes
 	NUM_EVENTS
 };
 
+/*struct Message
+{
+	std::string messageID;
+	MessageDelegate inDelegate;
+};*/
+
 typedef void (*MessageDelegate)(std::string);
 
 // Have things able to just #include this file and then subscribe themselves to specific events
