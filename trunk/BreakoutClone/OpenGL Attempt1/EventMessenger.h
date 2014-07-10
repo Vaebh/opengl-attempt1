@@ -3,17 +3,19 @@
 
 #include "Component.h"
 
+// Iffy on whether to use an enum, kind of want to just use raw strings so the messages can be more variable
 enum EventTypes
 {
 	PLAYER_MOVE,
 	NUM_EVENTS
 };
 
-/*struct Message
+// I don't know about this yet
+struct MessageHolder
 {
-	std::string messageID;
-	MessageDelegate inDelegate;
-};*/
+	EventTypes mMessageType;
+	std::vector<MessageDelegate> mDelegates;
+};
 
 typedef void (*MessageDelegate)(std::string);
 
@@ -42,7 +44,7 @@ public:
 	void Update(float inDT);
 
 private:
-	std::vector<std::vector<EventType or something>> mEvents;
+	std::vector<MessageHolder> mEvents;
 };
 
 #endif
