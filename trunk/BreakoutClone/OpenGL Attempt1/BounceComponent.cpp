@@ -1,13 +1,25 @@
 #include "BounceComponent.h"
 #include "RenderSystem.h"
 
+#include <iostream>
+void HandleEvent(EventType inEventType)
+{
+	if(inEventType == BALL_COLLISION)
+	{
+		std::cout << "\n\n\n\nBALL COLLIDED YO\n\n\n\n" << std::endl;
+	}
+}
+
 BounceComponent::BounceComponent(float inBounceSpeed) :
 CollisionComponent(),
 mBounceSpeed(inBounceSpeed),
 mInitialPosition(Vector3()),
 mMovementEnabled(false)
 {
+	//void (*MessageDelegate)(EventType);
+	//MessageDelegate = &HandleEvent;
 
+	EventMessenger::GetSingleton()->SubscribeToEvent(BALL_COLLISION, &HandleEvent);
 }
 
 void BounceComponent::OnAttached(GameObject* inGameObject)
@@ -52,6 +64,8 @@ void BounceComponent::OnCollision(CollisionComponent* inComponent, Vector3 inCol
 	mOwner->mVelocity += inCollisionVector;
 
 	mOwner->mVelocity = glm::normalize(mOwner->mVelocity) * mBounceSpeed;
+
+	EventMessenger::GetSingleton()->RecordEvent(BALL_COLLISION);
 }
 
 void BounceComponent::Update(float inDT)
@@ -102,3 +116,11 @@ void BounceComponent::Update(float inDT)
 		mMovementEnabled = true;
 	}
 }
+
+/*void BounceComponent::HandleEvent(EventType inEventType)
+{
+	if(inEventType == BALL_COLLISION)
+	{
+		std::cout << "\n\n\n\nBALL COLLIDED YO\n\n\n\n" << std::endl;
+	}
+}*/
