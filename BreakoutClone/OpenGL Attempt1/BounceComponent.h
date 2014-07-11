@@ -2,6 +2,7 @@
 #define BOUNCE_COMPONENT_SIMENGINE
 
 #include "CollisionComponent.h"
+#include "EventMessenger.h"
 
 class BounceComponent : public CollisionComponent
 {
@@ -13,6 +14,8 @@ public:
 	void Update(float inDT);
 
 	void OnAttached(GameObject* inGameObject);
+
+	//void HandleEvent(EventType inEventType);
 
 public:
 	Vector3 mInitialPosition;
