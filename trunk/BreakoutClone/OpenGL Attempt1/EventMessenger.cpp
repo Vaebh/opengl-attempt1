@@ -1,5 +1,6 @@
 #include "EventMessenger.h"
 
+// TODO
 // Switch all the loops in all methods to work like the one in SubscribeToEvent - as I am dumb
 // and forgot that there were no pointers so I had to directly access and change the values
 
@@ -22,6 +23,7 @@ EventMessenger::EventMessenger()
 {
 	Event newEvent;
 
+	mEvents.reserve(NUM_EVENTS);
 	for(unsigned int i = 0; i < NUM_EVENTS; ++i)
 	{
 		newEvent.mEventType = EventType(i);
@@ -40,7 +42,7 @@ EventMessenger* EventMessenger::GetSingleton()
 	return mEventMessenger;
 }
 
-void EventMessenger::RecordEvent(EventType inEventType, float inEventNotificationDelay)
+void EventMessenger::RecordEvent(uint inEventType, float inEventNotificationDelay)
 {
 	std::vector<Event> events = GetSingleton()->mEvents;
 
@@ -52,7 +54,7 @@ void EventMessenger::RecordEvent(EventType inEventType, float inEventNotificatio
 			{
 				if(theDelegate != NULL)
 				{
-					theDelegate(inEventType);
+					(*theDelegate)(inEventType);
 				}
 			}
 		}
@@ -61,12 +63,12 @@ void EventMessenger::RecordEvent(EventType inEventType, float inEventNotificatio
 
 // Loop through event list, if the delegate is null or already there then return,
 // otherwise add it to the delegate list
-void EventMessenger::SubscribeToEvent(EventType inEventType, MessageDelegate inMsgDel)
+void EventMessenger::SubscribeToEvent(uint inEventType, MessageDelegate inMsgDel)
 {
 	if(inMsgDel == NULL)
 		return;
 
-	std::vector<Event>* events = &GetSingleton()->mEvents;
+	//std::vector<Event>* events = &GetSingleton()->mEvents;
 
 	for(unsigned int i = 0; i < mEvents.size(); ++i)
 	{
@@ -81,32 +83,22 @@ void EventMessenger::SubscribeToEvent(EventType inEventType, MessageDelegate inM
 			}
 
 			mEvents[i].mEventDelegates.push_back(inMsgDel);
+			return;
 		}
 	}
-	for each(Event theEvent in *events)
-	{
-		if(theEvent.mEventType == inEventType)
-		{
-			for each(MessageDelegate theDelegate in theEvent.mEventDelegates)
-			{
-				if(theDelegate == inMsgDel)
-				{
-					return;
-				}
-			}
 
-			theEvent.mEventDelegates.push_back(inMsgDel);
+	// If this event is not in the list then add it
+	Event newEvent;
+	newEvent.mEventType = inEventType;
+	newEvent.mEventDelegates = std::vector<MessageDelegate>();
+	newEvent.mEventDelegates.push_back(inMsgDel);
 
-			std::vector<Event> events = GetSingleton()->mEvents;
-			int g = 3+4;
-			g - 2;
-		}
-	}
+	mEvents.push_back(newEvent);
 }
 
 // Loop through event list, if the delegate is null or not there then return,
 // otherwise remove it from the delegate list
-void EventMessenger::UnsubscribeToEvent(EventType inEventType, MessageDelegate inMsgDel)
+void EventMessenger::UnsubscribeToEvent(uint inEventType, MessageDelegate inMsgDel)
 {
 	if(inMsgDel == NULL)
 		return;

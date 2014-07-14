@@ -1,12 +1,16 @@
 #include "BounceComponent.h"
 #include "RenderSystem.h"
-
+#include "EventMessenger.h"
 #include <iostream>
-void HandleEvent(EventType inEventType)
+
+namespace
 {
-	if(inEventType == BALL_COLLISION)
+	void HandleEventFree(uint inEventType)
 	{
-		std::cout << "\n\n\n\nBALL COLLIDED YO\n\n\n\n" << std::endl;
+		if(inEventType == BALL_COLLISION)
+		{
+			std::cout << "\nBALL COLLIDED YO FUCK YEAH FREE FUNCTION\n";
+		}
 	}
 }
 
@@ -16,10 +20,23 @@ mBounceSpeed(inBounceSpeed),
 mInitialPosition(Vector3()),
 mMovementEnabled(false)
 {
-	//void (*MessageDelegate)(EventType);
-	//MessageDelegate = &HandleEvent;
+	// Example event usage
+	IEventCallback* newCallback = new EventCallbackMember<BounceComponent>(this, &BounceComponent::HandleEvent);
+	//newCallback(BALL_COLLISION);
 
-	EventMessenger::GetSingleton()->SubscribeToEvent(BALL_COLLISION, &HandleEvent);
+	IEventCallback* newCallbackFree = new EventCallbackFree(&HandleEventFree);
+	//newCallbackFree(BALL_COLLISION);
+
+	EventMessenger::GetSingleton()->SubscribeToEvent(BALL_COLLISION, newCallback);
+	EventMessenger::GetSingleton()->SubscribeToEvent(BALL_COLLISION, newCallbackFree);
+}
+
+void BounceComponent::HandleEvent(uint inEventType)
+{
+	if(inEventType == BALL_COLLISION)
+	{
+		std::cout << "\nBALL COLLIDED YO\n" << std::endl;
+	}
 }
 
 void BounceComponent::OnAttached(GameObject* inGameObject)
@@ -116,11 +133,3 @@ void BounceComponent::Update(float inDT)
 		mMovementEnabled = true;
 	}
 }
-
-/*void BounceComponent::HandleEvent(EventType inEventType)
-{
-	if(inEventType == BALL_COLLISION)
-	{
-		std::cout << "\n\n\n\nBALL COLLIDED YO\n\n\n\n" << std::endl;
-	}
-}*/

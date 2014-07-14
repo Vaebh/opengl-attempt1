@@ -102,7 +102,7 @@ int main(void)
 		if(time > 1)
 		{
 			time = 0;
-			cout << "DeltaTime: " << delta << endl;
+			//cout << "DeltaTime: " << delta << endl;
 		}
 
 		levelOne->Update(delta);

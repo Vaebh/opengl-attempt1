@@ -54,11 +54,6 @@ void SpriteComponent::SetShader(const std::string inVertexShaderSrc, const std::
 
 	mShader = new Shader(inVertexShaderSrc, inFragShaderSrc);
 
-	if(glIsProgram(mShader->mShaderProgram) == GL_TRUE)
-		cout << "sprite isProgram success" << endl;
-	else
-		cout << "sprite isProgram fail" << endl;
-
 	glUseProgram(mShader->mShaderProgram);
 
 	glBindVertexArray(mVao);

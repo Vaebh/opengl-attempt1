@@ -2,85 +2,32 @@
 #define EVENT_MESSENGER_SIMENGINE
 
 #include "Component.h"
-#include <utility>
+#include "Foundation.h"
+#include "EventCallback.h"
 
-using namespace std;
+// The main problem with this system right now is there's no way to subscribe the events of specific components or gameobjects
+// For example I could want to listen to the collision event of a specific BounceComponent, the one attached to the ball in a Breakout game
+// However all I can do right now is listen for ALL collision events
 
-// Have a list of all components and call same method for each?
+// One way is to pass in pointers to specific components, but that constrains the events so they can only be used in components, not anywhere I please
 
-// Iffy on whether to use an enum, kind of want to just use raw strings so the messages can be more variable
-// Maybe just hold a list of pairs comprised of listeners and what events they're subscribed to and invoke them if the
-// received message matches their subscirbed one
+// Really the issue is that I want to listen to the things (events) that occur to specific things
+// So I want to listen to the OnCollision event of the ball, but nothing else
+// The only way I can think of to do that would be to store a pointer to the object that I want to listen to
+
 enum EventType
 {
 	BALL_COLLISION,
 	NUM_EVENTS
 };
 
-typedef void (*MessageDelegate)(EventType);
+typedef IEventCallback* MessageDelegate;
 
 struct Event
 {
-	EventType mEventType;
+	uint mEventType;
 	std::vector<MessageDelegate> mEventDelegates;
 };
-
-
-// Going to try this but with an enum event id instead of a string, can always pass in uints as a way to extend the enum event list without altering the list in this header file
-// as in enum GameEventTypes{FIRST_EVENT = EventTypes::NUM_EVENTS};
-
-// Hold a vector/map of pairs, which each hold a string event id, and a vector of function pointers
-// This approach hinges on being able to compare function pointers. So when we subscribe to an event we
-// just check the event against the list of event id's and add the supplied function pointer to it's paired vector of function pointers
-
-/* e.g.
-vector<pair(string eventID, vector<functionPointers>)> eventList
-for(eventList)
-{
-	if(suppliedEventID == eventList[i].first)
-	{
-		eventList[i].second.push_back(suppliedFunctionPointer);
-	}
-}
-*/
-
-/* And when you unsubscribe you just check through the eventList for your matching eventID and function pointer
-/* e.g.
-vector<pair(string eventID, vector<functionPointers>)> eventList
-for(eventList)
-{
-	if(suppliedEventID == eventList[i].first)
-	{
-		for(functionPointerList)
-		{
-			if(suppliedFunctionPointer == functionPointerList[j])
-			{
-				functionPointerList[j].remove();
-			}
-		}
-	}
-}
-*/
-
-// Read in the string eventList from a file, make sure to have a SetEventListFile method so we can
-// set which file is on a per application basis.
-
-// I don't know about this yet
-/*struct MessageHolder
-{
-	EventTypes mMessageType;
-	std::vector<MessageDelegate> mDelegates;
-};*/
-
-// Have things able to just #include this file and then subscribe themselves to specific events
-// They supply a function pointer to a function that the event messaging system will call when an event of that type shows up
-// Will likely declare this function pointer as a virtual function in either GameObject or Component, though any file
-// can subscribe to any event and provide their own custom function pointer
-
-// Actually will likely not put it in GameObject or Component, better to keep it only in the classes that need it
-// Maybe make an interface to inherit from that provides a couple of methods for receiving events and subscribing to them
-
-// Could also put in delayed events with an update method
 
 class EventMessenger
 {
@@ -89,19 +36,16 @@ public:
 
 	static EventMessenger* GetSingleton();
 
-	// Might not need this one
-	//virtual void SendMessage(const std::string& inMessage) = 0;
+	// Will have to add another parameter for passing event specific info, an array of string or uint params maybe
+	void RecordEvent(uint inEventType, float inEventNotificationDelay = 0.f);
 
-	// Loop through list of events and call function pointers for ones that match the recorded event - possibly 2d vector?
-	void RecordEvent(EventType inEventType, float inEventNotificationDelay = 0.f);
+	void SubscribeToEvent(uint inEventType, MessageDelegate inMsgDel);
+	void UnsubscribeToEvent(uint inEventType, MessageDelegate inMsgDel);
 
-	void SubscribeToEvent(EventType inEventType, MessageDelegate inMsgDel);
-	void UnsubscribeToEvent(EventType inEventType, MessageDelegate inMsgDel);
-
+	// TODO - Add delayed events, will likely need an event queue
 	//void Update(float inDT);
 
 private:
-	//std::vector<MessageHolder> mEvents;
 	std::vector<Event> mEvents;
 
 	static EventMessenger* mEventMessenger;
