@@ -5,6 +5,8 @@
 using std::cout;
 using std::endl;
 
+#define DEBUG_PRINTING 0
+
 Shader::Shader()
 {
   
@@ -70,10 +72,12 @@ GLuint Shader::CreateShaderProgram(const std::string& vertexShaderSrc, const std
         
 	//mShaderProgram = shaderProgram;
 
+	#if DEBUG_PRINTING == 1
 	if(glIsProgram(mShaderProgram) == GL_TRUE)
 		cout << "isProgram success" << endl;
 	else
 		cout << "isProgram fail" << endl;
+	#endif
 
 	/*glUseProgram(mShaderProgram);
 
@@ -98,18 +102,24 @@ bool Shader::ShaderCompilationCheck(const GLuint vertexShader, const GLuint frag
         
 	if(vertexStatus == GL_TRUE && fragmentStatus == GL_TRUE)
 	{
+		#if DEBUG_PRINTING == 1
 		cout << shaderName + " shader compilation SUCCESS" << endl;
+		#endif
 		return true;
 	}
 	else
 	{
 		if(vertexStatus == GL_FALSE)
 		{
+			#if DEBUG_PRINTING == 1
 			cout << "Vertex shader compilation FAILED" << endl;
+			#endif
 		}
 		if(fragmentStatus == GL_FALSE)
 		{
+			#if DEBUG_PRINTING == 1
 			cout << "Fragment shader compilation FAILED" << endl;
+			#endif
 		}
                 
 		return false;

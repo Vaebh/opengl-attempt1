@@ -2,7 +2,12 @@
 #define BOUNCE_COMPONENT_SIMENGINE
 
 #include "CollisionComponent.h"
-#include "EventMessenger.h"
+#include "Foundation.h"
+
+// TODO - I could pass in a callback function through the constructor (or not) that is triggered when the onCollision event is called
+// Would mean I wouldn't have to use the event system, and could just keep it for more general usage
+// It is probably out of it's scope to be able to subscribe to things on a per Component level, well, it wouldn't be, but would marry it to one
+// aspect of the engine too much for my liking. I want it to be useful for a lot more than that
 
 class BounceComponent : public CollisionComponent
 {
@@ -15,7 +20,7 @@ public:
 
 	void OnAttached(GameObject* inGameObject);
 
-	//void HandleEvent(EventType inEventType);
+	void HandleEvent(uint inEventType);
 
 public:
 	Vector3 mInitialPosition;
