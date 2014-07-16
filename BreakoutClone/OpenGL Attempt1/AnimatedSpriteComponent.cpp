@@ -42,6 +42,8 @@ void AnimatedSpriteComponent::ChangeFrame()
 void AnimatedSpriteComponent::SendAnimInfo()
 {
     float spriteFrameDivisorX = 1.f / mNumFrames;
+
+	glUseProgram(mShader->GetProgramID());
       
     glUniform2f(mSpriteCoord, spriteFrameDivisorX, 1.f);
     glUniform1i(mUniformSpriteIndex, mCurrentFrame);

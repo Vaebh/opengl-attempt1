@@ -5,6 +5,6 @@
 
 GameObject* CreateBall();
 GameObject* CreatePaddle();
-GameObject* CreateBlock();
+GameObject* CreateBlock(Vector3 inPosition);
 
 #endif

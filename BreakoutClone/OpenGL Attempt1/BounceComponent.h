@@ -20,7 +20,7 @@ public:
 
 	void OnAttached(GameObject* inGameObject);
 
-	void HandleEvent(uint inEventType);
+	void HandleEvent(uint32_t inEventType);
 
 public:
 	Vector3 mInitialPosition;

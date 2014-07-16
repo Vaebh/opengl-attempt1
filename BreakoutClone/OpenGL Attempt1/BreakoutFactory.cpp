@@ -42,11 +42,12 @@ GameObject* CreatePaddle()
 	return thePaddle;
 }
 
-/*GameObject* CreateBlock()
+GameObject* CreateBlock(Vector3 inPosition)
 {
 	GameObject* const theBlock = new GameObject();
 
 	theBlock->mScale = Vector3(0.2, 0.2, 0);
+	theBlock->SetPosition(inPosition);
 
 	SpriteComponent* const animSpriteComp = new SpriteComponent("bros.png", 1);
 	theBlock->Attach(animSpriteComp);
@@ -55,4 +56,4 @@ GameObject* CreatePaddle()
 	theBlock->Attach(fragileColComp);
 
 	return theBlock;
-}*/
+}

@@ -5,7 +5,7 @@
 
 namespace
 {
-	void HandleEventFree(uint inEventType)
+	void HandleEventFree(uint32_t inEventType)
 	{
 		if(inEventType == BALL_COLLISION)
 		{
@@ -31,7 +31,7 @@ mMovementEnabled(false)
 	EventMessenger::GetSingleton()->SubscribeToEvent(BALL_COLLISION, newCallbackFree);
 }
 
-void BounceComponent::HandleEvent(uint inEventType)
+void BounceComponent::HandleEvent(uint32_t inEventType)
 {
 	if(inEventType == BALL_COLLISION)
 	{

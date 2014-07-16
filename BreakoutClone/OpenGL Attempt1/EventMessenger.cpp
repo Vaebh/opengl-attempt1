@@ -42,7 +42,7 @@ EventMessenger* EventMessenger::GetSingleton()
 	return mEventMessenger;
 }
 
-void EventMessenger::RecordEvent(uint inEventType, float inEventNotificationDelay)
+void EventMessenger::RecordEvent(uint32_t inEventType, float inEventNotificationDelay)
 {
 	std::vector<Event> events = GetSingleton()->mEvents;
 
@@ -63,7 +63,7 @@ void EventMessenger::RecordEvent(uint inEventType, float inEventNotificationDela
 
 // Loop through event list, if the delegate is null or already there then return,
 // otherwise add it to the delegate list
-void EventMessenger::SubscribeToEvent(uint inEventType, MessageDelegate inMsgDel)
+void EventMessenger::SubscribeToEvent(uint32_t inEventType, MessageDelegate inMsgDel)
 {
 	if(inMsgDel == NULL)
 		return;
@@ -98,7 +98,7 @@ void EventMessenger::SubscribeToEvent(uint inEventType, MessageDelegate inMsgDel
 
 // Loop through event list, if the delegate is null or not there then return,
 // otherwise remove it from the delegate list
-void EventMessenger::UnsubscribeToEvent(uint inEventType, MessageDelegate inMsgDel)
+void EventMessenger::UnsubscribeToEvent(uint32_t inEventType, MessageDelegate inMsgDel)
 {
 	if(inMsgDel == NULL)
 		return;
