@@ -25,7 +25,7 @@ typedef IEventCallback* MessageDelegate;
 
 struct Event
 {
-	uint mEventType;
+	uint32_t mEventType;
 	std::vector<MessageDelegate> mEventDelegates;
 };
 
@@ -37,10 +37,10 @@ public:
 	static EventMessenger* GetSingleton();
 
 	// Will have to add another parameter for passing event specific info, an array of string or uint params maybe
-	void RecordEvent(uint inEventType, float inEventNotificationDelay = 0.f);
+	void RecordEvent(uint32_t inEventType, float inEventNotificationDelay = 0.f);
 
-	void SubscribeToEvent(uint inEventType, MessageDelegate inMsgDel);
-	void UnsubscribeToEvent(uint inEventType, MessageDelegate inMsgDel);
+	void SubscribeToEvent(uint32_t inEventType, MessageDelegate inMsgDel);
+	void UnsubscribeToEvent(uint32_t inEventType, MessageDelegate inMsgDel);
 
 	// TODO - Add delayed events, will likely need an event queue
 	//void Update(float inDT);
