@@ -11,7 +11,7 @@ BlockManager::BlockManager(std::vector<GameObject*>& outGameObjects, std::string
 		for(int j = 0; j < BLOCK_ROWS; ++j)
 		{
 			mBlocks[i][j] = CreateBlock(Vector3(-0.8f + i * 0.3f, 0.8f - j * 0.3f, 0.f));
-			mBlocks[i][j]->mName = "Block" + ConvertNumber(i);
+			mBlocks[i][j]->SetName("Block" + ConvertNumber(i));
 		}
 	}
 }
@@ -22,8 +22,7 @@ BlockManager::~BlockManager()
 	{
 		for(int j = 0; j < BLOCK_ROWS; ++j)
 		{
-			delete mBlocks[i][j];
-			mBlocks[i][j] = 0;
+			SAFE_DELETE(mBlocks[i][j]);
 		}
 	}
 }
