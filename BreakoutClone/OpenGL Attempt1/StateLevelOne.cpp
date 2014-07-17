@@ -1,6 +1,7 @@
 #include "StateLevelOne.h"
 #include "RenderSystem.h"
 #include "BreakoutFactory.h"
+#include "Foundation.h"
 
 // TODO - CONVERT THIS OVER ONCE NEW STUFF IS DONE
 
@@ -17,14 +18,9 @@ StateLevelOne::StateLevelOne()
 
 StateLevelOne::~StateLevelOne()
 {
-	delete mBlockManager;
-	mBlockManager = 0;
-
-	delete mBall;
-	mBall = 0;
-
-	delete mPaddle;
-	mPaddle = 0;
+	SAFE_DELETE(mBlockManager);
+	SAFE_DELETE(mBall);
+	SAFE_DELETE(mPaddle);
 }
 
 void StateLevelOne::Update(float inDT)
