@@ -6,15 +6,16 @@
 class ComponentBallModel : public IComponent
 {
 public:
-	BallModel(Vector3 inPosition);
-	~BallModel();
+	ComponentBallModel(Vector3 inPosition);
+	~ComponentBallModel();
 
-	virtual void OnCollision(Entity* inEntity, Vector3& inCollisionVector, Rectangle inSimulatedBoundingBox);
-	virtual void Update(float inDT);
-	virtual void Draw();
+	inline const Vector3 GetSpeed() const {return mSpeed;}
+	inline void SetSpeed(Vector3 inSpeed) {mSpeed = inSpeed;}
 
-	Vector3 mVelocity;
+	inline const bool IsMovementEnabled() {return mMovementEnabled;}
+	inline void SetMovementEnabled(bool inMovementEnabled) {mMovementEnabled = inMovementEnabled;}
 
+private:
 	bool mMovementEnabled;
 
 	Vector3 mInitialPosition;
