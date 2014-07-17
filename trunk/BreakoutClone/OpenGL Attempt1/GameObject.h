@@ -23,41 +23,43 @@ public:
 
 	void ScaleBy(Vector3 inScale) {mScale += inScale;}
 
+	inline const std::string GetName() {return mName;}
+	inline void SetName(std::string inName) {mName = inName;}
+
 	void Update(float inDT);
 
 	template<class ComponentType>
-	ComponentType* GetComponent()
-	{
-		for each(IComponent* theComponent in mComponents)
-		{
-			ComponentType* soughtComp = dynamic_cast<ComponentType*>(theComponent);
-
-			if(soughtComp != NULL)
-			{
-				return soughtComp;
-			}
-		}
-
-		return NULL;
-	}
+	ComponentType* GetComponent();
 
 public:
 	unsigned const int mIndex;
 	Vector3 mScale;
 	Vector3 mRotationAngle;
-
-	// TODO USE VELOCITY FOR MOVEMENT IN UPDATE
-
 	Vector3 mVelocity;
 
 	std::vector<IComponent*> mComponents;
-
-	std::string mName;
 
 private:
 	static unsigned int mNumGameObjects;
 
 	Vector3 mPosition;
+	std::string mName;
 };
+
+template<class ComponentType>
+ComponentType* GetComponent()
+{
+	for each(IComponent* theComponent in mComponents)
+	{
+		ComponentType* soughtComp = dynamic_cast<ComponentType*>(theComponent);
+
+		if(soughtComp != NULL)
+		{
+			return soughtComp;
+		}
+	}
+
+	return NULL;
+}
 
 #endif

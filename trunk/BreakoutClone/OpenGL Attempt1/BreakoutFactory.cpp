@@ -17,7 +17,7 @@ GameObject* CreateBall()
 	BounceComponent* const bounceComp = new BounceComponent(1.6f);
 	theBall->Attach(bounceComp);
 
-	theBall->mName = "Ball";
+	theBall->SetName("Ball");
 
 	return theBall;
 }
@@ -37,7 +37,7 @@ GameObject* CreatePaddle()
 	FollowMouseComponent* const followMouseComp = new FollowMouseComponent(X_AXIS);
 	thePaddle->Attach(followMouseComp);
 
-	thePaddle->mName = "Paddle";
+	thePaddle->SetName("Paddle");
 
 	return thePaddle;
 }
