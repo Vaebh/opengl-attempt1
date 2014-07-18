@@ -13,7 +13,7 @@ public:
 	inline void SetSpeed(Vector3 inSpeed) {mSpeed = inSpeed;}
 
 	inline const bool IsMovementEnabled() {return mMovementEnabled;}
-	inline void SetMovementEnabled(bool inMovementEnabled) {mMovementEnabled = inMovementEnabled;}
+	inline void EnableMovement(bool inMovementEnabled) {mMovementEnabled = inMovementEnabled;}
 
 private:
 	bool mMovementEnabled;
