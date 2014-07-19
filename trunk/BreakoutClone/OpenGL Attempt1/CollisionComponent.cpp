@@ -1,5 +1,6 @@
 #include "CollisionComponent.h"
 #include "CollisionSystem.h"
+#include "EventMessenger.h"
 
 CollisionComponent::CollisionComponent()
 {
@@ -60,7 +61,7 @@ Rectangle CollisionComponent::CreateBoundingBox(Vector3 inPosition)
 
 void CollisionComponent::OnCollision(CollisionComponent* inComponent, Vector3 inCollisionVector)
 {
-
+	EventMessenger::GetSingleton()->RecordEvent(COLLISION, mOwner);
 }
 
 void CollisionComponent::Update(float inDT)

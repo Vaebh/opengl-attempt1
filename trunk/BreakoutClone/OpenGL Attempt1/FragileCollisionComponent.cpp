@@ -11,6 +11,8 @@ mDead(false)
 
 void FragileCollisionComponent::OnCollision(CollisionComponent* inComponent, Vector3 inCollisionVector)
 {
+	CollisionComponent::OnCollision(inComponent, inCollisionVector);
+
 	if(!mDying)
 	{
 		mHealth -= 1;

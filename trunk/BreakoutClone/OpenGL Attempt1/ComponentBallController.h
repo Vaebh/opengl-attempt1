@@ -1,24 +1,19 @@
-#ifndef BALL_SIMENGINE
-#define BALL_SIMENGINE
+/*#ifndef COMPONENT_BALL_CONTROLLER_SIMENGINE
+#define COMPONENT_BALL_CONTROLLER_SIMENGINE
 
-#include "Sprite.h"
+#include "GameObject.h"
+#include "ComponentBallModel.h"
 
-class Ball : public Sprite
+//class ComponentBallModel;
+
+class ComponentBallController : public IComponent
 {
 public:
-	Ball(Vector3 inPosition);
-	~Ball();
+	ComponentBallController(ComponentBallModel* inBallModel);
+	~ComponentBallController();
 
-	virtual void OnCollision(Entity* inEntity, Vector3& inCollisionVector, Rectangle inSimulatedBoundingBox);
-	virtual void Update(float inDT);
-	virtual void Draw();
-
-	Vector3 mVelocity;
-
-	bool mMovementEnabled;
-
-	Vector3 mInitialPosition;
-	Vector3 mSpeed;
+private:
+	ComponentBallModel* mBallModel;
 };
 
-#endif
+#endif*/

@@ -1,4 +1,4 @@
-#ifndef COMPONENT_BALL_MODEL_SIMENGINE
+/*#ifndef COMPONENT_BALL_MODEL_SIMENGINE
 #define COMPONENT_BALL_MODEL_SIMENGINE
 
 #include "GameObject.h"
@@ -22,4 +22,4 @@ private:
 	Vector3 mSpeed;
 };
 
-#endif
+#endif*/
