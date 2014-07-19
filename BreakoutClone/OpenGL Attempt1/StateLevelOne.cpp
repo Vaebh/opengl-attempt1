@@ -2,8 +2,20 @@
 #include "RenderSystem.h"
 #include "BreakoutFactory.h"
 #include "Foundation.h"
+#include "EventMessenger.h"
 
 // TODO - CONVERT THIS OVER ONCE NEW STUFF IS DONE
+
+namespace
+{
+	void HandleEventPaddle(uint32_t inEventType)
+	{
+		if(inEventType == COLLISION)
+		{
+			std::cout << "\n=============PADDLE COLLIDED=============\n";
+		}
+	}
+};
 
 StateLevelOne::StateLevelOne()
 {
@@ -12,6 +24,9 @@ StateLevelOne::StateLevelOne()
 
 	mPaddle = CreatePaddle();
 	mGameObjects.push_back(mPaddle);
+
+	IEventCallback* newCallbackFree = new EventCallbackFree(&HandleEventPaddle);
+	EventMessenger::GetSingleton()->SubscribeToEvent(COLLISION, mPaddle, newCallbackFree);
 
 	mBlockManager = new BlockManager(mGameObjects, "");
 }

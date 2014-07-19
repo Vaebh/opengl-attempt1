@@ -42,19 +42,19 @@ EventMessenger* EventMessenger::GetSingleton()
 	return mEventMessenger;
 }
 
-void EventMessenger::RecordEvent(uint32_t inEventType, float inEventNotificationDelay)
+void EventMessenger::RecordEvent(uint32_t inEventType, GameObject* inTarget, float inEventNotificationDelay)
 {
-	std::vector<Event> events = GetSingleton()->mEvents;
-
-	for each(Event theEvent in events)
+	for each(Event theEvent in mEvents)
 	{
 		if(theEvent.mEventType == inEventType)
 		{
-			for each(MessageDelegate theDelegate in theEvent.mEventDelegates)
+			for each(EventPair theEventPair in theEvent.mEventTargets)
 			{
-				if(theDelegate != NULL)
+				// If the recorded gameobject matches the stored gameobject
+				if(theEventPair.first != NULL && theEventPair.first == inTarget)
 				{
-					(*theDelegate)(inEventType);
+					(*theEventPair.second)(inEventType);
+					break;
 				}
 			}
 		}
@@ -63,26 +63,24 @@ void EventMessenger::RecordEvent(uint32_t inEventType, float inEventNotification
 
 // Loop through event list, if the delegate is null or already there then return,
 // otherwise add it to the delegate list
-void EventMessenger::SubscribeToEvent(uint32_t inEventType, MessageDelegate inMsgDel)
+void EventMessenger::SubscribeToEvent(uint32_t inEventType, GameObject* inTarget, MessageDelegate inMsgDel)
 {
-	if(inMsgDel == NULL)
+	if(inMsgDel == NULL || inTarget == NULL)
 		return;
-
-	//std::vector<Event>* events = &GetSingleton()->mEvents;
 
 	for(unsigned int i = 0; i < mEvents.size(); ++i)
 	{
 		if(mEvents[i].mEventType == inEventType)
 		{
-			for(unsigned int j = 0; j < mEvents[i].mEventDelegates.size(); ++j)
+			for(unsigned int j = 0; j < mEvents[i].mEventTargets.size(); ++j)
 			{
-				if(mEvents[i].mEventDelegates[j] == inMsgDel)
+				if(mEvents[i].mEventTargets[j].first == inTarget || mEvents[i].mEventTargets[j].second == inMsgDel)
 				{
 					return;
 				}
 			}
 
-			mEvents[i].mEventDelegates.push_back(inMsgDel);
+			mEvents[i].mEventTargets.push_back(std::make_pair(inTarget, inMsgDel));
 			return;
 		}
 	}
@@ -90,28 +88,30 @@ void EventMessenger::SubscribeToEvent(uint32_t inEventType, MessageDelegate inMs
 	// If this event is not in the list then add it
 	Event newEvent;
 	newEvent.mEventType = inEventType;
-	newEvent.mEventDelegates = std::vector<MessageDelegate>();
-	newEvent.mEventDelegates.push_back(inMsgDel);
+	newEvent.mEventTargets = std::vector<EventPair>();
+	newEvent.mEventTargets.push_back(std::make_pair(inTarget, inMsgDel));
 
 	mEvents.push_back(newEvent);
 }
 
 // Loop through event list, if the delegate is null or not there then return,
 // otherwise remove it from the delegate list
-void EventMessenger::UnsubscribeToEvent(uint32_t inEventType, MessageDelegate inMsgDel)
+void EventMessenger::UnsubscribeToEvent(uint32_t inEventType, GameObject* inTarget, MessageDelegate inMsgDel)
 {
-	if(inMsgDel == NULL)
+	if(inMsgDel == NULL || inTarget == NULL)
 		return;
 
 	for each(Event theEvent in GetSingleton()->mEvents)
 	{
 		if(theEvent.mEventType == inEventType)
 		{
-			for each(MessageDelegate theDelegate in theEvent.mEventDelegates)
+			for each(EventPair theEventPair in theEvent.mEventTargets)
 			{
-				if(theDelegate == inMsgDel)
+				if(theEventPair.first == inTarget && theEventPair.second == inMsgDel)
 				{
-					inMsgDel = 0;
+					// Should actually remove these from the vector
+					theEventPair.first = 0;
+					theEventPair.second = 0;
 					return;
 				}
 			}

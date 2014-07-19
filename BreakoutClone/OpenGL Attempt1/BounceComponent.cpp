@@ -7,7 +7,7 @@ namespace
 {
 	void HandleEventFree(uint32_t inEventType)
 	{
-		if(inEventType == BALL_COLLISION)
+		if(inEventType == COLLISION)
 		{
 			std::cout << "\nBALL COLLIDED YO FUCK YEAH FREE FUNCTION\n";
 		}
@@ -20,20 +20,12 @@ mBounceSpeed(inBounceSpeed),
 mInitialPosition(Vector3()),
 mMovementEnabled(false)
 {
-	// Example event usage
-	IEventCallback* newCallback = new EventCallbackMember<BounceComponent>(this, &BounceComponent::HandleEvent);
-	//newCallback(BALL_COLLISION);
-
-	IEventCallback* newCallbackFree = new EventCallbackFree(&HandleEventFree);
-	//newCallbackFree(BALL_COLLISION);
-
-	EventMessenger::GetSingleton()->SubscribeToEvent(BALL_COLLISION, newCallback);
-	EventMessenger::GetSingleton()->SubscribeToEvent(BALL_COLLISION, newCallbackFree);
+	
 }
 
 void BounceComponent::HandleEvent(uint32_t inEventType)
 {
-	if(inEventType == BALL_COLLISION)
+	if(inEventType == COLLISION)
 	{
 		std::cout << "\nBALL COLLIDED YO\n" << std::endl;
 	}
@@ -44,10 +36,22 @@ void BounceComponent::OnAttached(GameObject* inGameObject)
 	CollisionComponent::OnAttached(inGameObject);
 
 	mInitialPosition = inGameObject->GetPosition();
+
+	// Example event usage
+	//IEventCallback* newCallback = new EventCallbackMember<BounceComponent>(this, &BounceComponent::HandleEvent);
+	//newCallback(BALL_COLLISION);
+
+	IEventCallback* newCallbackFree = new EventCallbackFree(&HandleEventFree);
+	//newCallbackFree(BALL_COLLISION);
+
+	//EventMessenger::GetSingleton()->SubscribeToEvent(BALL_COLLISION, mOwner, newCallback);
+	EventMessenger::GetSingleton()->SubscribeToEvent(COLLISION, mOwner, newCallbackFree);
 }
 
 void BounceComponent::OnCollision(CollisionComponent* inComponent, Vector3 inCollisionVector)
 {
+	CollisionComponent::OnCollision(inComponent, inCollisionVector);
+
 	mMovementEnabled = true;
 
 	Vector3 dirVec(0.f, -1.f, 0.f);
@@ -81,8 +85,6 @@ void BounceComponent::OnCollision(CollisionComponent* inComponent, Vector3 inCol
 	mOwner->mVelocity += inCollisionVector;
 
 	mOwner->mVelocity = glm::normalize(mOwner->mVelocity) * mBounceSpeed;
-
-	EventMessenger::GetSingleton()->RecordEvent(BALL_COLLISION);
 }
 
 void BounceComponent::Update(float inDT)
@@ -112,11 +114,6 @@ void BounceComponent::Update(float inDT)
 			//flip the x
 			mOwner->mVelocity.x = -mOwner->mVelocity.x;
 		}
-	}
-
-	if(glfwGetKey(RenderSystem::mWindow, GLFW_KEY_1))
-	{
-		mOwner->mVelocity += Vector3(-0.01f, 0.f, 0.f);
 	}
 
 	if(mMovementEnabled && (mOwner->GetPosition().y <= -1.2f || glfwGetKey(RenderSystem::GetSingleton()->mWindow, GLFW_KEY_C)))
