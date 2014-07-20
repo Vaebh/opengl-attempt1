@@ -5,7 +5,7 @@
 
 namespace
 {
-	void HandleEventFree(uint32_t inEventType)
+	void HandleEventFree(uint32_t inEventType, GameObject* inTarget)
 	{
 		if(inEventType == COLLISION)
 		{
@@ -23,7 +23,7 @@ mMovementEnabled(false)
 	
 }
 
-void BounceComponent::HandleEvent(uint32_t inEventType)
+void BounceComponent::HandleEvent(uint32_t inEventType, GameObject* inTarget)
 {
 	if(inEventType == COLLISION)
 	{
@@ -41,11 +41,11 @@ void BounceComponent::OnAttached(GameObject* inGameObject)
 	//IEventCallback* newCallback = new EventCallbackMember<BounceComponent>(this, &BounceComponent::HandleEvent);
 	//newCallback(BALL_COLLISION);
 
-	IEventCallback* newCallbackFree = new EventCallbackFree(&HandleEventFree);
+	//IEventCallback* newCallbackFree = new EventCallbackFree(&HandleEventFree);
 	//newCallbackFree(BALL_COLLISION);
 
 	//EventMessenger::GetSingleton()->SubscribeToEvent(BALL_COLLISION, mOwner, newCallback);
-	EventMessenger::GetSingleton()->SubscribeToEvent(COLLISION, mOwner, newCallbackFree);
+	//EventMessenger::GetSingleton()->SubscribeToEvent(COLLISION, mOwner, newCallbackFree);
 }
 
 void BounceComponent::OnCollision(CollisionComponent* inComponent, Vector3 inCollisionVector)
@@ -56,19 +56,19 @@ void BounceComponent::OnCollision(CollisionComponent* inComponent, Vector3 inCol
 
 	Vector3 dirVec(0.f, -1.f, 0.f);
 
-	if(mOwner->GetPosition().x > inComponent->mBoundingBox.right)// &&
+	if(mOwner->GetPosition().x > inComponent->mBoundingBox.right)
 	{
 		dirVec = X_UNIT_POSITIVE;
 	}
-	else if(mOwner->GetPosition().x < inComponent->mBoundingBox.left)// &&
+	else if(mOwner->GetPosition().x < inComponent->mBoundingBox.left)
 	{
 		dirVec = X_UNIT_NEGATIVE;
 	}
-	else if(mOwner->GetPosition().y > inComponent->mBoundingBox.top)// &&
+	else if(mOwner->GetPosition().y > inComponent->mBoundingBox.top)
 	{
 		dirVec = Y_UNIT_POSITIVE;
 	}
-	else if(mOwner->GetPosition().y < inComponent->mBoundingBox.bottom)// &&
+	else if(mOwner->GetPosition().y < inComponent->mBoundingBox.bottom)
 	{
 		dirVec = Y_UNIT_NEGATIVE;
 	}
@@ -89,44 +89,5 @@ void BounceComponent::OnCollision(CollisionComponent* inComponent, Vector3 inCol
 
 void BounceComponent::Update(float inDT)
 {
-	// TODO
-	// This shouldn't be here, but I can't be arsed thinking through where else to put it
-
-	if(mOwner->GetPosition().y >= 0.95f || mOwner->GetPosition().y <= -0.95f || mOwner->GetPosition().x >= 0.95f || mOwner->GetPosition().x <= -0.95f)
-	{
-		if(mOwner->GetPosition().y >= 0.95f)
-		{
-			mOwner->mVelocity.y = -mOwner->mVelocity.y;
-		}
-
-		if(mOwner->GetPosition().y <= -0.95f)
-		{
-
-		}
-
-		if(mOwner->GetPosition().x >= 0.95f)
-		{
-			mOwner->mVelocity.x = -mOwner->mVelocity.x;
-		}
-
-		if(mOwner->GetPosition().x <= -0.95f)
-		{
-			//flip the x
-			mOwner->mVelocity.x = -mOwner->mVelocity.x;
-		}
-	}
-
-	if(mMovementEnabled && (mOwner->GetPosition().y <= -1.2f || glfwGetKey(RenderSystem::GetSingleton()->mWindow, GLFW_KEY_C)))
-	{
-		mOwner->mVelocity = Vector3();
-		mMovementEnabled = false;
-		mOwner->SetPosition(mInitialPosition);
-	}
-
-	if(!mMovementEnabled && glfwGetKey(RenderSystem::GetSingleton()->mWindow, GLFW_KEY_SPACE))
-	{
-		mOwner->mVelocity = Vector3(0.f, 0.9f, 0.f);
-
-		mMovementEnabled = true;
-	}
+	CollisionComponent::Update(inDT);
 }

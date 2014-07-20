@@ -19,6 +19,20 @@
 enum EventType
 {
 	COLLISION,
+	INPUT_LEFT_CLICK,
+	INPUT_LEFT_RELEASE,
+	INPUT_RIGHT_CLICK,
+	INPUT_RIGHT_RELEASE,
+	INPUT_SPACE_PRESS,
+	INPUT_SPACE_RELEASE,
+	INPUT_W_PRESS,
+	INPUT_W_RELEASE,
+	INPUT_A_PRESS,
+	INPUT_A_RELEASE,
+	INPUT_S_PRESS,
+	INPUT_S_RELEASE,
+	INPUT_D_PRESS,
+	INPUT_D_RELEASE,
 	NUM_EVENTS
 };
 
@@ -43,6 +57,7 @@ public:
 
 	// Will have to add another parameter for passing event specific info, an array of string or uint params maybe
 	void RecordEvent(uint32_t inEventType, GameObject* inTarget, float inEventNotificationDelay = 0.f);
+	void BroadcastEvent(uint32_t inEventType, float inEventNotificationDelay = 0.f);
 
 	void SubscribeToEvent(uint32_t inEventType, GameObject* inTarget, MessageDelegate inMsgDel);
 	void UnsubscribeToEvent(uint32_t inEventType, GameObject* inTarget, MessageDelegate inMsgDel);

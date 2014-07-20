@@ -4,6 +4,8 @@
 #include "RenderSystem.h"
 #include "FollowMouseComponent.h"
 #include "FragileCollisionComponent.h"
+#include "ComponentBallController.h"
+#include "ComponentBallModel.h"
 
 GameObject* CreateBall()
 {
@@ -16,6 +18,12 @@ GameObject* CreateBall()
 
 	BounceComponent* const bounceComp = new BounceComponent(1.6f);
 	theBall->Attach(bounceComp);
+
+	ComponentBallModel* const ballModel = new ComponentBallModel();
+	theBall->Attach(ballModel);
+
+	ComponentBallController* const ballController = new ComponentBallController(ballModel);
+	theBall->Attach(ballController);
 
 	theBall->SetName("Ball");
 

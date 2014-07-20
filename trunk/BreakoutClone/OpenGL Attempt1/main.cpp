@@ -3,7 +3,7 @@
 #include "Shader.h"
 #include "Sprite.h"
 #include "RenderSystem.h"
-#include "Input.h"
+#include "InputManager.h"
 #include <time.h>
 #include <iostream>
 #include "AudioSystem.h"
@@ -65,7 +65,7 @@ int main(void)
 	theScene->AddToScene(kitten);
 	theScene->AddToScene(puppy);*/
 
-	RenderSystem::GetSingleton();
+	InputManager* input = new InputManager(RenderSystem::GetSingleton()->mWindow);
 
 	AudioSystem* audioSystem = new AudioSystem();
 	audioSystem->Initialise();
@@ -104,6 +104,8 @@ int main(void)
 			time = 0;
 			//cout << "DeltaTime: " << delta << endl;
 		}
+
+		input->Update(delta);
 
 		levelOne->Update(delta);
 
