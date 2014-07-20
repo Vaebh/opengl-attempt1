@@ -47,7 +47,7 @@ private:
 };
 
 template<class ComponentType>
-ComponentType* GetComponent()
+ComponentType* GameObject::GetComponent()
 {
 	for each(IComponent* theComponent in mComponents)
 	{

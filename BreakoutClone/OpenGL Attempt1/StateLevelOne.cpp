@@ -3,6 +3,7 @@
 #include "BreakoutFactory.h"
 #include "Foundation.h"
 #include "EventMessenger.h"
+#include "ComponentBallController.h"
 
 // TODO - CONVERT THIS OVER ONCE NEW STUFF IS DONE
 
@@ -14,11 +15,21 @@ StateLevelOne::StateLevelOne()
 	mPaddle = CreatePaddle();
 	mGameObjects.push_back(mPaddle);
 
+	ComponentBallController* ballController = mBall->GetComponent<ComponentBallController>();
+	if(ballController)
+	{
+		ballController->SetAimingObject(mPaddle);
+	}
+
 	IEventCallback* newCallbackMember = new EventCallbackMember<StateLevelOne>(this, &StateLevelOne::HandleEvent);
 	EventMessenger::GetSingleton()->SubscribeToEvent(COLLISION, mPaddle, newCallbackMember);
 	EventMessenger::GetSingleton()->SubscribeToEvent(COLLISION, mBall, newCallbackMember);
+
 	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_SPACE_PRESS, mBall, newCallbackMember);
 	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_SPACE_RELEASE, mBall, newCallbackMember);
+
+	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_W_PRESS, mBall, newCallbackMember);
+	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_W_RELEASE, mBall, newCallbackMember);
 
 	mBlockManager = new BlockManager(mGameObjects, "");
 }
@@ -39,6 +50,15 @@ void StateLevelOne::HandleEvent(uint32_t inEventType, GameObject* inTarget)
 	if(inEventType == INPUT_SPACE_RELEASE)
 	{
 		std::cout << "Space bar released!=============\n";
+	}
+
+	if(inEventType == INPUT_W_PRESS)
+	{
+		std::cout << "W pressed!=============\n";
+	}
+	if(inEventType == INPUT_W_RELEASE)
+	{
+		std::cout << "W released!=============\n";
 	}
 
 	if(inEventType == COLLISION && inTarget == mPaddle)

@@ -20,10 +20,15 @@ public:
 
 	void OnAttached(GameObject* inGameObject);
 
+	inline void SetAimingObject(GameObject* inAimingObject) {mAimingObject = inAimingObject;}
+
 	//void EnableAimMode();
 
 private:
 	ComponentBallModel* mBallModel;
+	GameObject* mAimingObject;
+
+	bool mAiming;
 };
 
 #endif
