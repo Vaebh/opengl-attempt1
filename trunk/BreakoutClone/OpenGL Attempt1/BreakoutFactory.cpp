@@ -60,7 +60,7 @@ GameObject* CreateBlock(Vector3 inPosition)
 	SpriteComponent* const animSpriteComp = new SpriteComponent("bros.png", 1);
 	theBlock->Attach(animSpriteComp);
 
-	FragileCollisionComponent* const fragileColComp = new FragileCollisionComponent();
+	FragileCollisionComponent* const fragileColComp = new FragileCollisionComponent(2);
 	theBlock->Attach(fragileColComp);
 
 	return theBlock;
