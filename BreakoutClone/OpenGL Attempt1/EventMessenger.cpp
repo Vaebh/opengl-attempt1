@@ -53,9 +53,23 @@ void EventMessenger::RecordEvent(uint32_t inEventType, GameObject* inTarget, flo
 				// If the recorded gameobject matches the stored gameobject
 				if(theEventPair.first != NULL && theEventPair.first == inTarget)
 				{
-					(*theEventPair.second)(inEventType);
+					(*theEventPair.second)(inEventType, theEventPair.first);
 					break;
 				}
+			}
+		}
+	}
+}
+
+void EventMessenger::BroadcastEvent(uint32_t inEventType, float inEventNotificationDelay)
+{
+	for each(Event theEvent in mEvents)
+	{
+		if(theEvent.mEventType == inEventType)
+		{
+			for each(EventPair theEventPair in theEvent.mEventTargets)
+			{
+				(*theEventPair.second)(inEventType, NULL);
 			}
 		}
 	}
@@ -76,7 +90,9 @@ void EventMessenger::SubscribeToEvent(uint32_t inEventType, GameObject* inTarget
 			{
 				if(mEvents[i].mEventTargets[j].first == inTarget || mEvents[i].mEventTargets[j].second == inMsgDel)
 				{
-					return;
+					// If it's the same GameObject that we're subscribing to then just add the message delegate
+					// to that GameObjects vector of MessageDelegates, once it's implemented
+					//return;
 				}
 			}
 

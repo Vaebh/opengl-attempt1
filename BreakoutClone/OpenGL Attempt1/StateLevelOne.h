@@ -2,9 +2,8 @@
 #define STATE_LEVEL_ONE_SIMENGINE
 
 #include "State.h"
-#include "Sprite.h"
 #include "BlockManager.h"
-#include "Ball.h"
+#include "Foundation.h"
 
 #include "Input.h"
 
@@ -16,10 +15,11 @@ public:
 
 	virtual void Update(float inDT);
 
+	void HandleEvent(uint32_t inEventType, GameObject* inTarget);
+
 private:
 	BlockManager* mBlockManager;
 	GameObject* mBall;
-
 	GameObject* mPaddle;
 };
 

@@ -6,17 +6,6 @@
 
 // TODO - CONVERT THIS OVER ONCE NEW STUFF IS DONE
 
-namespace
-{
-	void HandleEventPaddle(uint32_t inEventType)
-	{
-		if(inEventType == COLLISION)
-		{
-			std::cout << "\n=============PADDLE COLLIDED=============\n";
-		}
-	}
-};
-
 StateLevelOne::StateLevelOne()
 {
 	mBall = CreateBall();
@@ -25,8 +14,11 @@ StateLevelOne::StateLevelOne()
 	mPaddle = CreatePaddle();
 	mGameObjects.push_back(mPaddle);
 
-	IEventCallback* newCallbackFree = new EventCallbackFree(&HandleEventPaddle);
-	EventMessenger::GetSingleton()->SubscribeToEvent(COLLISION, mPaddle, newCallbackFree);
+	IEventCallback* newCallbackMember = new EventCallbackMember<StateLevelOne>(this, &StateLevelOne::HandleEvent);
+	EventMessenger::GetSingleton()->SubscribeToEvent(COLLISION, mPaddle, newCallbackMember);
+	EventMessenger::GetSingleton()->SubscribeToEvent(COLLISION, mBall, newCallbackMember);
+	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_SPACE_PRESS, mBall, newCallbackMember);
+	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_SPACE_RELEASE, mBall, newCallbackMember);
 
 	mBlockManager = new BlockManager(mGameObjects, "");
 }
@@ -36,6 +28,27 @@ StateLevelOne::~StateLevelOne()
 	SAFE_DELETE(mBlockManager);
 	SAFE_DELETE(mBall);
 	SAFE_DELETE(mPaddle);
+}
+
+void StateLevelOne::HandleEvent(uint32_t inEventType, GameObject* inTarget)
+{
+	if(inEventType == INPUT_SPACE_PRESS)
+	{
+		std::cout << "Space bar pressed!=============\n";
+	}
+	if(inEventType == INPUT_SPACE_RELEASE)
+	{
+		std::cout << "Space bar released!=============\n";
+	}
+
+	if(inEventType == COLLISION && inTarget == mPaddle)
+	{
+		std::cout << "=============PADDLE COLLIDED=============\n";
+	}
+	else if(inEventType == COLLISION && inTarget == mBall)
+	{
+		std::cout << "=============BALL COLLIDED=============\n";
+	}
 }
 
 void StateLevelOne::Update(float inDT)

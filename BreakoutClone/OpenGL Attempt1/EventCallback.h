@@ -2,6 +2,7 @@
 #define EVENT_CALLBACK_SIMENGINE
 
 #include "Foundation.h"
+#include "GameObject.h"
 #include <iostream>
 
 // =======================================
@@ -10,7 +11,7 @@
 class IEventCallback
 {
 public:
-	virtual void operator() (uint32_t inEventType) = 0;
+	virtual void operator() (uint32_t inEventType, GameObject* inTarget) = 0;
 };
 
 // =======================================
@@ -20,16 +21,16 @@ template <class ClassType>
 class EventCallbackMember : public IEventCallback
 {
 public:
-	EventCallbackMember(ClassType* inClassPointer, void (ClassType::*inEventCallbackFunc)(uint32_t));
-	void operator() (uint32_t inEventType);
+	EventCallbackMember(ClassType* inClassPointer, void (ClassType::*inEventCallbackFunc)(uint32_t, GameObject*));
+	void operator() (uint32_t inEventType, GameObject* inTarget);
 
 public:
-	void (ClassType::*mEventCallbackFunc)(uint32_t);
+	void (ClassType::*mEventCallbackFunc)(uint32_t, GameObject*);
 	ClassType* mClassPointer;
 };
 
 template <class ClassType>
-EventCallbackMember<ClassType>::EventCallbackMember(ClassType* inClassPointer, void (ClassType::*inEventCallbackFunc)(uint32_t)) : 
+EventCallbackMember<ClassType>::EventCallbackMember(ClassType* inClassPointer, void (ClassType::*inEventCallbackFunc)(uint32_t, GameObject*)) : 
 mClassPointer(inClassPointer),
 mEventCallbackFunc(inEventCallbackFunc)
 {
@@ -37,10 +38,10 @@ mEventCallbackFunc(inEventCallbackFunc)
 }
 
 template <class ClassType>
-void EventCallbackMember<ClassType>::operator() (uint32_t inEventType)
+void EventCallbackMember<ClassType>::operator() (uint32_t inEventType, GameObject* inTarget)
 {
-	std::cout << "\nMember function callback\n";
-	(mClassPointer->*mEventCallbackFunc)(inEventType);
+	//std::cout << "\nMember function callback\n";
+	(mClassPointer->*mEventCallbackFunc)(inEventType, inTarget);
 }
 
 // =======================================
@@ -49,11 +50,11 @@ void EventCallbackMember<ClassType>::operator() (uint32_t inEventType)
 class EventCallbackFree : public IEventCallback
 {
 public:
-	EventCallbackFree(void (*inEventCallbackFunc)(uint32_t));
-	void operator() (uint32_t inEventType);
+	EventCallbackFree(void (*inEventCallbackFunc)(uint32_t, GameObject*));
+	void operator() (uint32_t inEventType, GameObject* inTarget);
 
 public:
-	void (*mEventCallbackFunc)(uint32_t);
+	void (*mEventCallbackFunc)(uint32_t, GameObject*);
 };
 
 #endif //include guard
