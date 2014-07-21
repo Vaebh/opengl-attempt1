@@ -42,7 +42,7 @@ EventMessenger* EventMessenger::GetSingleton()
 	return mEventMessenger;
 }
 
-void EventMessenger::RecordEvent(uint32_t inEventType, GameObject* inTarget, float inEventNotificationDelay)
+void EventMessenger::RecordEvent(const uint32_t& inEventType, GameObject* inTarget, const float& inEventNotificationDelay)
 {
 	for each(Event theEvent in mEvents)
 	{
@@ -61,7 +61,7 @@ void EventMessenger::RecordEvent(uint32_t inEventType, GameObject* inTarget, flo
 	}
 }
 
-void EventMessenger::BroadcastEvent(uint32_t inEventType, float inEventNotificationDelay)
+void EventMessenger::BroadcastEvent(const uint32_t& inEventType, const float& inEventNotificationDelay)
 {
 	for each(Event theEvent in mEvents)
 	{
@@ -77,7 +77,7 @@ void EventMessenger::BroadcastEvent(uint32_t inEventType, float inEventNotificat
 
 // Loop through event list, if the delegate is null or already there then return,
 // otherwise add it to the delegate list
-void EventMessenger::SubscribeToEvent(uint32_t inEventType, GameObject* inTarget, MessageDelegate inMsgDel)
+void EventMessenger::SubscribeToEvent(const uint32_t& inEventType, GameObject* inTarget, MessageDelegate inMsgDel)
 {
 	if(inMsgDel == NULL || inTarget == NULL)
 		return;
@@ -112,7 +112,7 @@ void EventMessenger::SubscribeToEvent(uint32_t inEventType, GameObject* inTarget
 
 // Loop through event list, if the delegate is null or not there then return,
 // otherwise remove it from the delegate list
-void EventMessenger::UnsubscribeToEvent(uint32_t inEventType, GameObject* inTarget, MessageDelegate inMsgDel)
+void EventMessenger::UnsubscribeToEvent(const uint32_t& inEventType, GameObject* inTarget, MessageDelegate inMsgDel)
 {
 	if(inMsgDel == NULL || inTarget == NULL)
 		return;

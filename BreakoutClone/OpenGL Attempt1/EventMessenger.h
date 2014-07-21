@@ -23,7 +23,7 @@ enum EventType
 	COLLISION,
 	DEATH,
 
-	INPUT_1_DOWN,
+	INPUT_1_PRESS,
 	INPUT_1_RELEASE,
 	INPUT_2_PRESS,
 	INPUT_2_RELEASE,
@@ -154,10 +154,10 @@ enum EventType
 	INPUT_UP_PRESS,
 	INPUT_UP_RELEASE,
 
-	INPUT_LEFT_CLICK,
-	INPUT_LEFT_RELEASE,
-	INPUT_RIGHT_CLICK,
-	INPUT_RIGHT_RELEASE,
+	INPUT_LEFT_CLICK_PRESS,
+	INPUT_LEFT_CLICK_RELEASE,
+	INPUT_RIGHT_CLICK_PRESS,
+	INPUT_RIGHT_CLICK_RELEASE,
 
 	NUM_EVENTS
 };
@@ -182,11 +182,11 @@ public:
 	static EventMessenger* GetSingleton();
 
 	// Will have to add another parameter for passing event specific info, an array of string or uint params maybe
-	void RecordEvent(uint32_t inEventType, GameObject* inTarget, float inEventNotificationDelay = 0.f);
-	void BroadcastEvent(uint32_t inEventType, float inEventNotificationDelay = 0.f);
+	void RecordEvent(const uint32_t& inEventType, GameObject* inTarget, const float& inEventNotificationDelay = 0.f);
+	void BroadcastEvent(const uint32_t& inEventType, const float& inEventNotificationDelay = 0.f);
 
-	void SubscribeToEvent(uint32_t inEventType, GameObject* inTarget, MessageDelegate inMsgDel);
-	void UnsubscribeToEvent(uint32_t inEventType, GameObject* inTarget, MessageDelegate inMsgDel);
+	void SubscribeToEvent(const uint32_t& inEventType, GameObject* inTarget, MessageDelegate inMsgDel);
+	void UnsubscribeToEvent(const uint32_t& inEventType, GameObject* inTarget, MessageDelegate inMsgDel);
 
 	// TODO - Add delayed events, will likely need an event queue
 	//void Update(float inDT);
