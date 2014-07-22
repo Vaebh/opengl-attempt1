@@ -112,4 +112,10 @@ void SpriteComponent::Draw()
     glm::mat4 model;
 	model = glm::translate(model, GetOwner()->GetPosition()) * glm::scale(model, GetOwner()->mScale) * glm::rotate(model, GetOwner()->mRotationAngle.x, X_UNIT_POSITIVE) * glm::rotate(model, GetOwner()->mRotationAngle.y, Y_UNIT_POSITIVE) * glm::rotate(model, GetOwner()->mRotationAngle.z, Z_UNIT_POSITIVE);
     glUniformMatrix4fv(mMoveUniform, 1, GL_FALSE, glm::value_ptr(CalculateMatrix()));
+
+    float spriteFrameDivisorX = 1.f / mNumFrames;
+
+	//Vector2 spriteIndexMult(0.5f, 1.f);
+	glUniform2f(mSpriteCoord, spriteFrameDivisorX, 1.f);
+	glUniform1i(mUniformSpriteIndex, mCurrentFrame);
 }
