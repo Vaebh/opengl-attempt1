@@ -134,7 +134,7 @@ void RenderSystem::Draw()
 			if(spriteShader == NULL)
 			{
 				spriteShader = mComponents[i]->GetShader();
-				glUseProgram(spriteShader);
+				glUseProgram(spriteShader->GetProgramID());
 			}
 
 			mComponents[i]->Draw();
