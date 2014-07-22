@@ -64,3 +64,9 @@ void AnimatedSpriteComponent::Update(float inDT)
 		}
 	}
 }
+
+void AnimatedSpriteComponent::Draw()
+{
+	SpriteComponent::Draw();
+	SendAnimInfo();
+}

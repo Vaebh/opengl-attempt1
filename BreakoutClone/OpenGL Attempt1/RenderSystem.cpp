@@ -131,11 +131,11 @@ void RenderSystem::Draw()
 	{
 		if(mComponents[i]->IsVisible())
 		{
-			//if(spriteShader == NULL)
-			//{
-				//spriteShader = mComponents[i]->GetShader();
-			glUseProgram(mComponents[i]->GetShader()->GetProgramID());
-			//}
+			if(spriteShader == NULL)
+			{
+				spriteShader = mComponents[i]->GetShader();
+				glUseProgram(spriteShader);
+			}
 
 			mComponents[i]->Draw();
 
