@@ -8,7 +8,7 @@
 class ISystem
 {
 public:
-	ISystem();
+	//ISystem();
 	//virtual ~ISystem();
 
 	virtual void Update(float inDT) = 0;
