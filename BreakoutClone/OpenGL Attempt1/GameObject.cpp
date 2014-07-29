@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "Foundation.h"
 #include <algorithm>
 
 unsigned int GameObject::mNumGameObjects = 0;
@@ -15,10 +16,10 @@ mVelocity(0)
 
 GameObject::~GameObject()
 {
-	for each(IComponent* theComponent in mComponents)
-	{
-		delete theComponent;
-	}
+    for(uint32_t i = 0; i < mComponents.size(); ++i)
+    {
+        SAFE_DELETE(mComponents[i]);
+    }
 
 	mComponents.clear();
 }
@@ -60,9 +61,9 @@ void GameObject::MovePosition(Vector3 inPosition)
 {
 	inPosition = GetPosition() + inPosition;
 
-	for each(IComponent* theComponent in mComponents)
-	{
-		theComponent->PrePositionSet(inPosition);
+	for(uint32_t i = 0; i < mComponents.size(); ++i)
+    {
+		mComponents[i]->PrePositionSet(inPosition);
 	}
 
 	SetPosition(inPosition);

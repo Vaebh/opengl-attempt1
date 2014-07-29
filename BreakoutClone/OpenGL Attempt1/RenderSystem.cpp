@@ -1,9 +1,15 @@
 #include "RenderSystem.h"
 #include "Shader.h"
+#include <iostream>
 
 RenderSystem* RenderSystem::mRenderer = NULL;
 
 GLFWwindow* RenderSystem::mWindow;
+
+static void ErrorCallback(int error, const char* description)
+{
+    std::cout<< "GLFW ERROR: " << description << std::endl;
+}
 
 namespace
 {
@@ -12,19 +18,26 @@ namespace
 	{
 		if (!glfwInit())
 			return NULL;
+        
+        glfwSetErrorCallback(ErrorCallback);
     
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+		//glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+		//glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+		//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
 		glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
 		GLFWwindow* window = glfwCreateWindow(640, 480, "Breakout Clone", NULL, NULL);
-  
-		if (!window)
+        
+		if(!window)
 		{
 			glfwTerminate();
-				return NULL;
+            return NULL;
 		}
   
 		glfwMakeContextCurrent(window);
