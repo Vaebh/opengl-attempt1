@@ -24,7 +24,7 @@ EventMessenger::EventMessenger()
 	Event newEvent;
 
 	mEvents.reserve(NUM_EVENTS);
-	for(unsigned int i = 0; i < NUM_EVENTS; ++i)
+	for(uint32_t i = 0; i < NUM_EVENTS; ++i)
 	{
 		newEvent.mEventType = EventType(i);
 
@@ -44,12 +44,14 @@ EventMessenger* EventMessenger::GetSingleton()
 
 void EventMessenger::RecordEvent(const uint32_t& inEventType, GameObject* inTarget, const float& inEventNotificationDelay)
 {
-	for each(Event theEvent in mEvents)
+    for(uint32_t i = 0; i < mEvents.size(); ++i)
 	{
-		if(theEvent.mEventType == inEventType)
+		if(mEvents[i].mEventType == inEventType)
 		{
-			for each(EventPair theEventPair in theEvent.mEventTargets)
+			for(uint32_t j = 0; j < mEvents[i].mEventTargets.size(); ++j)
 			{
+                EventPair& theEventPair = mEvents[i].mEventTargets[j];
+                
 				// If the recorded gameobject matches the stored gameobject
 				if(theEventPair.first != NULL && theEventPair.first == inTarget)
 				{
@@ -63,13 +65,13 @@ void EventMessenger::RecordEvent(const uint32_t& inEventType, GameObject* inTarg
 
 void EventMessenger::BroadcastEvent(const uint32_t& inEventType, const float& inEventNotificationDelay)
 {
-	for each(Event theEvent in mEvents)
+    for(uint32_t i = 0; i < mEvents.size(); ++i)
 	{
-		if(theEvent.mEventType == inEventType)
+		if(mEvents[i].mEventType == inEventType)
 		{
-			for each(EventPair theEventPair in theEvent.mEventTargets)
+            for(uint32_t j = 0; j < mEvents[i].mEventTargets.size(); ++j)
 			{
-				(*theEventPair.second)(inEventType, NULL);
+				(*mEvents[i].mEventTargets[j].second)(inEventType, NULL);
 			}
 		}
 	}
@@ -82,13 +84,15 @@ void EventMessenger::SubscribeToEvent(const uint32_t& inEventType, GameObject* i
 	if(inMsgDel == NULL || inTarget == NULL)
 		return;
 
-	for(unsigned int i = 0; i < mEvents.size(); ++i)
+	for(uint32_t i = 0; i < mEvents.size(); ++i)
 	{
 		if(mEvents[i].mEventType == inEventType)
 		{
-			for(unsigned int j = 0; j < mEvents[i].mEventTargets.size(); ++j)
+			for(uint32_t j = 0; j < mEvents[i].mEventTargets.size(); ++j)
 			{
-				if(mEvents[i].mEventTargets[j].first == inTarget || mEvents[i].mEventTargets[j].second == inMsgDel)
+                EventPair& theEventPair = mEvents[i].mEventTargets[j];
+                
+				if(theEventPair.first == inTarget || theEventPair.second == inMsgDel)
 				{
 					// If it's the same GameObject that we're subscribing to then just add the message delegate
 					// to that GameObjects vector of MessageDelegates, once it's implemented
@@ -117,12 +121,14 @@ void EventMessenger::UnsubscribeToEvent(const uint32_t& inEventType, GameObject*
 	if(inMsgDel == NULL || inTarget == NULL)
 		return;
 
-	for each(Event theEvent in GetSingleton()->mEvents)
+	for(uint32_t i = 0; i < mEvents.size(); ++i)
 	{
-		if(theEvent.mEventType == inEventType)
+		if(mEvents[i].mEventType == inEventType)
 		{
-			for each(EventPair theEventPair in theEvent.mEventTargets)
+			for(uint32_t j = 0; j < mEvents[i].mEventTargets.size(); ++j)
 			{
+                EventPair& theEventPair = mEvents[i].mEventTargets[j];
+                
 				if(theEventPair.first == inTarget && theEventPair.second == inMsgDel)
 				{
 					// Should actually remove these from the vector

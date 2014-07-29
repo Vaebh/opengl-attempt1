@@ -2,35 +2,37 @@
 
 #include <iostream>
 #include <fstream>
+#include <string>
+using namespace std;
 
 using std::cout;
 using std::endl;
 
 /*GLFWwindow* InitialiseWindow()
 {
-        if (!glfwInit())
-                return NULL;
-    
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    if (!glfwInit())
+        return NULL;
 
-        glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-        GLFWwindow* window = glfwCreateWindow(640, 480, "Red Square Adventures", NULL, NULL);
-  
-        if (!window)
-        {
-                glfwTerminate();
-                        return NULL;
-        }
-  
-        glfwMakeContextCurrent(window);
+    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-        glewExperimental = GL_TRUE;
-        glewInit();
+    GLFWwindow* window = glfwCreateWindow(640, 480, "Red Square Adventures", NULL, NULL);
 
-        return window;
+    if (!window)
+    {
+            glfwTerminate();
+                    return NULL;
+    }
+
+    glfwMakeContextCurrent(window);
+
+    glewExperimental = GL_TRUE;
+    glewInit();
+
+    return window;
 }*/
 
 bool ShaderCompilationCheck(GLuint shader, std::string shaderType)
@@ -42,7 +44,7 @@ bool ShaderCompilationCheck(GLuint shader, std::string shaderType)
 		cout << shaderType + " shader compilation SUCCESS" << endl;
 		return true;
 	}
-	else if(status == GL_FALSE)
+	else
 	{
 		cout << shaderType + " shader compilation FAILED" << endl;
 		return false;
@@ -162,6 +164,11 @@ TextureData LoadImage(const GLchar * path)
 	glBindTexture(GL_TEXTURE_2D, texture);
 	image = SOIL_load_image(path, &width, &height, 0, SOIL_LOAD_RGBA);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+    if(image == NULL)
+    {
+        cout << "Image " << path << " is null!" << endl;
+        cout << SOIL_last_result() << endl;
+    }
 	SOIL_free_image_data(image);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);

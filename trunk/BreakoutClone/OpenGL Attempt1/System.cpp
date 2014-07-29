@@ -1,4 +1,5 @@
 #include "System.h"
+#include "Component.h"
 
 ISystem::ISystem()
 {
@@ -7,11 +8,11 @@ ISystem::ISystem()
 
 void ISystem::Update(float inDT)
 {
-	for(std::vector<IComponent>::const_iterator it = mComponents.begin(); it != mComponents.end(); ++it)
+	/*for(std::vector<IComponent>::const_iterator it = mComponents.begin(); it != mComponents.end(); ++it)
 	{
 		if((*it) != NULL)
 		{
 			it->Update(inDT);
 		}
-	}
+	}*/
 }

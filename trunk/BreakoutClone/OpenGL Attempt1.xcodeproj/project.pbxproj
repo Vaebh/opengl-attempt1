@@ -7,6 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CEA90B801982590E00E0B2FC /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA90B7F1982590E00E0B2FC /* OpenGL.framework */; };
+		CEA90B821982591F00E0B2FC /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA90B811982591F00E0B2FC /* GLUT.framework */; };
+		CEA90B841982593600E0B2FC /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA90B831982593600E0B2FC /* CoreFoundation.framework */; };
+		CEA90B8819825D8F00E0B2FC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA90B8719825D8F00E0B2FC /* Cocoa.framework */; };
+		CEA90B8A19825EE300E0B2FC /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA90B8919825EE300E0B2FC /* IOKit.framework */; };
+		CEA90B8C19825EFC00E0B2FC /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA90B8B19825EFC00E0B2FC /* CoreVideo.framework */; };
+		CEA96DA81987AC1400084C54 /* libGLEW.1.10.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA96DA01987AC1400084C54 /* libGLEW.1.10.0.dylib */; };
+		CEA96DA91987AC1400084C54 /* libGLEW.1.10.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA96DA11987AC1400084C54 /* libGLEW.1.10.0.dylib */; };
+		CEA96DAA1987AC1400084C54 /* libGLEW.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA96DA21987AC1400084C54 /* libGLEW.a */; };
+		CEA96DAB1987AC1400084C54 /* libGLEW.1.10.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA96DA31987AC1400084C54 /* libGLEW.1.10.0.dylib */; };
+		CEA96DAC1987AC1400084C54 /* libGLEWmx.1.10.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA96DA41987AC1400084C54 /* libGLEWmx.1.10.0.dylib */; };
+		CEA96DAD1987AC1400084C54 /* libGLEWmx.1.10.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA96DA51987AC1400084C54 /* libGLEWmx.1.10.0.dylib */; };
+		CEA96DAE1987AC1400084C54 /* libGLEWmx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA96DA61987AC1400084C54 /* libGLEWmx.a */; };
+		CEA96DAF1987AC1400084C54 /* libGLEWmx.1.10.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA96DA71987AC1400084C54 /* libGLEWmx.1.10.0.dylib */; };
+		CEA96DB11987AD2000084C54 /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA96DB01987AD2000084C54 /* libglfw3.a */; };
+		CEA96DB61987ADE800084C54 /* image_DXT.o in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA96DB21987ADE800084C54 /* image_DXT.o */; };
+		CEA96DB71987ADE800084C54 /* image_helper.o in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA96DB31987ADE800084C54 /* image_helper.o */; };
+		CEA96DB81987ADE800084C54 /* SOIL.o in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA96DB41987ADE800084C54 /* SOIL.o */; };
+		CEA96DB91987ADE800084C54 /* stb_image_aug.o in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA96DB51987ADE800084C54 /* stb_image_aug.o */; };
 		CEAC8BFE197FB13F00D01C4C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEAC8BFD197FB13F00D01C4C /* main.cpp */; };
 		CEAC8C41197FE82A00D01C4C /* AnimatedSpriteComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEAC8C08197FE82A00D01C4C /* AnimatedSpriteComponent.cpp */; };
 		CEAC8C42197FE82A00D01C4C /* AudioSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEAC8C0A197FE82A00D01C4C /* AudioSystem.cpp */; };
@@ -48,6 +67,31 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CEA90B6519824F2500E0B2FC /* glfw3.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = glfw3.lib; path = ../Dependancies/GLFW3/lib/glfw3.lib; sourceTree = "<group>"; };
+		CEA90B771982586700E0B2FC /* image_DXT.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = image_DXT.o; path = "../Simple OpenGL Image Library/obj/image_DXT.o"; sourceTree = "<group>"; };
+		CEA90B781982586700E0B2FC /* image_helper.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = image_helper.o; path = "../Simple OpenGL Image Library/obj/image_helper.o"; sourceTree = "<group>"; };
+		CEA90B791982586700E0B2FC /* SOIL.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = SOIL.o; path = "../Simple OpenGL Image Library/obj/SOIL.o"; sourceTree = "<group>"; };
+		CEA90B7A1982586700E0B2FC /* stb_image_aug.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = stb_image_aug.o; path = "../Simple OpenGL Image Library/obj/stb_image_aug.o"; sourceTree = "<group>"; };
+		CEA90B7F1982590E00E0B2FC /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		CEA90B811982591F00E0B2FC /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		CEA90B831982593600E0B2FC /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		CEA90B8719825D8F00E0B2FC /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		CEA90B8919825EE300E0B2FC /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		CEA90B8B19825EFC00E0B2FC /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		CEA90BA41982A4A900E0B2FC /* Ball2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Ball2.png; sourceTree = "<group>"; };
+		CEA96DA01987AC1400084C54 /* libGLEW.1.10.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.1.10.0.dylib; path = "../Dependancies/glew-1.10.0/lib/libGLEW.1.10.0.dylib"; sourceTree = "<group>"; };
+		CEA96DA11987AC1400084C54 /* libGLEW.1.10.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.1.10.0.dylib; path = "../Dependancies/glew-1.10.0/lib/libGLEW.1.10.0.dylib"; sourceTree = "<group>"; };
+		CEA96DA21987AC1400084C54 /* libGLEW.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGLEW.a; path = "../Dependancies/glew-1.10.0/lib/libGLEW.a"; sourceTree = "<group>"; };
+		CEA96DA31987AC1400084C54 /* libGLEW.1.10.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.1.10.0.dylib; path = "../Dependancies/glew-1.10.0/lib/libGLEW.1.10.0.dylib"; sourceTree = "<group>"; };
+		CEA96DA41987AC1400084C54 /* libGLEWmx.1.10.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEWmx.1.10.0.dylib; path = "../Dependancies/glew-1.10.0/lib/libGLEWmx.1.10.0.dylib"; sourceTree = "<group>"; };
+		CEA96DA51987AC1400084C54 /* libGLEWmx.1.10.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEWmx.1.10.0.dylib; path = "../Dependancies/glew-1.10.0/lib/libGLEWmx.1.10.0.dylib"; sourceTree = "<group>"; };
+		CEA96DA61987AC1400084C54 /* libGLEWmx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGLEWmx.a; path = "../Dependancies/glew-1.10.0/lib/libGLEWmx.a"; sourceTree = "<group>"; };
+		CEA96DA71987AC1400084C54 /* libGLEWmx.1.10.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEWmx.1.10.0.dylib; path = "../Dependancies/glew-1.10.0/lib/libGLEWmx.1.10.0.dylib"; sourceTree = "<group>"; };
+		CEA96DB01987AD2000084C54 /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = ../Dependancies/GLFW3/lib/libglfw3.a; sourceTree = "<group>"; };
+		CEA96DB21987ADE800084C54 /* image_DXT.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = image_DXT.o; path = ../Dependancies/SOIL/lib/image_DXT.o; sourceTree = "<group>"; };
+		CEA96DB31987ADE800084C54 /* image_helper.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = image_helper.o; path = ../Dependancies/SOIL/lib/image_helper.o; sourceTree = "<group>"; };
+		CEA96DB41987ADE800084C54 /* SOIL.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = SOIL.o; path = ../Dependancies/SOIL/lib/SOIL.o; sourceTree = "<group>"; };
+		CEA96DB51987ADE800084C54 /* stb_image_aug.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = stb_image_aug.o; path = ../Dependancies/SOIL/lib/stb_image_aug.o; sourceTree = "<group>"; };
 		CEAC8BFD197FB13F00D01C4C /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		CEAC8C07197FC8FE00D01C4C /* OpenGL Attempt1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "OpenGL Attempt1"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEAC8C08197FE82A00D01C4C /* AnimatedSpriteComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatedSpriteComponent.cpp; sourceTree = "<group>"; };
@@ -114,6 +158,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEA96DB61987ADE800084C54 /* image_DXT.o in Frameworks */,
+				CEA96DB71987ADE800084C54 /* image_helper.o in Frameworks */,
+				CEA96DB81987ADE800084C54 /* SOIL.o in Frameworks */,
+				CEA96DB91987ADE800084C54 /* stb_image_aug.o in Frameworks */,
+				CEA96DB11987AD2000084C54 /* libglfw3.a in Frameworks */,
+				CEA96DA81987AC1400084C54 /* libGLEW.1.10.0.dylib in Frameworks */,
+				CEA96DA91987AC1400084C54 /* libGLEW.1.10.0.dylib in Frameworks */,
+				CEA96DAA1987AC1400084C54 /* libGLEW.a in Frameworks */,
+				CEA96DAB1987AC1400084C54 /* libGLEW.1.10.0.dylib in Frameworks */,
+				CEA96DAC1987AC1400084C54 /* libGLEWmx.1.10.0.dylib in Frameworks */,
+				CEA96DAD1987AC1400084C54 /* libGLEWmx.1.10.0.dylib in Frameworks */,
+				CEA96DAE1987AC1400084C54 /* libGLEWmx.a in Frameworks */,
+				CEA96DAF1987AC1400084C54 /* libGLEWmx.1.10.0.dylib in Frameworks */,
+				CEA90B8C19825EFC00E0B2FC /* CoreVideo.framework in Frameworks */,
+				CEA90B8A19825EE300E0B2FC /* IOKit.framework in Frameworks */,
+				CEA90B8819825D8F00E0B2FC /* Cocoa.framework in Frameworks */,
+				CEA90B841982593600E0B2FC /* CoreFoundation.framework in Frameworks */,
+				CEA90B821982591F00E0B2FC /* GLUT.framework in Frameworks */,
+				CEA90B801982590E00E0B2FC /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,6 +186,30 @@
 		CEAC8BF1197FB13F00D01C4C = {
 			isa = PBXGroup;
 			children = (
+				CEA96DB21987ADE800084C54 /* image_DXT.o */,
+				CEA96DB31987ADE800084C54 /* image_helper.o */,
+				CEA96DB41987ADE800084C54 /* SOIL.o */,
+				CEA96DB51987ADE800084C54 /* stb_image_aug.o */,
+				CEA96DB01987AD2000084C54 /* libglfw3.a */,
+				CEA96DA01987AC1400084C54 /* libGLEW.1.10.0.dylib */,
+				CEA96DA11987AC1400084C54 /* libGLEW.1.10.0.dylib */,
+				CEA96DA21987AC1400084C54 /* libGLEW.a */,
+				CEA96DA31987AC1400084C54 /* libGLEW.1.10.0.dylib */,
+				CEA96DA41987AC1400084C54 /* libGLEWmx.1.10.0.dylib */,
+				CEA96DA51987AC1400084C54 /* libGLEWmx.1.10.0.dylib */,
+				CEA96DA61987AC1400084C54 /* libGLEWmx.a */,
+				CEA96DA71987AC1400084C54 /* libGLEWmx.1.10.0.dylib */,
+				CEA90B8B19825EFC00E0B2FC /* CoreVideo.framework */,
+				CEA90B8919825EE300E0B2FC /* IOKit.framework */,
+				CEA90B8719825D8F00E0B2FC /* Cocoa.framework */,
+				CEA90B831982593600E0B2FC /* CoreFoundation.framework */,
+				CEA90B811982591F00E0B2FC /* GLUT.framework */,
+				CEA90B7F1982590E00E0B2FC /* OpenGL.framework */,
+				CEA90B771982586700E0B2FC /* image_DXT.o */,
+				CEA90B781982586700E0B2FC /* image_helper.o */,
+				CEA90B791982586700E0B2FC /* SOIL.o */,
+				CEA90B7A1982586700E0B2FC /* stb_image_aug.o */,
+				CEA90B6519824F2500E0B2FC /* glfw3.lib */,
 				CEAC8BFC197FB13F00D01C4C /* OpenGL Attempt1 */,
 				CEAC8C07197FC8FE00D01C4C /* OpenGL Attempt1 */,
 			);
@@ -131,6 +218,7 @@
 		CEAC8BFC197FB13F00D01C4C /* OpenGL Attempt1 */ = {
 			isa = PBXGroup;
 			children = (
+				CEA90BA41982A4A900E0B2FC /* Ball2.png */,
 				CEAC8C08197FE82A00D01C4C /* AnimatedSpriteComponent.cpp */,
 				CEAC8C09197FE82A00D01C4C /* AnimatedSpriteComponent.h */,
 				CEAC8C0A197FE82A00D01C4C /* AudioSystem.cpp */,
@@ -312,7 +400,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"\"/Users/user/Documents/Stuff/GL Stuff/Dependancies/gl\"",
-					"\"/Users/user/Documents/Stuff/GL Stuff/Dependancies/glew-1.10.0/include\"",
+					"\"/Users/user/Documents/Stuff/GL Stuff/glew/1.10.0/include\"",
 					"\"/Users/user/Documents/Stuff/GL Stuff/Dependancies/glfw-3.0.4/include\"",
 					"\"/Users/user/Documents/Stuff/GL Stuff/Dependancies/Simple OpenGL Image Library/src\"",
 					"\"/Users/user/Documents/Stuff/GL Stuff/Dependancies/glm/glm\"",
@@ -375,6 +463,22 @@
 		CEAC8C04197FB13F00D01C4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"/Users/user/Documents/Stuff/GL Stuff/Dependancies/gl\"",
+					"\"/Users/user/Documents/Stuff/GL Stuff/Dependancies/glew-1.10.0/include\"",
+					"\"/Users/user/Documents/Stuff/GL Stuff/Dependancies/GLFW3/include\"",
+					"\"/Users/user/Documents/Stuff/GL Stuff/Dependancies/SOIL/src\"",
+					"\"/Users/user/Documents/Stuff/GL Stuff/Dependancies/glm/glm\"",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"/Users/user/Documents/Stuff/GL Stuff/Dependancies/GLFW3/lib\"",
+					"\"/Users/user/Documents/Stuff/GL Stuff/Dependancies/glew-1.10.0/lib\"",
+					/Users/user/Documents/Stuff/GL,
+					"Stuff/SOIL/lib\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -382,6 +486,13 @@
 		CEAC8C05197FB13F00D01C4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"/Users/user/Documents/Stuff/GL Stuff/Dependancies/GLFW3/lib\"",
+					"\"/Users/user/Documents/Stuff/GL Stuff/Dependancies/glew-1.10.0/lib\"",
+					/Users/user/Documents/Stuff/GL,
+					"Stuff/SOIL/lib\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

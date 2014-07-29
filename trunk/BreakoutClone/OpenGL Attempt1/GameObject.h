@@ -5,6 +5,7 @@
 #include "Vectors.h"
 
 #include <vector>
+#include <string>
 
 class IComponent;
 
@@ -49,15 +50,15 @@ private:
 template<class ComponentType>
 ComponentType* GameObject::GetComponent()
 {
-	for each(IComponent* theComponent in mComponents)
-	{
-		ComponentType* soughtComp = dynamic_cast<ComponentType*>(theComponent);
-
+    for(uint32_t i = 0; i < mComponents.size(); ++i)
+    {
+        ComponentType* soughtComp = dynamic_cast<ComponentType*>(mComponents[i]);
+        
 		if(soughtComp != NULL)
 		{
 			return soughtComp;
 		}
-	}
+    }
 
 	return NULL;
 }
