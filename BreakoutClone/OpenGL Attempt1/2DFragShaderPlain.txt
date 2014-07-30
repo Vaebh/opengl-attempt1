@@ -4,8 +4,9 @@ in vec2 Texcoord;
 out vec4 outColor;
 
 uniform sampler2D textureSprite;
+uniform vec4 uniformColour;
 
 void main()
 {
-	outColor = texture(textureSprite, Texcoord);
+	outColor = clamp(texture(textureSprite, Texcoord) + uniformColour, 0.0, 1.0);
 }

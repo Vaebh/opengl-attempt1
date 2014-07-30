@@ -33,7 +33,9 @@ public:
 	GLuint mSpriteCoord;
 	GLuint mUniformSpriteIndex;
 
-	float speed;
+	GLuint mColourTintUniform;
+
+	Vector4 mColourTint;
 
 private:
 	void Initialise();

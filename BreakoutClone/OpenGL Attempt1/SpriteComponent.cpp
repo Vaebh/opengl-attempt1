@@ -22,7 +22,12 @@ const std::string DEFAULT_FRAG_SHADER = "2DFragShaderPlain.txt";
 
 using namespace std;
 
-SpriteComponent::SpriteComponent(const std::string inTexture, int inNumFrames) : IRenderableComponent(), mNumFrames(inNumFrames), mCurrentFrame(0)
+SpriteComponent::SpriteComponent(const std::string inTexture, int inNumFrames) :
+IRenderableComponent(),
+mNumFrames(inNumFrames),
+mCurrentFrame(0),
+mColourTintUniform(0),
+mColourTint(Vector4(0.f, 0.f, 0.f, 1.f))
 {
 	Initialise();
 	SetShader(DEFAULT_VERT_SHADER, DEFAULT_FRAG_SHADER);
@@ -72,6 +77,7 @@ void SpriteComponent::SetShader(const std::string inVertexShaderSrc, const std::
 	mMoveUniform = glGetUniformLocation(mShader->GetProgramID(), "move");
 	mSpriteCoord = glGetUniformLocation(mShader->GetProgramID(), "spriteOffset");
 	mUniformSpriteIndex = glGetUniformLocation(mShader->GetProgramID(), "currentFrame");
+	mColourTintUniform = glGetUniformLocation(mShader->GetProgramID(), "uniformColour");
 
 
 	// TODO - REMOVE ALL STATEMENTS BELOW THIS WHEN THIS HAS BEEN TESTED
@@ -115,4 +121,6 @@ void SpriteComponent::Draw()
 	//Vector2 spriteIndexMult(0.5f, 1.f);
 	glUniform2f(mSpriteCoord, spriteFrameDivisorX, 1.f);
 	glUniform1i(mUniformSpriteIndex, mCurrentFrame);
+
+	glUniform4f(mColourTintUniform, mColourTint.x, mColourTint.y, mColourTint.z, mColourTint.w);
 }
