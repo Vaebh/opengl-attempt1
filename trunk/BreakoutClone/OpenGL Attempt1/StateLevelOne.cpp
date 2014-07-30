@@ -4,6 +4,7 @@
 #include "Foundation.h"
 #include "EventMessenger.h"
 #include "ComponentBallController.h"
+#include "SpriteComponent.h"
 
 // TODO - CONVERT THIS OVER ONCE NEW STUFF IS DONE
 
@@ -68,6 +69,8 @@ void StateLevelOne::HandleEvent(uint32_t inEventType, GameObject* inTarget)
 	else if(inEventType == COLLISION && inTarget == mBall)
 	{
 		std::cout << "=============BALL COLLIDED=============\n";
+
+		mBall->GetComponent<SpriteComponent>()->mColourTint = Vector4(0.f, 0.f, 1.f, 0.f);
 	}
 }
 
