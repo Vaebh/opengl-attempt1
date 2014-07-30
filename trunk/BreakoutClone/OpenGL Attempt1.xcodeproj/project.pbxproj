@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CEA83D6B1988FDAD008C686E /* libfmod.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA83D691988FDAD008C686E /* libfmod.dylib */; };
+		CEA83D6C1988FDAD008C686E /* libfmodL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA83D6A1988FDAD008C686E /* libfmodL.dylib */; };
 		CEA90B801982590E00E0B2FC /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA90B7F1982590E00E0B2FC /* OpenGL.framework */; };
 		CEA90B821982591F00E0B2FC /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA90B811982591F00E0B2FC /* GLUT.framework */; };
 		CEA90B841982593600E0B2FC /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA90B831982593600E0B2FC /* CoreFoundation.framework */; };
@@ -67,11 +69,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		CEA90B6519824F2500E0B2FC /* glfw3.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = glfw3.lib; path = ../Dependancies/GLFW3/lib/glfw3.lib; sourceTree = "<group>"; };
-		CEA90B771982586700E0B2FC /* image_DXT.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = image_DXT.o; path = "../Simple OpenGL Image Library/obj/image_DXT.o"; sourceTree = "<group>"; };
-		CEA90B781982586700E0B2FC /* image_helper.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = image_helper.o; path = "../Simple OpenGL Image Library/obj/image_helper.o"; sourceTree = "<group>"; };
-		CEA90B791982586700E0B2FC /* SOIL.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = SOIL.o; path = "../Simple OpenGL Image Library/obj/SOIL.o"; sourceTree = "<group>"; };
-		CEA90B7A1982586700E0B2FC /* stb_image_aug.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = stb_image_aug.o; path = "../Simple OpenGL Image Library/obj/stb_image_aug.o"; sourceTree = "<group>"; };
+		CEA83D691988FDAD008C686E /* libfmod.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfmod.dylib; path = ../Dependancies/FMOD/lib/libfmod.dylib; sourceTree = "<group>"; };
+		CEA83D6A1988FDAD008C686E /* libfmodL.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfmodL.dylib; path = ../Dependancies/FMOD/lib/libfmodL.dylib; sourceTree = "<group>"; };
 		CEA90B7F1982590E00E0B2FC /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		CEA90B811982591F00E0B2FC /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		CEA90B831982593600E0B2FC /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -158,6 +157,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEA83D6B1988FDAD008C686E /* libfmod.dylib in Frameworks */,
+				CEA83D6C1988FDAD008C686E /* libfmodL.dylib in Frameworks */,
 				CEA96DB61987ADE800084C54 /* image_DXT.o in Frameworks */,
 				CEA96DB71987ADE800084C54 /* image_helper.o in Frameworks */,
 				CEA96DB81987ADE800084C54 /* SOIL.o in Frameworks */,
@@ -186,6 +187,8 @@
 		CEAC8BF1197FB13F00D01C4C = {
 			isa = PBXGroup;
 			children = (
+				CEA83D691988FDAD008C686E /* libfmod.dylib */,
+				CEA83D6A1988FDAD008C686E /* libfmodL.dylib */,
 				CEA96DB21987ADE800084C54 /* image_DXT.o */,
 				CEA96DB31987ADE800084C54 /* image_helper.o */,
 				CEA96DB41987ADE800084C54 /* SOIL.o */,
@@ -205,11 +208,6 @@
 				CEA90B831982593600E0B2FC /* CoreFoundation.framework */,
 				CEA90B811982591F00E0B2FC /* GLUT.framework */,
 				CEA90B7F1982590E00E0B2FC /* OpenGL.framework */,
-				CEA90B771982586700E0B2FC /* image_DXT.o */,
-				CEA90B781982586700E0B2FC /* image_helper.o */,
-				CEA90B791982586700E0B2FC /* SOIL.o */,
-				CEA90B7A1982586700E0B2FC /* stb_image_aug.o */,
-				CEA90B6519824F2500E0B2FC /* glfw3.lib */,
 				CEAC8BFC197FB13F00D01C4C /* OpenGL Attempt1 */,
 				CEAC8C07197FC8FE00D01C4C /* OpenGL Attempt1 */,
 			);
@@ -471,13 +469,14 @@
 					"\"/Users/user/Documents/Stuff/GL Stuff/Dependancies/GLFW3/include\"",
 					"\"/Users/user/Documents/Stuff/GL Stuff/Dependancies/SOIL/src\"",
 					"\"/Users/user/Documents/Stuff/GL Stuff/Dependancies/glm/glm\"",
+					"\"/Users/user/Documents/Stuff/GL Stuff/Dependancies/FMOD/inc\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"/Users/user/Documents/Stuff/GL Stuff/Dependancies/GLFW3/lib\"",
 					"\"/Users/user/Documents/Stuff/GL Stuff/Dependancies/glew-1.10.0/lib\"",
-					/Users/user/Documents/Stuff/GL,
-					"Stuff/SOIL/lib\"",
+					"\"/Users/user/Documents/Stuff/GL Stuff/SOIL/lib\"",
+					"\"/Users/user/Documents/Stuff/GL Stuff/Dependancies/FMOD/lib\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -490,8 +489,8 @@
 					"$(inherited)",
 					"\"/Users/user/Documents/Stuff/GL Stuff/Dependancies/GLFW3/lib\"",
 					"\"/Users/user/Documents/Stuff/GL Stuff/Dependancies/glew-1.10.0/lib\"",
-					/Users/user/Documents/Stuff/GL,
-					"Stuff/SOIL/lib\"",
+					"\"/Users/user/Documents/Stuff/GL Stuff/SOIL/lib\"",
+					"\"/Users/user/Documents/Stuff/GL Stuff/Dependancies/FMOD/lib\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
