@@ -1,4 +1,4 @@
-#ifndef COMMAND_SIMENGINE
+/*#ifndef COMMAND_SIMENGINE
 #define COMMAND_SIMENGINE
 
 #include "Entity.h"
@@ -71,5 +71,4 @@ public:
 	void Execute(Entity* inEntity, float inDeltaTime);
 };
 
-#endif
-
+#endif*/

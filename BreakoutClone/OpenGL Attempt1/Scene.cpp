@@ -1,4 +1,4 @@
-#include "Scene.h"
+/*#include "Scene.h"
 
 // TODO - PROBABLY GET RID OF THIS, BUT COMMENT IT OUT FOR NOW
 
@@ -39,4 +39,4 @@ void Scene::Update(float inDT)
 	{
 		theEntity->Update(inDT);
 	}
-}
+}*/

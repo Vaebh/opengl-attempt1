@@ -1,10 +1,10 @@
 #include "System.h"
 #include "Component.h"
 
-ISystem::ISystem()
+/*ISystem::ISystem()
 {
 
-}
+}*/
 
 void ISystem::Update(float inDT)
 {
