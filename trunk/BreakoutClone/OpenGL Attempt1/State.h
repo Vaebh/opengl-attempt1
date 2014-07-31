@@ -1,7 +1,7 @@
 #ifndef STATE_SIMENGINE
 #define STATE_SIMENGINE
 
-#include "Scene.h"
+//#include "Scene.h"
 #include "GameObject.h"
 
 class IState
