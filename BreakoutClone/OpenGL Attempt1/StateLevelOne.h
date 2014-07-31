@@ -5,8 +5,6 @@
 #include "BlockManager.h"
 #include "Foundation.h"
 
-#include "Input.h"
-
 class StateLevelOne : public IState
 {
 public:

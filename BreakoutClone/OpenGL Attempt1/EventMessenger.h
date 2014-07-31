@@ -174,7 +174,7 @@ struct Event
 	std::vector<EventPair> mEventTargets;
 };
 
-class EventMessenger final
+class EventMessenger
 {
 public:
 	EventMessenger();
