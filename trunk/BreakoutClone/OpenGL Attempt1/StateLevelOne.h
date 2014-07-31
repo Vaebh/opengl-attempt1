@@ -18,9 +18,9 @@ public:
 	void HandleEvent(uint32_t inEventType, GameObject* inTarget);
 
 private:
-	BlockManager* mBlockManager;
-	GameObject* mBall;
-	GameObject* mPaddle;
+    std::unique_ptr<BlockManager> mBlockManager;
+	std::unique_ptr<GameObject> mBall;
+	std::unique_ptr<GameObject> mPaddle;
 };
 
 #endif

@@ -10,36 +10,36 @@
 
 StateLevelOne::StateLevelOne()
 {
-	mBall = CreateBall();
-	mGameObjects.push_back(mBall);
+	mBall.reset(CreateBall());
+	mGameObjects.push_back(mBall.get());
 
-	mPaddle = CreatePaddle();
-	mGameObjects.push_back(mPaddle);
+	mPaddle.reset(CreatePaddle());
+	mGameObjects.push_back(mPaddle.get());
 
 	ComponentBallController* ballController = mBall->GetComponent<ComponentBallController>();
 	if(ballController)
 	{
-		ballController->SetAimingObject(mPaddle);
+		ballController->SetAimingObject(mPaddle.get());
 	}
 
 	IEventCallback* newCallbackMember = new EventCallbackMember<StateLevelOne>(this, &StateLevelOne::HandleEvent);
-	EventMessenger::GetSingleton()->SubscribeToEvent(COLLISION, mPaddle, newCallbackMember);
-	EventMessenger::GetSingleton()->SubscribeToEvent(COLLISION, mBall, newCallbackMember);
+	EventMessenger::GetSingleton()->SubscribeToEvent(COLLISION, mPaddle.get(), newCallbackMember);
+	EventMessenger::GetSingleton()->SubscribeToEvent(COLLISION, mBall.get(), newCallbackMember);
 
-	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_SPACE_PRESS, mBall, newCallbackMember);
-	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_SPACE_RELEASE, mBall, newCallbackMember);
+	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_SPACE_PRESS, mBall.get(), newCallbackMember);
+	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_SPACE_RELEASE, mBall.get(), newCallbackMember);
 
-	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_W_PRESS, mBall, newCallbackMember);
-	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_W_RELEASE, mBall, newCallbackMember);
+	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_W_PRESS, mBall.get(), newCallbackMember);
+	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_W_RELEASE, mBall.get(), newCallbackMember);
 
-	mBlockManager = new BlockManager(mGameObjects, "");
+	mBlockManager.reset(new BlockManager(mGameObjects, ""));
 }
 
 StateLevelOne::~StateLevelOne()
 {
-	SAFE_DELETE(mBlockManager);
-	SAFE_DELETE(mBall);
-	SAFE_DELETE(mPaddle);
+	mBlockManager.reset();
+	mBall.reset();
+	mPaddle.reset();
 }
 
 void StateLevelOne::HandleEvent(uint32_t inEventType, GameObject* inTarget)
@@ -62,11 +62,11 @@ void StateLevelOne::HandleEvent(uint32_t inEventType, GameObject* inTarget)
 		std::cout << "W released!=============\n";
 	}
 
-	if(inEventType == COLLISION && inTarget == mPaddle)
+	if(inEventType == COLLISION && inTarget == mPaddle.get())
 	{
 		std::cout << "=============PADDLE COLLIDED=============\n";
 	}
-	else if(inEventType == COLLISION && inTarget == mBall)
+	else if(inEventType == COLLISION && inTarget == mBall.get())
 	{
 		std::cout << "=============BALL COLLIDED=============\n";
 

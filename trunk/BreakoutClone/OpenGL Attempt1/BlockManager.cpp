@@ -35,15 +35,16 @@ void BlockManager::Update(float inDT)
 		{
 			if(mBlocks[i][j] != NULL)
 			{
-				for each(IComponent* theComponent in mBlocks[i][j]->mComponents)
+                for(uint32_t k = 0; k < mBlocks[i][j]->mComponents.size(); ++k)
 				{
-					FragileCollisionComponent* fragComp = dynamic_cast<FragileCollisionComponent*>(theComponent);
+					FragileCollisionComponent* fragComp = dynamic_cast<FragileCollisionComponent*>(mBlocks[i][j]->mComponents[k]);
 					if(fragComp)
 					{
 						mBlocks[i][j]->Update(inDT);
 
 						if(fragComp->mDead)
 						{
+                            // Probably shouldn't be deleting this here, instead should be in StateLevelone
 							SAFE_DELETE(mBlocks[i][j]);
 
 							break;

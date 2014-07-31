@@ -9,7 +9,7 @@ class GameObject;
 class IComponent
 {
 public:
-    //IComponent();
+    IComponent();
 	virtual ~IComponent() {}
 
 	virtual void Update(float inDT) = 0;
