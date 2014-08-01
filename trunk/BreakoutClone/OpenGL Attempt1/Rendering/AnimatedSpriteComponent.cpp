@@ -1,4 +1,4 @@
-#include "AnimatedSpriteComponent.h"
+#include "../Rendering/AnimatedSpriteComponent.h"
 
 AnimatedSpriteComponent::AnimatedSpriteComponent(const std::string inTexture, int inNumFrames, float inAnimationSpeed, bool inbLooping) : SpriteComponent(inTexture),
 mAnimSpeed(inAnimationSpeed),

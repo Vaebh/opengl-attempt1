@@ -1,7 +1,7 @@
 #ifndef ANIMATED_SPRITE_COMPONENT_SIMENGINE
 #define ANIMATED_SPRITE_COMPONENT_SIMENGINE
 
-#include "SpriteComponent.h"
+#include "../Rendering/SpriteComponent.h"
 
 class AnimatedSpriteComponent : public SpriteComponent
 {

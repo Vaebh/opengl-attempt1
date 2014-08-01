@@ -1,8 +1,8 @@
-#include "BlockManager.h"
-#include "BreakoutFactory.h"
-#include "FragileCollisionComponent.h"
-#include "Foundation.h"
-#include "StringUtils.h"
+#include "../Game/BlockManager.h"
+#include "../Game/BreakoutFactory.h"
+#include "../Collision/FragileCollisionComponent.h"
+#include "../Foundation/Foundation.h"
+#include "../Foundation/StringUtils.h"
 
 BlockManager::BlockManager(std::vector<GameObject*>& outGameObjects, std::string instrLevelLayout)
 {

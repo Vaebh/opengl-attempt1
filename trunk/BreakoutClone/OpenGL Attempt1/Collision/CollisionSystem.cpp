@@ -1,5 +1,5 @@
-#include "CollisionSystem.h"
-#include "Foundation.h"
+#include "../Collision/CollisionSystem.h"
+#include "../Foundation/Foundation.h"
 
 // TODO - DECIDE WHERE COLLISION IS HAPPENING AND HOW TO USE IT TO PREVENT MOVEMENT
 // TODO - ADD POSITION MANIPULATION METHODS TO GAMEOBJECT AND HAVE THEM CHECK COLLISION FIRST

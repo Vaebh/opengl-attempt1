@@ -1,7 +1,7 @@
 #ifndef FOLLOWMOUSE_COMPONENT_SIMENGINE
 #define FOLLOWMOUSE_COMPONENT_SIMENGINE
 
-#include "Component.h"
+#include "../Structure/Component.h"
 
 enum AXIS
 {

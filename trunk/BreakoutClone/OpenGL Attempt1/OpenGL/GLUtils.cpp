@@ -1,4 +1,4 @@
-#include "GLUtils.h"
+#include "../OpenGL/GLUtils.h"
 
 #include <iostream>
 #include <fstream>
@@ -161,8 +161,13 @@ TextureData LoadImage(const GLchar * path)
 	int width, height;
 	unsigned char* image;
 
+	const std::string imagePath = "\\Assets\\Images\\";
+
+	std::string amendedPath(path);
+	amendedPath = imagePath + amendedPath;
+
 	glBindTexture(GL_TEXTURE_2D, texture);
-	image = SOIL_load_image(path, &width, &height, 0, SOIL_LOAD_RGBA);
+	image = SOIL_load_image(amendedPath.c_str(), &width, &height, 0, SOIL_LOAD_RGBA);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
     if(image == NULL)
     {

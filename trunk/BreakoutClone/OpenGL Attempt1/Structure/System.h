@@ -1,7 +1,7 @@
 #ifndef SYSTEM_SIMENGINE
 #define SYSTEM_SIMENGINE
 
-#include "Component.h"
+#include "../Structure/Component.h"
 #include <string>
 #include <vector>
 

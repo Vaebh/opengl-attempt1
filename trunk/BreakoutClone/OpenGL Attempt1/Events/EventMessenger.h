@@ -1,9 +1,9 @@
 #ifndef EVENT_MESSENGER_SIMENGINE
 #define EVENT_MESSENGER_SIMENGINE
 
-#include "Component.h"
-#include "Foundation.h"
-#include "EventCallback.h"
+#include "../Structure/Component.h"
+#include "../Foundation/Foundation.h"
+#include "../Events/EventCallback.h"
 #include <utility>
 
 // The main problem with this system right now is there's no way to subscribe the events of specific components or gameobjects

@@ -1,7 +1,7 @@
 #ifndef SIMENGINE_STATEMANAGER
 #define SIMENGINE_STATEMANAGER
 
-#include "State.h"
+#include "../Structure/State.h"
 
 class StateManager
 {

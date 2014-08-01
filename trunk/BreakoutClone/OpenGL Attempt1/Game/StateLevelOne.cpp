@@ -1,10 +1,10 @@
-#include "StateLevelOne.h"
-#include "RenderSystem.h"
-#include "BreakoutFactory.h"
-#include "Foundation.h"
-#include "EventMessenger.h"
-#include "ComponentBallController.h"
-#include "SpriteComponent.h"
+#include "../Game/StateLevelOne.h"
+#include "../Rendering/RenderSystem.h"
+#include "../Game/BreakoutFactory.h"
+#include "../Foundation/Foundation.h"
+#include "../Events/EventMessenger.h"
+#include "../Game/ComponentBallController.h"
+#include "../Rendering/SpriteComponent.h"
 
 // TODO - CONVERT THIS OVER ONCE NEW STUFF IS DONE
 

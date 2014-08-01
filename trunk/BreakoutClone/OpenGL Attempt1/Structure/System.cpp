@@ -1,5 +1,5 @@
-#include "System.h"
-#include "Component.h"
+#include "../Structure/System.h"
+#include "../Structure/Component.h"
 
 /*ISystem::ISystem()
 {

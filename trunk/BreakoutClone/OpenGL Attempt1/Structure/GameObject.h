@@ -1,8 +1,8 @@
 #ifndef GAMEOBJECT_SIMENGINE
 #define GAMEOBJECT_SIMENGINE
 
-#include "Component.h"
-#include "Vectors.h"
+#include "../Structure/Component.h"
+#include "../Structure/Vectors.h"
 
 #include <vector>
 #include <string>

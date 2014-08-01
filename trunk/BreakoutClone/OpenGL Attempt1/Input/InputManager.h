@@ -1,11 +1,11 @@
 #ifndef INPUT_MANAGER_SIMENGINE
 #define INPUT_MANAGER_SIMENGINE
 
-#include "GLIncludes.h"
+#include "../OpenGL/GLIncludes.h"
 #include <map>
 #include <list>
-#include "EventMessenger.h"
-#include "Foundation.h"
+#include "../Events/EventMessenger.h"
+#include "../Foundation/Foundation.h"
 #include <utility>
 
 struct Key

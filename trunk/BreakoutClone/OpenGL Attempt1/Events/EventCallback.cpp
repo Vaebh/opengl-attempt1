@@ -1,4 +1,4 @@
-#include "EventCallback.h"
+#include "../Events/EventCallback.h"
 #include <assert.h>
 
 EventCallbackFree::EventCallbackFree(void (*inEventCallbackFunc)(uint32_t, GameObject*)) : 

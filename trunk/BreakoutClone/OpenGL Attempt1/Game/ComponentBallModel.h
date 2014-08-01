@@ -1,7 +1,7 @@
 #ifndef COMPONENT_BALL_MODEL_SIMENGINE
 #define COMPONENT_BALL_MODEL_SIMENGINE
 
-#include "GameObject.h"
+#include "../Structure/GameObject.h"
 
 class ComponentBallModel : public IComponent
 {

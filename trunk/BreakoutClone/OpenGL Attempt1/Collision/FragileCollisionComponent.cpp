@@ -1,4 +1,4 @@
-#include "FragileCollisionComponent.h"
+#include "../Collision/FragileCollisionComponent.h"
 
 FragileCollisionComponent::FragileCollisionComponent(int inHealth) :
 CollisionComponent(),

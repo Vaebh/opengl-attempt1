@@ -1,5 +1,5 @@
-#include "AudioSystem.h"
-#include "Sound.h"
+#include "../Sound/AudioSystem.h"
+#include "../Sound/Sound.h"
 #include <iostream>
 
 AudioSystem::AudioSystem() : mNumDrivers(0), mSystem(NULL), mMusicChannelGroup(NULL), mSoundFXChannelGroup(NULL)

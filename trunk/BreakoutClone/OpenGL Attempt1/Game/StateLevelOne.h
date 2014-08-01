@@ -1,9 +1,9 @@
 #ifndef STATE_LEVEL_ONE_SIMENGINE
 #define STATE_LEVEL_ONE_SIMENGINE
 
-#include "State.h"
-#include "BlockManager.h"
-#include "Foundation.h"
+#include "../Structure/State.h"
+#include "../Game/BlockManager.h"
+#include "../Foundation/Foundation.h"
 
 class StateLevelOne : public IState
 {

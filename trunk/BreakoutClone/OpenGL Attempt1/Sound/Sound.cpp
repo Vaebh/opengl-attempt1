@@ -1,4 +1,4 @@
-#include "Sound.h"
+#include "../Sound/Sound.h"
 
 Sound::Sound(const std::string& inFilename, FMOD::System* inFMODSystem, FMOD::ChannelGroup* inChannelGroup) : mFMODSystem(inFMODSystem)
 {
