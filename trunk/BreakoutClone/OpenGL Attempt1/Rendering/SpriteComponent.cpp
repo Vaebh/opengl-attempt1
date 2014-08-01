@@ -17,8 +17,8 @@ const GLfloat vertices[] =
 
 const unsigned int kNumVertsForSprites = 4;
 
-const std::string DEFAULT_VERT_SHADER = "2DVertexShaderMove.txt";
-const std::string DEFAULT_FRAG_SHADER = "2DFragShaderPlain.txt";
+const std::string DEFAULT_VERT_SHADER = "../OpenGL Attempt1/Assets/Shaders/2DVertexShaderMove.txt";
+const std::string DEFAULT_FRAG_SHADER = "../OpenGL Attempt1/Assets/Shaders/2DFragShaderPlain.txt";
 
 using namespace std;
 

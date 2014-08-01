@@ -161,7 +161,7 @@ TextureData LoadImage(const GLchar * path)
 	int width, height;
 	unsigned char* image;
 
-	const std::string imagePath = "..\\OpenGL Attempt1\\Assets\\Images\\";
+	const std::string imagePath = "../OpenGL Attempt1/Assets/Images/";
 
 	std::string amendedPath(path);
 	amendedPath = imagePath + amendedPath;
