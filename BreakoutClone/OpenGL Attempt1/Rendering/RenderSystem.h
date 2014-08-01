@@ -1,9 +1,9 @@
 #ifndef RENDERSYSTEM_SIMENGINE
 #define RENDERSYSTEM_SIMENGINE
 
-#include "GLIncludes.h"
-#include "RenderableComponent.h"
-#include "System.h"
+#include "../OpenGL/GLIncludes.h"
+#include "../Rendering/RenderableComponent.h"
+#include "../Structure/System.h"
 #include <vector>
 
 class RenderSystem : public ISystem

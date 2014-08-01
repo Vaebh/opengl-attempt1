@@ -1,11 +1,11 @@
-#include "BreakoutFactory.h"
-#include "AnimatedSpriteComponent.h"
-#include "BounceComponent.h"
-#include "RenderSystem.h"
-#include "FollowMouseComponent.h"
-#include "FragileCollisionComponent.h"
-#include "ComponentBallController.h"
-#include "ComponentBallModel.h"
+#include "../Game/BreakoutFactory.h"
+#include "../Rendering/AnimatedSpriteComponent.h"
+#include "../Collision/BounceComponent.h"
+#include "../Rendering/RenderSystem.h"
+#include "../Game/FollowMouseComponent.h"
+#include "../Collision/FragileCollisionComponent.h"
+#include "../Game/ComponentBallController.h"
+#include "../Game/ComponentBallModel.h"
 
 GameObject* CreateBall()
 {

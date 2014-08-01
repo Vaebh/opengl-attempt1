@@ -1,7 +1,7 @@
 #ifndef FRAGILE_COLLISION_COMPONENT_SIMENGINE
 #define FRAGILE_COLLISION_COMPONENT_SIMENGINE
 
-#include "CollisionComponent.h"
+#include "../Collision/CollisionComponent.h"
 
 class FragileCollisionComponent : public CollisionComponent
 {

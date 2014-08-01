@@ -1,5 +1,5 @@
-#include "RenderSystem.h"
-#include "Shader.h"
+#include "../Rendering/RenderSystem.h"
+#include "../Rendering/Shader.h"
 #include <iostream>
 
 RenderSystem* RenderSystem::mRenderer = NULL;

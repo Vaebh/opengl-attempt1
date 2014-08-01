@@ -1,4 +1,4 @@
-#include "AudioSystem.h"
+#include "../Sound/AudioSystem.h"
 
 class Sound
 {

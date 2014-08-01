@@ -1,8 +1,8 @@
 #ifndef COLLISION_COMPONENT_SIMENGINE
 #define COLLISION_COMPONENT_SIMENGINE
 
-#include "Component.h"
-#include "Rectangle.h"
+#include "../Structure/Component.h"
+#include "../Structure/Rectangle.h"
 
 class CollisionComponent : public IComponent
 {

@@ -1,8 +1,8 @@
 #ifndef BOUNCE_COMPONENT_SIMENGINE
 #define BOUNCE_COMPONENT_SIMENGINE
 
-#include "CollisionComponent.h"
-#include "Foundation.h"
+#include "../Collision/CollisionComponent.h"
+#include "../Foundation/Foundation.h"
 
 // TODO - I could pass in a callback function through the constructor (or not) that is triggered when the onCollision event is called
 // Would mean I wouldn't have to use the event system, and could just keep it for more general usage

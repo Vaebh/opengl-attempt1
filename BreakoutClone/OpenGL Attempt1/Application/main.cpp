@@ -1,12 +1,12 @@
-#include "GLIncludes.h"
-#include "GLUtils.h"
-#include "RenderSystem.h"
-#include "InputManager.h"
+#include "../OpenGL/GLIncludes.h"
+#include "../OpenGL/GLUtils.h"
+#include "../Rendering/RenderSystem.h"
+#include "../Input/InputManager.h"
 #include <time.h>
 #include <iostream>
-#include "AudioSystem.h"
-#include "StateLevelOne.h"
-#include "Foundation.h"
+#include "../Sound/AudioSystem.h"
+#include "../Game/StateLevelOne.h"
+#include "../Foundation/Foundation.h"
 
 using namespace std;
 

@@ -1,9 +1,9 @@
 #ifndef SPRITE_COMPONENT_SIMENGINE
 #define SPRITE_COMPONENT_SIMENGINE
 
-#include "GLIncludes.h"
-#include "GLUtils.h"
-#include "RenderableComponent.h"
+#include "../OpenGL/GLIncludes.h"
+#include "../OpenGL/GLUtils.h"
+#include "../Rendering/RenderableComponent.h"
 #include <string>
 
 class SpriteComponent : public IRenderableComponent

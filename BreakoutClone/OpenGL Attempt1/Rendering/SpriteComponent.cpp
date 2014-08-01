@@ -1,7 +1,7 @@
-#include "SpriteComponent.h"
+#include "../Rendering/SpriteComponent.h"
 
-#include "RenderSystem.h"
-#include "GLUtils.h"
+#include "../Rendering/RenderSystem.h"
+#include "../OpenGL/GLUtils.h"
 #include <iostream>
 
 const GLfloat vertices[] = 

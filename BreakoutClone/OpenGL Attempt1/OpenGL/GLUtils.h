@@ -1,7 +1,7 @@
 #ifndef GLUTILS_SIMENGINE
 #define GLUTILS_SIMENGINE
 
-#include "GLIncludes.h"
+#include "../OpenGL/GLIncludes.h"
 #include <string>
 
 //GLFWwindow* InitialiseWindow(int width = 640, int height = 480);

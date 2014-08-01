@@ -1,6 +1,6 @@
-#include "ComponentBallController.h"
-#include "RenderSystem.h"
-#include "EventMessenger.h"
+#include "../Game/ComponentBallController.h"
+#include "../Rendering/RenderSystem.h"
+#include "../Events/EventMessenger.h"
 
 ComponentBallController::ComponentBallController(ComponentBallModel* inBallModel) : 
 IComponent()

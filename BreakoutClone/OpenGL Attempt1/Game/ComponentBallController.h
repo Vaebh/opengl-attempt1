@@ -1,9 +1,9 @@
 #ifndef COMPONENT_BALL_CONTROLLER_SIMENGINE
 #define COMPONENT_BALL_CONTROLLER_SIMENGINE
 
-#include "GameObject.h"
-#include "ComponentBallModel.h"
-#include "Foundation.h"
+#include "../Structure/GameObject.h"
+#include "../Game/ComponentBallModel.h"
+#include "../Foundation/Foundation.h"
 
 class ComponentBallController : public IComponent
 {

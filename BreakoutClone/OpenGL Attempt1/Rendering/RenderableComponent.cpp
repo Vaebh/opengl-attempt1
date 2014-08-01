@@ -1,5 +1,5 @@
-#include "RenderableComponent.h"
-#include "RenderSystem.h"
+#include "../Rendering/RenderableComponent.h"
+#include "../Rendering/RenderSystem.h"
 
 IRenderableComponent::IRenderableComponent() : mVisible(true), mShader(NULL)
 {

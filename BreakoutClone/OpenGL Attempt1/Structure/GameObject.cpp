@@ -1,5 +1,5 @@
-#include "GameObject.h"
-#include "Foundation.h"
+#include "../Structure/GameObject.h"
+#include "../Foundation/Foundation.h"
 #include <algorithm>
 
 unsigned int GameObject::mNumGameObjects = 0;

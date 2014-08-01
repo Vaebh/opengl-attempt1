@@ -1,8 +1,8 @@
 #ifndef RENDERABLECOMPONENT_SIMENGINE
 #define RENDERABLECOMPONENT_SIMENGINE
 
-#include "Component.h"
-#include "Shader.h"
+#include "../Structure/Component.h"
+#include "../Rendering/Shader.h"
 
 class IRenderableComponent : public IComponent
 {

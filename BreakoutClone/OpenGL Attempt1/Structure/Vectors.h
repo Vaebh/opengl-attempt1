@@ -1,7 +1,7 @@
 #ifndef VECTORS_SIMENGINE
 #define VECTORS_SIMENGINE
 
-#include "GLIncludes.h"
+#include "../OpenGL/GLIncludes.h"
 
 typedef glm::vec2 Vector2;
 typedef glm::vec3 Vector3;

@@ -1,7 +1,7 @@
-#ifndef SHADER
-#define SHADER
+#ifndef SIMENGINE_SHADER
+#define SIMENGINE_SHADER
 
-#include "GLIncludes.h"
+#include "../OpenGL/GLIncludes.h"
 #include <string>
 
 class Shader

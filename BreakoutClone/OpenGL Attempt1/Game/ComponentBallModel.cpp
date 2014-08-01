@@ -1,4 +1,4 @@
-#include "ComponentBallModel.h"
+#include "../Game/ComponentBallModel.h"
 
 ComponentBallModel::ComponentBallModel() : 
 IComponent()

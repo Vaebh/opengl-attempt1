@@ -1,5 +1,5 @@
-#include "FollowMouseComponent.h"
-#include "RenderSystem.h"
+#include "../Game/FollowMouseComponent.h"
+#include "../Rendering/RenderSystem.h"
 
 FollowMouseComponent::FollowMouseComponent(AXIS inAxis) :
 IComponent(),

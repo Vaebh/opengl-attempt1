@@ -1,7 +1,7 @@
 #ifndef BLOCKMANAGER_SIMENGINE
 #define BLOCKMANAGER_SIMENGINE
 
-#include "GameObject.h"
+#include "../Structure/GameObject.h"
 #include <vector>
 
 const int BLOCK_COLS = 6;
