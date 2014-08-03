@@ -1,7 +1,10 @@
-#include "../Rendering/SpriteComponent.h"
+#include "../Foundation/Foundation.h"
 
-#include "../Rendering/RenderSystem.h"
 #include "../OpenGL/GLUtils.h"
+
+#include "../Rendering/SpriteComponent.h"
+#include "../Rendering/RenderSystem.h"
+
 #include <iostream>
 
 const GLfloat vertices[] = 
@@ -37,7 +40,7 @@ mColourTint(Vector4(0.f, 0.f, 0.f, 1.f))
 
 SpriteComponent::~SpriteComponent()
 {
-
+	SAFE_DELETE(mShader);
 }
 
 void SpriteComponent::Initialise()

@@ -1,12 +1,16 @@
+#include "../Foundation/Foundation.h"
+
 #include "../OpenGL/GLIncludes.h"
 #include "../OpenGL/GLUtils.h"
-#include "../Rendering/RenderSystem.h"
+
 #include "../Input/InputManager.h"
-#include <time.h>
-#include <iostream>
+#include "../Rendering/RenderSystem.h"
 #include "../Sound/AudioSystem.h"
+
 #include "../Game/StateLevelOne.h"
-#include "../Foundation/Foundation.h"
+#include "../Structure/StateManager.h"
+
+#include <iostream>
 
 using namespace std;
 
@@ -19,13 +23,16 @@ int main(void)
 
 	//audioSystem->PlaySound("Tank.mp3");
 
-	StateLevelOne* stateLevelOne = new StateLevelOne();
+	StateManager* stateManager = new StateManager(new StateLevelOne());
 
 	double olddelta = 0;
 	double delta = 0;
 	double begin_time = glfwGetTime();
 
 	float time = 0;
+
+	bool stateChange = false;
+	float timer = 0;
 
 	// Loop until the window should close
 	while (!glfwWindowShouldClose(RenderSystem::GetSingleton()->mWindow))
@@ -41,9 +48,28 @@ int main(void)
 			//cout << "DeltaTime: " << delta << endl;
 		}
 
+		// Stupid test code
+		if(glfwGetKey(RenderSystem::GetSingleton()->mWindow, GLFW_KEY_BACKSPACE) == GLFW_PRESS && stateChange == false)
+		{
+			stateChange = true;
+			timer = 0;
+
+			//StateLevelOne* stateLevelOneNum2 = new StateLevelOne();
+
+			stateManager->PopState();
+			stateManager->PushState(new StateLevelOne());
+		}
+
+		if(stateChange)
+			timer += delta;
+
+		if(timer >= 1)
+			stateChange = false;
+		// End of stupid test code
+
 		inputSystem->Update(delta);
 
-		stateLevelOne->Update(delta);
+		stateManager->Update(delta);
 
 		RenderSystem::GetSingleton()->Draw();
 
@@ -55,7 +81,7 @@ int main(void)
 
 	SAFE_DELETE(inputSystem);
 	SAFE_DELETE(audioSystem);
-	SAFE_DELETE(stateLevelOne);
+	SAFE_DELETE(stateManager);
 
 	glfwDestroyWindow(RenderSystem::GetSingleton()->mWindow);
 	glfwTerminate();
