@@ -51,6 +51,7 @@ void GameObject::Detach(IComponent* inComponent)
 		if((*it) == inComponent)
 		{
 			inComponent->SetOwner(NULL);
+			inComponent->OnDetached(this);
 			mComponents.erase(std::remove(mComponents.begin(), mComponents.end(), inComponent));
 			break;
 		}

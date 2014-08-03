@@ -1,6 +1,5 @@
 #include "../Game/ComponentBallController.h"
 #include "../Rendering/RenderSystem.h"
-#include "../Events/EventMessenger.h"
 
 ComponentBallController::ComponentBallController(ComponentBallModel* inBallModel) : 
 IComponent()
@@ -8,6 +7,15 @@ IComponent()
 ,mAiming(true)
 {
 	assert(mBallModel);
+}
+
+ComponentBallController::~ComponentBallController()
+{
+	// TODO - Can't unsubscribe in both detach and this and have this not fuck up, should think of better way to do it
+	EventMessenger::GetSingleton()->UnsubscribeToEvent(INPUT_SPACE_PRESS, mOwner, mCallbackMember.get());
+	EventMessenger::GetSingleton()->UnsubscribeToEvent(DEATH, mOwner, mCallbackMember.get());
+
+	mCallbackMember.reset();
 }
 
 void ComponentBallController::HandleEvent(uint32_t inEventType, GameObject* inTarget)
@@ -26,9 +34,19 @@ void ComponentBallController::OnAttached(GameObject* inGameObject)
 {
 	IComponent::OnAttached(inGameObject);
 
-	IEventCallback* newCallbackMember = new EventCallbackMember<ComponentBallController>(this, &ComponentBallController::HandleEvent);
-	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_SPACE_PRESS, mOwner, newCallbackMember);
-	EventMessenger::GetSingleton()->SubscribeToEvent(DEATH, mOwner, newCallbackMember);
+	mCallbackMember.reset(new EventCallbackMember<ComponentBallController>(this, &ComponentBallController::HandleEvent));
+	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_SPACE_PRESS, mOwner, mCallbackMember.get());
+	EventMessenger::GetSingleton()->SubscribeToEvent(DEATH, mOwner, mCallbackMember.get());
+}
+
+void ComponentBallController::OnDetached(GameObject* inGameObject)
+{
+	IComponent::OnDetached(inGameObject);
+
+	EventMessenger::GetSingleton()->UnsubscribeToEvent(INPUT_SPACE_PRESS, mOwner, mCallbackMember.get());
+	EventMessenger::GetSingleton()->UnsubscribeToEvent(DEATH, mOwner, mCallbackMember.get());
+
+	mCallbackMember.reset();
 }
 
 void ComponentBallController::LaunchBall()

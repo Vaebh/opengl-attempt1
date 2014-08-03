@@ -71,7 +71,10 @@ void EventMessenger::BroadcastEvent(const uint32_t& inEventType, const float& in
 		{
             for(uint32_t j = 0; j < mEvents[i].mEventTargets.size(); ++j)
 			{
-				(*mEvents[i].mEventTargets[j].second)(inEventType, NULL);
+				if(mEvents[i].mEventTargets[j].second != NULL)
+				{
+					(*mEvents[i].mEventTargets[j].second)(inEventType, NULL);
+				}
 			}
 		}
 	}

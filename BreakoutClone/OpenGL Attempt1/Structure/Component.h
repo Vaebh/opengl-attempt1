@@ -18,6 +18,7 @@ public:
 	inline void SetOwner(GameObject* inNewOwner) {mOwner = inNewOwner;}
 
 	virtual void OnAttached(GameObject* inGameObject) {}
+	virtual void OnDetached(GameObject* inGameObject) {}
 
 	virtual void PrePositionSet(Vector3 inNewPosition) {}
 

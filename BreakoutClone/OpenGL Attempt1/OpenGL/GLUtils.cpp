@@ -146,6 +146,8 @@ GLuint CreateShaderFromFile(std::string path, GLenum shaderType)
 	return shader;
 }
 
+#include <vector>
+
 //-------------------------------------------------------------------------------------
 // LoadImage
 //
@@ -153,13 +155,24 @@ GLuint CreateShaderFromFile(std::string path, GLenum shaderType)
 //
 // @return - The index for the image
 //-------------------------------------------------------------------------------------
-TextureData LoadImage(const GLchar * path)
+TextureData LoadImage(const GLchar* path)
 {
+	// Do this but in a non horrible way, tie it to the state somehow? Maybe bring back the Scene and tie it to that instead
+	static std::vector<TextureData> textures;
+
+	for(int i = 0; i < textures.size(); ++i)
+	{
+		if(textures[i].name == std::string(path))
+		{
+			return textures[i];
+		}
+	}
+
 	GLuint texture;
 	glGenTextures(1, &texture);
+	int width = 0, height = 0;
 
-	int width, height;
-	unsigned char* image;
+	unsigned char* image = NULL;
 
 	const std::string imagePath = "../OpenGL Attempt1/Assets/Images/";
 
@@ -169,11 +182,11 @@ TextureData LoadImage(const GLchar * path)
 	glBindTexture(GL_TEXTURE_2D, texture);
 	image = SOIL_load_image(amendedPath.c_str(), &width, &height, 0, SOIL_LOAD_RGBA);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
-    if(image == NULL)
-    {
-        cout << "Image " << path << " is null!" << endl;
-        cout << SOIL_last_result() << endl;
-    }
+	if(image == NULL)
+	{
+		cout << "Image " << path << " is null!" << endl;
+		cout << SOIL_last_result() << endl;
+	}
 	SOIL_free_image_data(image);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -184,8 +197,11 @@ TextureData LoadImage(const GLchar * path)
 	//TextureData newTexData(texture, width, height);
 	TextureData newTexData;
 	newTexData.textureID = texture;
+	newTexData.name = std::string(path);
 	newTexData.width = width;
 	newTexData.height = height;
+
+	textures.push_back(newTexData);
 
 	return newTexData;
 }
