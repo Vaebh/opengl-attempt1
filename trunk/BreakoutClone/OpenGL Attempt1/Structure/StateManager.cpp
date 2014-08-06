@@ -29,12 +29,6 @@ void StateManager::PopState()
 	if(mStateHierarchy.empty())
 		return;
 
-	/*if(mStateHierarchy.size() == 1)
-	{
-		std::cout << "Can't pop base state" << std::endl;
-		return;
-	}*/
-
 	SAFE_DELETE(mStateHierarchy.back());
 	mStateHierarchy.pop_back();
 
