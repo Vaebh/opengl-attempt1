@@ -1,3 +1,5 @@
+#include "../Foundation/Foundation.h"
+
 #include "../Rendering/RenderSystem.h"
 #include "../Rendering/Shader.h"
 #include <iostream>
@@ -134,13 +136,13 @@ void RenderSystem::Draw()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 
-	int numVertices = 0;
+	uint32_t numVertices = 0;
 
 	Shader* spriteShader = NULL;
 
 	glActiveTexture(GL_TEXTURE0);
 
-	for(int i = 0; i < mComponents.size(); ++i)
+	for(uint32_t i = 0; i < mComponents.size(); ++i)
 	{
 		if(mComponents[i]->IsVisible())
 		{
@@ -157,6 +159,4 @@ void RenderSystem::Draw()
 			numVertices += 6;
 		}
 	}
-
-	//glDrawArrays(GL_TRIANGLES, 0, numVertices);
 }
