@@ -44,31 +44,13 @@ StateLevelOne::~StateLevelOne()
 
 void StateLevelOne::HandleEvent(uint32_t inEventType, GameObject* inTarget)
 {
-	if(inEventType == INPUT_SPACE_PRESS)
-	{
-		std::cout << "Space bar pressed!=============\n";
-	}
-	if(inEventType == INPUT_SPACE_RELEASE)
-	{
-		std::cout << "Space bar released!=============\n";
-	}
-
-	if(inEventType == INPUT_W_PRESS)
-	{
-		std::cout << "W pressed!=============\n";
-	}
-	if(inEventType == INPUT_W_RELEASE)
-	{
-		std::cout << "W released!=============\n";
-	}
-
 	if(inEventType == COLLISION && inTarget == mPaddle.get())
 	{
-		std::cout << "=============PADDLE COLLIDED=============\n";
+		//std::cout << "=============PADDLE COLLIDED=============\n";
 	}
 	else if(inEventType == COLLISION && inTarget == mBall.get())
 	{
-		std::cout << "=============BALL COLLIDED=============\n";
+		//std::cout << "=============BALL COLLIDED=============\n";
 
 		mBall->GetComponent<SpriteComponent>()->mColourTint = Vector4(0.f, 0.f, 1.f, 0.f);
 	}

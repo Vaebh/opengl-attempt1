@@ -14,30 +14,6 @@
 
 using namespace std;
 
-void YearsTillRetirement()
-{
-    int annualIncome = 30000;
-    int annualSpending = 14000;
-    int savings = 0;
-    int retirementNumber = annualSpending * 25;
-    
-    int years = 0;
-    
-    while(savings < retirementNumber)
-    {
-        years += 1;
-        
-        savings += savings * 0.04f;
-        savings += (annualIncome - annualSpending);
-        
-        cout << "savings in year " << years << ": " << savings << endl;
-        
-        //annualIncome += annualIncome * 0.02;
-    }
-    
-    cout << "years: " << years << endl << endl;
-}
-
 int main(void)
 {
 	InputManager* inputSystem = new InputManager(RenderSystem::GetSingleton()->mWindow);
@@ -51,14 +27,11 @@ int main(void)
 
 	double olddelta = 0;
 	double delta = 0;
-	double begin_time = glfwGetTime();
 
 	float time = 0;
 
 	bool stateChange = false;
 	float timer = 0;
-    
-    YearsTillRetirement();
 
 	// Loop until the window should close
 	while (!glfwWindowShouldClose(RenderSystem::GetSingleton()->mWindow))
@@ -68,10 +41,11 @@ int main(void)
 
 		time += delta;
 
-		if(time > 1)
+		if(time > 0.2)
 		{
 			time = 0;
 			//cout << "DeltaTime: " << delta << endl;
+			cout << "FPS: " << 1 / delta << endl;
 		}
 
 		// Stupid test code

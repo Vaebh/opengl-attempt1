@@ -136,8 +136,6 @@ void RenderSystem::Draw()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 
-	uint32_t numVertices = 0;
-
 	Shader* spriteShader = NULL;
 
 	glActiveTexture(GL_TEXTURE0);
@@ -155,8 +153,6 @@ void RenderSystem::Draw()
 			mComponents[i]->Draw();
 
 			glDrawArrays(GL_TRIANGLES, 0, 6);
-
-			numVertices += 6;
 		}
 	}
 }

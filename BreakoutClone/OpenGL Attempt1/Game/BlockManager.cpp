@@ -37,6 +37,7 @@ void BlockManager::Update(float inDT)
 			{
                 for(uint32_t k = 0; k < mBlocks[i][j]->mComponents.size(); ++k)
 				{
+					// TODO Replace FragileCollisionComp with a BlockModel component and have it just listen to collision events from it's owner
 					FragileCollisionComponent* const fragComp = dynamic_cast<FragileCollisionComponent*>(mBlocks[i][j]->mComponents[k]);
 					if(fragComp)
 					{
