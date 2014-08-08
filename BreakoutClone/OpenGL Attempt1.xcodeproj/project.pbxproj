@@ -53,6 +53,7 @@
 		CEA9A448198B8BDE00DB1408 /* Component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEA9A42D198B8BDE00DB1408 /* Component.cpp */; };
 		CEA9A449198B8BDE00DB1408 /* GameObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEA9A42F198B8BDE00DB1408 /* GameObject.cpp */; };
 		CEA9A44A198B8BDE00DB1408 /* System.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEA9A434198B8BDE00DB1408 /* System.cpp */; };
+		CEAEA6F6198F7C2A00336643 /* StateManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEAEA6F5198F7C2A00336643 /* StateManager.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -159,7 +160,9 @@
 		CEA9A45C198BBFAC00DB1408 /* 2DVertexShaderMove.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2DVertexShaderMove.txt; sourceTree = "<group>"; };
 		CEA9A45D198BBFAC00DB1408 /* 3DFragShader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 3DFragShader.txt; sourceTree = "<group>"; };
 		CEA9A45E198BBFAC00DB1408 /* 3DVertexShader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 3DVertexShader.txt; sourceTree = "<group>"; };
+		CEAB6C2919938F2800687A73 /* TextureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureManager.h; sourceTree = "<group>"; };
 		CEAC8C07197FC8FE00D01C4C /* OpenGL Attempt1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "OpenGL Attempt1"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEAEA6F5198F7C2A00336643 /* StateManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StateManager.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -289,6 +292,7 @@
 				CEA9A424198B8BDE00DB1408 /* Shader.h */,
 				CEA9A425198B8BDE00DB1408 /* SpriteComponent.cpp */,
 				CEA9A426198B8BDE00DB1408 /* SpriteComponent.h */,
+				CEAB6C2919938F2800687A73 /* TextureManager.h */,
 			);
 			path = Rendering;
 			sourceTree = "<group>";
@@ -307,16 +311,17 @@
 		CEA9A42C198B8BDE00DB1408 /* Structure */ = {
 			isa = PBXGroup;
 			children = (
-				CEA9A42D198B8BDE00DB1408 /* Component.cpp */,
 				CEA9A42E198B8BDE00DB1408 /* Component.h */,
-				CEA9A42F198B8BDE00DB1408 /* GameObject.cpp */,
+				CEA9A42D198B8BDE00DB1408 /* Component.cpp */,
 				CEA9A430198B8BDE00DB1408 /* GameObject.h */,
-				CEA9A431198B8BDE00DB1408 /* Rectangle.h */,
+				CEA9A42F198B8BDE00DB1408 /* GameObject.cpp */,
 				CEA9A432198B8BDE00DB1408 /* State.h */,
 				CEA9A433198B8BDE00DB1408 /* StateManager.h */,
-				CEA9A434198B8BDE00DB1408 /* System.cpp */,
+				CEAEA6F5198F7C2A00336643 /* StateManager.cpp */,
 				CEA9A435198B8BDE00DB1408 /* System.h */,
+				CEA9A434198B8BDE00DB1408 /* System.cpp */,
 				CEA9A436198B8BDE00DB1408 /* Vectors.h */,
+				CEA9A431198B8BDE00DB1408 /* Rectangle.h */,
 			);
 			path = Structure;
 			sourceTree = "<group>";
@@ -503,6 +508,7 @@
 				CEA9A43E198B8BDE00DB1408 /* StateLevelOne.cpp in Sources */,
 				CEA9A448198B8BDE00DB1408 /* Component.cpp in Sources */,
 				CEA9A43A198B8BDE00DB1408 /* BreakoutFactory.cpp in Sources */,
+				CEAEA6F6198F7C2A00336643 /* StateManager.cpp in Sources */,
 				CEA9A43C198B8BDE00DB1408 /* ComponentBallModel.cpp in Sources */,
 				CEA9A447198B8BDE00DB1408 /* Sound.cpp in Sources */,
 				CEA9A446198B8BDE00DB1408 /* AudioSystem.cpp in Sources */,
