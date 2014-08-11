@@ -117,6 +117,9 @@ void EventMessenger::SubscribeToEvent(const uint32_t& inEventType, GameObject* i
 	mEvents.push_back(newEvent);
 }
 
+// TODO - Redo the unsubscribe function as it is currently not working, the capacity for the event vector just keeps going up and up and up
+
+
 // Loop through event list, if the delegate is null or not there then return,
 // otherwise remove it from the delegate list
 void EventMessenger::UnsubscribeToEvent(const uint32_t& inEventType, GameObject* inTarget, MessageDelegate inMsgDel)

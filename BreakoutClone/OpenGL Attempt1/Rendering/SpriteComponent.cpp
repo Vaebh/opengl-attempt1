@@ -42,6 +42,8 @@ SpriteComponent::~SpriteComponent()
 {
 	SAFE_DELETE(mShader);
     
+	// TODO - Make some kind of sprite managery class, maybe SpriteBatch, and have it store and bind the vao and vbo as they're the same for every sprite
+	// Also maybe use the same shader program for all sprites
     glDeleteBuffers(1, &mVbo);
     glDeleteVertexArrays(1, &mVao);
 }
