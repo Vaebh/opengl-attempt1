@@ -10,7 +10,7 @@ struct TextureData
 {
 	//TextureData(GLuint inTexID, float inWidth, float inHeight) {textureID = inTexID; width = inWidth; height = inHeight;}
 	std::string name;
-	GLuint textureID;
+	GLuint* textureID;
 	float width;
 	float height;
 };

@@ -41,6 +41,9 @@ mColourTint(Vector4(0.f, 0.f, 0.f, 1.f))
 SpriteComponent::~SpriteComponent()
 {
 	SAFE_DELETE(mShader);
+    
+    glDeleteBuffers(1, &mVbo);
+    glDeleteVertexArrays(1, &mVao);
 }
 
 void SpriteComponent::Initialise()
@@ -112,7 +115,7 @@ void SpriteComponent::Update(float inDT)
 void SpriteComponent::Draw()
 {
 	//glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, mTextureData.textureID);
+    glBindTexture(GL_TEXTURE_2D, *(mTextureData.textureID));
 
 	//glUseProgram(mShader->GetProgramID());
 

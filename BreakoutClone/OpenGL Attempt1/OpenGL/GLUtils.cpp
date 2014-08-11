@@ -168,8 +168,8 @@ TextureData LoadImage(const GLchar* path)
 		}
 	}
 
-	GLuint texture;
-	glGenTextures(1, &texture);
+	GLuint* texture = new GLuint;
+	glGenTextures(1, texture);
 	int width = 0, height = 0;
 
 	unsigned char* image = NULL;
@@ -179,7 +179,7 @@ TextureData LoadImage(const GLchar* path)
 	std::string amendedPath(path);
 	amendedPath = imagePath + amendedPath;
 
-	glBindTexture(GL_TEXTURE_2D, texture);
+	glBindTexture(GL_TEXTURE_2D, *texture);
 	image = SOIL_load_image(amendedPath.c_str(), &width, &height, 0, SOIL_LOAD_RGBA);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 	if(image == NULL)

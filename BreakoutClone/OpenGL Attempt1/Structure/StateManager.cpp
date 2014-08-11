@@ -22,6 +22,8 @@ void StateManager::PushState(IState* const inNewState)
 {
 	mStateHierarchy.push_back(inNewState);
 	mActiveState = inNewState;
+    
+    std::cout << "State pushed" << std::endl;
 }
 
 void StateManager::PopState()
