@@ -70,5 +70,6 @@ void StateLevelOne::Update(float inDT)
 		}
 	}
 
-	mBlockManager->Update(inDT);
+	if(mBlockManager)
+		mBlockManager->Update(inDT);
 }

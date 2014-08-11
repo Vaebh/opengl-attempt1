@@ -5,6 +5,7 @@ ComponentBallController::ComponentBallController(ComponentBallModel* inBallModel
 IComponent()
 ,mBallModel(inBallModel)
 ,mAiming(true)
+,mAimingObject(NULL)
 {
 	assert(mBallModel);
 }
