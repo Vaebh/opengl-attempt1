@@ -26,6 +26,7 @@ void AudioSystem::Initialise()
 
 void AudioSystem::PlaySound(const std::string& inSoundName)
 {
+	// Memory leak
 	Sound* soundEffect = new Sound(inSoundName, mSystem, mSoundFXChannelGroup);
 	soundEffect->Play();
 }
