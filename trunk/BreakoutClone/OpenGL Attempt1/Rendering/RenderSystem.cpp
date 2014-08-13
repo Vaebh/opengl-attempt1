@@ -130,7 +130,7 @@ void RenderSystem::Update(float inDT)
 
 void RenderSystem::Draw()
 {
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -146,7 +146,7 @@ void RenderSystem::Draw()
 		{
 			if(spriteShader == NULL)
 			{
-				spriteShader = mComponents[i]->GetShader();
+				spriteShader = &(mComponents[i]->GetShader());
 				glUseProgram(spriteShader->GetProgramID());
 			}
 

@@ -7,28 +7,21 @@ using std::endl;
 
 #define DEBUG_PRINTING 0
 
-Shader::Shader()
+Shader::Shader() :
+mShaderProgram(0)
 {
   
 }
 
-Shader::Shader(const std::string& vertexShaderSrc, const std::string& fragShaderSrc)
+Shader::Shader(const std::string& inName, const std::string& vertexShaderSrc, const std::string& fragShaderSrc) :
+mShaderProgram(0),
+mName(inName)
 {
 	CreateShaderProgram(vertexShaderSrc, fragShaderSrc);
 }
 
 Shader::~Shader()
 {
-	if(mVertexShader)
-	{
-		glDetachShader(mShaderProgram, mVertexShader);
-		glDeleteShader(mVertexShader);
-	}
-	if(mFragmentShader)
-	{
-		glDetachShader(mShaderProgram, mFragmentShader);
-		glDeleteShader(mFragmentShader);
-	}
 	if(mShaderProgram)
 	{
 		glDeleteProgram(mShaderProgram);
@@ -48,18 +41,20 @@ GLint Shader::GetAttributeLocation(const char * inAttributeName)
 //
 // @return - The index for the shader program we've just created
 //-------------------------------------------------------------------------------------
-GLuint Shader::CreateShaderProgram(const std::string& vertexShaderSrc, const std::string& fragShaderSrc)
+void Shader::CreateShaderProgram(const std::string& vertexShaderSrc, const std::string& fragShaderSrc)
 {
 	GLuint vertexShader = CreateShaderFromFile(vertexShaderSrc, GL_VERTEX_SHADER);
 	GLuint fragShader = CreateShaderFromFile(fragShaderSrc, GL_FRAGMENT_SHADER);
 
-	if(!ShaderCompilationCheck(vertexShader, fragShader, "NAME"))
+	if(!ShaderCompilationCheck(vertexShader, fragShader, mName))
 	{
-		return 0;
+		if(vertexShader != 0)
+			DeleteShader(vertexShader);
+		if(fragShader != 0)
+			DeleteShader(fragShader);
+
+		return;
 	}
-        
-	mVertexShader = vertexShader;
-	mFragmentShader = fragShader;
 
 	// Actually create the shader program
 	mShaderProgram = glCreateProgram();
@@ -69,8 +64,10 @@ GLuint Shader::CreateShaderProgram(const std::string& vertexShaderSrc, const std
 	// Telling the program which buffer the fragment shader is writing to
 	glBindFragDataLocation(mShaderProgram, 0, "outColor");
 	glLinkProgram(mShaderProgram);
-        
-	//mShaderProgram = shaderProgram;
+
+	// Detach and delete the shaders
+	DeleteShader(vertexShader);
+	DeleteShader(fragShader);
 
 	#if DEBUG_PRINTING == 1
 	if(glIsProgram(mShaderProgram) == GL_TRUE)
@@ -79,19 +76,7 @@ GLuint Shader::CreateShaderProgram(const std::string& vertexShaderSrc, const std
 		cout << "isProgram fail" << endl;
 	#endif
 
-	/*glUseProgram(mShaderProgram);
-
-	GLint posAttrib = glGetAttribLocation(mShaderProgram, "position");
-	std::cout << "PositionAttrib: " << posAttrib << std::endl;
-	glEnableVertexAttribArray(posAttrib);
-	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 4*sizeof(float), 0);
-                     
-	GLint texAttrib = glGetAttribLocation(mShaderProgram, "texcoord");
-	std::cout << "TexAttrib: " << texAttrib << std::endl;
-	glEnableVertexAttribArray(texAttrib);
-	glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 4*sizeof(float), (void*)(2*sizeof(float)));*/
-
-	return mShaderProgram;
+	return;
 }
 
 bool Shader::ShaderCompilationCheck(const GLuint vertexShader, const GLuint fragmentShader, const std::string shaderName) const
@@ -158,4 +143,10 @@ std::string Shader::LoadShaderFromFile(const std::string& path) const
 	}
 
 	return "";
+}
+
+void Shader::DeleteShader(GLuint inShader)
+{
+	glDetachShader(mShaderProgram, inShader);
+	glDeleteShader(inShader);
 }

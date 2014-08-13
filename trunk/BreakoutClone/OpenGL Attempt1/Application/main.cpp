@@ -54,8 +54,6 @@ int main(void)
 			stateChange = true;
 			timer = 0;
 
-			//StateLevelOne* stateLevelOneNum2 = new StateLevelOne();
-
 			stateManager->PopState();
 			stateManager->PushState(new StateLevelOne());
 		}
