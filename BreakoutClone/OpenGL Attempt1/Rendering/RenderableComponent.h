@@ -10,7 +10,7 @@ public:
 	IRenderableComponent();
 	~IRenderableComponent();
 
-	inline Shader* GetShader() const {return mShader;}
+	inline Shader GetShader() const {return mShader;}
 	inline bool IsVisible() const {return mVisible;}
 
 	virtual void Update(float inDT) = 0;
@@ -19,7 +19,7 @@ public:
 	virtual void OnAttached(GameObject* inGameObject);
 
 protected:
-	Shader* mShader;
+	Shader mShader;
 	bool mVisible;
 };
 
