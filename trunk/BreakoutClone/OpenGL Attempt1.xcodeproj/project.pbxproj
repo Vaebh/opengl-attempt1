@@ -53,6 +53,7 @@
 		CEA9A448198B8BDE00DB1408 /* Component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEA9A42D198B8BDE00DB1408 /* Component.cpp */; };
 		CEA9A449198B8BDE00DB1408 /* GameObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEA9A42F198B8BDE00DB1408 /* GameObject.cpp */; };
 		CEA9A44A198B8BDE00DB1408 /* System.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEA9A434198B8BDE00DB1408 /* System.cpp */; };
+		CEA9A6BF199B936B000577CB /* TextureManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEA9A6BE199B936B000577CB /* TextureManager.cpp */; };
 		CEAEA6F6198F7C2A00336643 /* StateManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEAEA6F5198F7C2A00336643 /* StateManager.cpp */; };
 /* End PBXBuildFile section */
 
@@ -160,6 +161,7 @@
 		CEA9A45C198BBFAC00DB1408 /* 2DVertexShaderMove.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 2DVertexShaderMove.txt; sourceTree = "<group>"; };
 		CEA9A45D198BBFAC00DB1408 /* 3DFragShader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 3DFragShader.txt; sourceTree = "<group>"; };
 		CEA9A45E198BBFAC00DB1408 /* 3DVertexShader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 3DVertexShader.txt; sourceTree = "<group>"; };
+		CEA9A6BE199B936B000577CB /* TextureManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureManager.cpp; sourceTree = "<group>"; };
 		CEAB6C2919938F2800687A73 /* TextureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureManager.h; sourceTree = "<group>"; };
 		CEAC8C07197FC8FE00D01C4C /* OpenGL Attempt1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "OpenGL Attempt1"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEAEA6F5198F7C2A00336643 /* StateManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StateManager.cpp; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 				CEA9A425198B8BDE00DB1408 /* SpriteComponent.cpp */,
 				CEA9A426198B8BDE00DB1408 /* SpriteComponent.h */,
 				CEAB6C2919938F2800687A73 /* TextureManager.h */,
+				CEA9A6BE199B936B000577CB /* TextureManager.cpp */,
 			);
 			path = Rendering;
 			sourceTree = "<group>";
@@ -507,6 +510,7 @@
 				CEA9A440198B8BDE00DB1408 /* GLUtils.cpp in Sources */,
 				CEA9A43E198B8BDE00DB1408 /* StateLevelOne.cpp in Sources */,
 				CEA9A448198B8BDE00DB1408 /* Component.cpp in Sources */,
+				CEA9A6BF199B936B000577CB /* TextureManager.cpp in Sources */,
 				CEA9A43A198B8BDE00DB1408 /* BreakoutFactory.cpp in Sources */,
 				CEAEA6F6198F7C2A00336643 /* StateManager.cpp in Sources */,
 				CEA9A43C198B8BDE00DB1408 /* ComponentBallModel.cpp in Sources */,

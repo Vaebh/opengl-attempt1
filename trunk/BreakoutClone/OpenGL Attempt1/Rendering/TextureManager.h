@@ -9,22 +9,40 @@
 #ifndef TEXTUREMANAGER_SIMEGINE
 #define TEXTUREMANAGER_SIMEGINE
 
+#include "../Foundation/Foundation.h"
+#include "../OpenGL/GLIncludes.h"
+
+#include <vector>
+#include <string>
+
 struct TextureData
 {
-	//TextureData(GLuint inTexID, float inWidth, float inHeight) {textureID = inTexID; width = inWidth; height = inHeight;}
-	std::string name;
-	GLuint textureID;
-	float width;
-	float height;
+	TextureData(const std::string& inName = "", GLuint* inTexID = NULL, uint32_t inWidth = 0, uint32_t inHeight = 0) :
+    mName(inName),
+    mTextureID(inTexID),
+    mWidth(inWidth),
+    mHeight(inHeight)
+    {}
+    
+	std::string mName;
+	GLuint* mTextureID;
+	uint32_t mWidth;
+	uint32_t mHeight;
 };
 
 class TextureManager
 {
+public:
     TextureManager();
     ~TextureManager();
     
-    TextureData GetTexture();
-    TextureData LoadTexture();
+    TextureData GetTexture(const GLchar* path);
+    TextureData LoadTexture(const GLchar* path);
+    
+    void DumpTextureCache();
+    
+private:
+    std::vector<TextureData> mTextureCache;
 };
 
 #endif
