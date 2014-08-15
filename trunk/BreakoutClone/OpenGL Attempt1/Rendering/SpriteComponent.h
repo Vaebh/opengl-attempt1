@@ -11,7 +11,11 @@ class SpriteComponent : public IRenderableComponent
 public:
 	SpriteComponent(const std::string inTexture = "sample.png", int inNumFrames = 1);
 	~SpriteComponent();
+    
+    inline Vector4 GetColourTint() const {return mColourTint;}
+    inline void SetColourTint(Vector4 inColourTint) {mColourTint = inColourTint;}
 
+    // These really should not be public
 	inline GLuint GetVAO() const {return mVao;}
 	inline GLuint GetVBO() const {return mVbo;}
 

@@ -52,7 +52,7 @@ void StateLevelOne::HandleEvent(uint32_t inEventType, GameObject* inTarget)
 	{
 		//std::cout << "=============BALL COLLIDED=============\n";
 
-		mBall->GetComponent<SpriteComponent>()->mColourTint = Vector4(0.f, 0.f, 1.f, 0.f);
+		mBall->GetComponent<SpriteComponent>()->SetColourTint(Vector4(0.f, 0.f, 1.f, 0.f));
 	}
 }
 
