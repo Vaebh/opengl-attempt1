@@ -131,15 +131,13 @@ void EventMessenger::UnsubscribeToEvent(const uint32_t& inEventType, GameObject*
 	{
 		if(mEvents[i].mEventType == inEventType)
 		{
-			for(uint32_t j = 0; j < mEvents[i].mEventTargets.size(); ++j)
+            for(std::vector<EventPair>::iterator it = mEvents[i].mEventTargets.begin(); it != mEvents[i].mEventTargets.end(); ++it)
 			{
-                EventPair& theEventPair = mEvents[i].mEventTargets[j];
+                EventPair& theEventPair = *it;
                 
 				if(theEventPair.first == inTarget && theEventPair.second == inMsgDel)
 				{
-					// Should actually remove these from the vector
-					theEventPair.first = 0;
-					theEventPair.second = 0;
+                    mEvents[i].mEventTargets.erase(it);
 					return;
 				}
 			}
