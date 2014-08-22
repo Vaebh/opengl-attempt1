@@ -1,9 +1,10 @@
-#include "../Game/StateLevelOne.h"
-#include "../Rendering/RenderSystem.h"
-#include "../Game/BreakoutFactory.h"
 #include "../Foundation/Foundation.h"
-#include "../Events/EventMessenger.h"
+
+#include "../Game/BreakoutFactory.h"
 #include "../Game/ComponentBallController.h"
+#include "../Game/StateLevelOne.h"
+
+#include "../Rendering/RenderSystem.h"
 #include "../Rendering/SpriteComponent.h"
 
 // TODO - CONVERT THIS OVER ONCE NEW STUFF IS DONE
@@ -22,24 +23,23 @@ StateLevelOne::StateLevelOne()
 		ballController->SetAimingObject(mPaddle.get());
 	}
 
-	IEventCallback* newCallbackMember = new EventCallbackMember<StateLevelOne>(this, &StateLevelOne::HandleEvent);
-	EventMessenger::GetSingleton()->SubscribeToEvent(COLLISION, mPaddle.get(), newCallbackMember);
-	EventMessenger::GetSingleton()->SubscribeToEvent(COLLISION, mBall.get(), newCallbackMember);
+	mEventCallbackHandler.reset(new EventCallbackMember<StateLevelOne>(this, &StateLevelOne::HandleEvent));
+	EventMessenger::GetSingleton()->SubscribeToEvent(COLLISION, mPaddle.get(), mEventCallbackHandler.get());
+	EventMessenger::GetSingleton()->SubscribeToEvent(COLLISION, mBall.get(), mEventCallbackHandler.get());
 
-	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_SPACE_PRESS, mBall.get(), newCallbackMember);
-	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_SPACE_RELEASE, mBall.get(), newCallbackMember);
-
-	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_W_PRESS, mBall.get(), newCallbackMember);
-	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_W_RELEASE, mBall.get(), newCallbackMember);
+	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_SPACE_PRESS, mBall.get(), mEventCallbackHandler.get());
+	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_SPACE_RELEASE, mBall.get(), mEventCallbackHandler.get());
 
 	mBlockManager.reset(new BlockManager(mGameObjects, ""));
 }
 
 StateLevelOne::~StateLevelOne()
 {
-	mBlockManager.reset();
-	mBall.reset();
-	mPaddle.reset();
+    EventMessenger::GetSingleton()->UnsubscribeToEvent(COLLISION, mPaddle.get(), mEventCallbackHandler.get());
+	EventMessenger::GetSingleton()->UnsubscribeToEvent(COLLISION, mBall.get(), mEventCallbackHandler.get());
+    
+	EventMessenger::GetSingleton()->UnsubscribeToEvent(INPUT_SPACE_PRESS, mBall.get(), mEventCallbackHandler.get());
+	EventMessenger::GetSingleton()->UnsubscribeToEvent(INPUT_SPACE_RELEASE, mBall.get(), mEventCallbackHandler.get());
 }
 
 void StateLevelOne::HandleEvent(uint32_t inEventType, GameObject* inTarget)
