@@ -1,9 +1,10 @@
 #ifndef STATE_LEVEL_ONE_SIMENGINE
 #define STATE_LEVEL_ONE_SIMENGINE
 
-#include "../Structure/State.h"
-#include "../Game/BlockManager.h"
+#include "../Events/EventMessenger.h"
 #include "../Foundation/Foundation.h"
+#include "../Game/BlockManager.h"
+#include "../Structure/State.h"
 
 class StateLevelOne : public IState
 {
@@ -19,6 +20,7 @@ private:
     std::unique_ptr<BlockManager> mBlockManager;
 	std::unique_ptr<GameObject> mBall;
 	std::unique_ptr<GameObject> mPaddle;
+    std::unique_ptr<IEventCallback> mEventCallbackHandler;
 };
 
 #endif
