@@ -44,8 +44,8 @@ SpriteComponent::~SpriteComponent()
 {
 	// TODO - Make some kind of sprite managery class, maybe SpriteBatch, and have it store and bind the vao and vbo as they're the same for every sprite
 	// Also maybe use the same shader program for all sprites
-    glDeleteBuffers(1, &mVbo);
-    glDeleteVertexArrays(1, &mVao);
+    //glDeleteBuffers(1, &mVbo);
+    //glDeleteVertexArrays(1, &mVao);
 }
 
 void SpriteComponent::Initialise()
@@ -106,10 +106,9 @@ void SpriteComponent::Draw()
 	// Calculate transformation
     glUniformMatrix4fv(mMoveUniform, 1, GL_FALSE, glm::value_ptr(CalculateMatrix()));
 
-    float spriteFrameDivisorX = 1.f / mNumFrames;
+    float spriteFrameDivisorU = 1.f / mNumFrames;
 
-	//Vector2 spriteIndexMult(0.5f, 1.f);
-	glUniform2f(mUVUniform, spriteFrameDivisorX, 1.f);
+	glUniform2f(mUVUniform, spriteFrameDivisorU, 1.f);
 	glUniform1i(mFrameUniform, mCurrentFrame);
 
 	glUniform4f(mColourTintUniform, mColourTint.x, mColourTint.y, mColourTint.z, mColourTint.w);
