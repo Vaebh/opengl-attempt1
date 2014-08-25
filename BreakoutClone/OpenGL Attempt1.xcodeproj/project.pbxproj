@@ -54,6 +54,7 @@
 		CEA9A449198B8BDE00DB1408 /* GameObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEA9A42F198B8BDE00DB1408 /* GameObject.cpp */; };
 		CEA9A44A198B8BDE00DB1408 /* System.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEA9A434198B8BDE00DB1408 /* System.cpp */; };
 		CEA9A6BF199B936B000577CB /* TextureManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEA9A6BE199B936B000577CB /* TextureManager.cpp */; };
+		CEAC59E919A6219900757D40 /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEAC59E719A6219900757D40 /* Scene.cpp */; };
 		CEAEA6F6198F7C2A00336643 /* StateManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEAEA6F5198F7C2A00336643 /* StateManager.cpp */; };
 /* End PBXBuildFile section */
 
@@ -162,7 +163,12 @@
 		CEA9A45D198BBFAC00DB1408 /* 3DFragShader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 3DFragShader.txt; sourceTree = "<group>"; };
 		CEA9A45E198BBFAC00DB1408 /* 3DVertexShader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 3DVertexShader.txt; sourceTree = "<group>"; };
 		CEA9A6BE199B936B000577CB /* TextureManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureManager.cpp; sourceTree = "<group>"; };
+		CEAAAD2C19AB6ECA00C7C9BA /* SpriteBatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteBatcher.h; sourceTree = "<group>"; };
+		CEAAAD2D19AB75B200C7C9BA /* Buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Buffer.h; sourceTree = "<group>"; };
+		CEAAAD2E19AB7A4600C7C9BA /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
 		CEAB6C2919938F2800687A73 /* TextureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureManager.h; sourceTree = "<group>"; };
+		CEAC59E719A6219900757D40 /* Scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scene.cpp; sourceTree = "<group>"; };
+		CEAC59E819A6219900757D40 /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
 		CEAC8C07197FC8FE00D01C4C /* OpenGL Attempt1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "OpenGL Attempt1"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEAEA6F5198F7C2A00336643 /* StateManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StateManager.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -284,6 +290,7 @@
 		CEA9A41C198B8BDE00DB1408 /* Rendering */ = {
 			isa = PBXGroup;
 			children = (
+				CEAAAD2C19AB6ECA00C7C9BA /* SpriteBatcher.h */,
 				CEA9A41D198B8BDE00DB1408 /* AnimatedSpriteComponent.cpp */,
 				CEA9A41E198B8BDE00DB1408 /* AnimatedSpriteComponent.h */,
 				CEA9A41F198B8BDE00DB1408 /* RenderableComponent.cpp */,
@@ -296,6 +303,8 @@
 				CEA9A426198B8BDE00DB1408 /* SpriteComponent.h */,
 				CEAB6C2919938F2800687A73 /* TextureManager.h */,
 				CEA9A6BE199B936B000577CB /* TextureManager.cpp */,
+				CEAAAD2D19AB75B200C7C9BA /* Buffer.h */,
+				CEAAAD2E19AB7A4600C7C9BA /* Texture.h */,
 			);
 			path = Rendering;
 			sourceTree = "<group>";
@@ -314,6 +323,8 @@
 		CEA9A42C198B8BDE00DB1408 /* Structure */ = {
 			isa = PBXGroup;
 			children = (
+				CEAC59E719A6219900757D40 /* Scene.cpp */,
+				CEAC59E819A6219900757D40 /* Scene.h */,
 				CEA9A42E198B8BDE00DB1408 /* Component.h */,
 				CEA9A42D198B8BDE00DB1408 /* Component.cpp */,
 				CEA9A430198B8BDE00DB1408 /* GameObject.h */,
@@ -504,6 +515,7 @@
 				CEA9A3FD198B8BCF00DB1408 /* CollisionComponent.cpp in Sources */,
 				CEA9A444198B8BDE00DB1408 /* Shader.cpp in Sources */,
 				CEA9A44A198B8BDE00DB1408 /* System.cpp in Sources */,
+				CEAC59E919A6219900757D40 /* Scene.cpp in Sources */,
 				CEA9A437198B8BDE00DB1408 /* EventCallback.cpp in Sources */,
 				CEA9A449198B8BDE00DB1408 /* GameObject.cpp in Sources */,
 				CEA9A438198B8BDE00DB1408 /* EventMessenger.cpp in Sources */,
