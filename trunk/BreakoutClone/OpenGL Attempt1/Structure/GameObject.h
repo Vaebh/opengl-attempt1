@@ -2,6 +2,7 @@
 #define GAMEOBJECT_SIMENGINE
 
 #include "../Structure/Component.h"
+#include "../Structure/Scene.h"
 #include "../Structure/Vectors.h"
 
 #include <vector>
@@ -26,6 +27,8 @@ public:
 
 	inline const std::string GetName() {return mName;}
 	inline void SetName(std::string inName) {mName = inName;}
+    
+    void SetOwningScene(Scene* inScene);
 
 	void Update(float inDT);
 
