@@ -39,6 +39,9 @@ bool Sound::IsPlaying()
 
 bool Sound::IsPaused()
 {
+    if(!mChannel)
+        return false;
+    
 	bool isPaused = false;
 	AudioSystem::FMODErrorCheck(mChannel->getPaused(&isPaused));
 

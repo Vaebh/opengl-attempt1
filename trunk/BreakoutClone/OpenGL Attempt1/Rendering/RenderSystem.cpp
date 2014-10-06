@@ -146,7 +146,8 @@ void RenderSystem::Draw()
 		{
 			if(spriteShader == NULL)
 			{
-				spriteShader = &(mComponents[i]->GetShader());
+                Shader sprShader(mComponents[i]->GetShader());
+				spriteShader = &(sprShader);
 				glUseProgram(spriteShader->GetProgramID());
 			}
 
