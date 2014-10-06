@@ -2,6 +2,12 @@
 #include "../Sound/Sound.h"
 #include <iostream>
 
+namespace
+{
+    const std::string musicPath = "../OpenGL Attempt1/Assets/Audio/Music/";
+    const std::string soundFXPath = "../OpenGL Attempt1/Assets/Audio/Effects/";
+}
+
 AudioSystem::AudioSystem() : mNumDrivers(0), mSystem(NULL), mMusicChannelGroup(NULL), mSoundFXChannelGroup(NULL)
 {
 
@@ -24,11 +30,18 @@ void AudioSystem::Initialise()
 	CheckSoundcards();
 }
 
-void AudioSystem::PlaySound(const std::string& inSoundName)
+void AudioSystem::PlaySoundEffect(const std::string& inSoundName)
 {
-	// Memory leak
-	Sound* soundEffect = new Sound(inSoundName, mSystem, mSoundFXChannelGroup);
+	// TODO - Fix Memory leak
+	Sound* soundEffect = new Sound(soundFXPath + inSoundName, mSystem, mSoundFXChannelGroup);
 	soundEffect->Play();
+}
+
+void AudioSystem::PlayMusic(const std::string& inMusicName)
+{
+	// TODO - Fix Memory leak
+	Sound* music = new Sound(musicPath + inMusicName, mSystem, mMusicChannelGroup);
+	music->Play();
 }
 
 void AudioSystem::CheckSoundcards()

@@ -5,7 +5,7 @@
 #include "../Structure/GameObject.h"
 #include "../Structure/State.h"
 
-class Scene
+/*class Scene
 {
 public:
 	Scene();
@@ -16,6 +16,6 @@ public:
 
 private:
 	std::vector<GameObject*> mGameObjects;
-};
+};*/
 
 #endif

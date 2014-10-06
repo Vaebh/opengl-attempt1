@@ -16,19 +16,36 @@ using namespace std;
 
 int main(void)
 {
+    const int years = 10;
+    int savings = 0;
+    float investmentReturn = 0.04;
+    
+    float savedIncomePerMonth = 5000.f;
+    float yearlyIncome = savedIncomePerMonth * 12;
+    
+    for(int i = 1; i <= years; ++i)
+    {
+        if(savings > 3000)
+            savings += savings * investmentReturn;
+        
+        savings += yearlyIncome;
+        
+        cout << "year " << i << " savings: " << savings << endl;
+    }
+    
 	InputManager* inputSystem = new InputManager(RenderSystem::GetSingleton()->mWindow);
 
 	AudioSystem* audioSystem = new AudioSystem();
 	audioSystem->Initialise();
 
-	//audioSystem->PlaySound("Tank.mp3");
+	audioSystem->PlayMusic("Tank.mp3");
 
 	StateManager* stateManager = new StateManager(new StateLevelOne());
 
 	double olddelta = 0;
 	double delta = 0;
 
-	float time = 0;
+	float fpsTimer = 0;
 
 	bool stateChange = false;
 	float timer = 0;
@@ -39,13 +56,13 @@ int main(void)
 		delta = glfwGetTime() - olddelta;
 		olddelta = glfwGetTime();
 
-		time += delta;
+		fpsTimer += delta;
 
-		if(time > 0.2)
+		if(fpsTimer > 0.2)
 		{
-			time = 0;
+			fpsTimer = 0;
 			//cout << "DeltaTime: " << delta << endl;
-			cout << "FPS: " << 1 / delta << endl;
+			//cout << "FPS: " << 1 / delta << endl;
 		}
 
 		// Stupid test code

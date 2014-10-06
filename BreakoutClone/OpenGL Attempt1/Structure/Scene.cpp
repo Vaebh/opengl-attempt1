@@ -1,4 +1,4 @@
-#include "../Structure/Scene.h"
+/*#include "../Structure/Scene.h"
 
 // TODO - reconfigure to work with gameobjects and as a member variable of each state
 
@@ -39,4 +39,4 @@ void Scene::Update(float inDT)
     {
         mGameObjects[i]->Update(inDT);
     }
-}
+}*/

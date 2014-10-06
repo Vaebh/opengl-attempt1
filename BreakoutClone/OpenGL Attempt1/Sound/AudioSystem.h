@@ -15,7 +15,8 @@ public:
 
 	void Update(float inDT);
 
-	void PlaySound(const std::string& inSoundName);
+	void PlaySoundEffect(const std::string& inSoundName);
+    void PlayMusic(const std::string& inMusicName);
 
 	static bool FMODErrorCheck(FMOD_RESULT inResult);
 
