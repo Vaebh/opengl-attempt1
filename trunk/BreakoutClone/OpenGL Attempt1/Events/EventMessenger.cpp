@@ -95,7 +95,7 @@ void EventMessenger::SubscribeToEvent(const uint32_t& inEventType, GameObject* i
 			{
                 EventPair& theEventPair = mEvents[i].mEventTargets[j];
                 
-				if(theEventPair.first == inTarget || theEventPair.second == inMsgDel)
+				if(theEventPair.first == inTarget)
 				{
 					// If it's the same GameObject that we're subscribing to then just add the message delegate
 					// to that GameObjects vector of MessageDelegates, once it's implemented
