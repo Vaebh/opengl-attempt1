@@ -2,9 +2,10 @@
 #include "../Foundation/Foundation.h"
 #include <iostream>
 
-StateManager::StateManager(IState* const inInitialState)
+StateManager* StateManager::mStateManager = NULL;
+
+StateManager::StateManager()
 {
-	PushState(inInitialState);
 }
 
 StateManager::~StateManager()
@@ -16,6 +17,16 @@ StateManager::~StateManager()
 	}
 
 	mActiveState = NULL;
+}
+
+StateManager* StateManager::GetSingleton()
+{
+	if(!mStateManager)
+	{
+		mStateManager = new StateManager();
+	}
+
+	return mStateManager;
 }
 
 void StateManager::PushState(IState* const inNewState)
