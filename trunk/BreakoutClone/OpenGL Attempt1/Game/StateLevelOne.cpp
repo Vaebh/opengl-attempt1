@@ -7,6 +7,9 @@
 #include "../Rendering/RenderSystem.h"
 #include "../Rendering/SpriteComponent.h"
 
+#include "../Structure/StateManager.h"
+#include "../Game/StateVictory.h"
+
 // TODO - CONVERT THIS OVER ONCE NEW STUFF IS DONE
 
 StateLevelOne::StateLevelOne()
@@ -23,14 +26,13 @@ StateLevelOne::StateLevelOne()
 		ballController->SetAimingObject(mPaddle.get());
 	}
 
+	/*IEventCallback* newCallbackMember = new EventCallbackMember<StateLevelOne>(this, &StateLevelOne::HandleEvent);
+	EventMessenger::GetSingleton()->SubscribeToEvent(COLLISION, mBall.get(), newCallbackMember);*/
 	mEventCallbackHandler.reset(new EventCallbackMember<StateLevelOne>(this, &StateLevelOne::HandleEvent));
 	EventMessenger::GetSingleton()->SubscribeToEvent(COLLISION, mPaddle.get(), mEventCallbackHandler.get());
 	EventMessenger::GetSingleton()->SubscribeToEvent(COLLISION, mBall.get(), mEventCallbackHandler.get());
-
 	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_SPACE_PRESS, mBall.get(), mEventCallbackHandler.get());
-	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_SPACE_RELEASE, mBall.get(), mEventCallbackHandler.get());
-
-	mBlockManager.reset(new BlockManager(mGameObjects, ""));
+	EventMessenger::GetSingleton()->SubscribeToEvent(INPUT_SPACE_RELEASE, mBall.get(), mEventCallbackHandler.get());	mBlockManager.reset(new BlockManager(mGameObjects, ""));
 }
 
 StateLevelOne::~StateLevelOne()
@@ -71,5 +73,13 @@ void StateLevelOne::Update(float inDT)
 	}
 
 	if(mBlockManager)
+	{
 		mBlockManager->Update(inDT);
+
+		if(mBlockManager->AreAllBlocksDead())
+		{
+			StateManager::GetSingleton()->PopState();
+			StateManager::GetSingleton()->PushState(new StateVictory());
+		}
+	}
 }

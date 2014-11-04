@@ -44,10 +44,10 @@ void ComponentBallController::OnDetached(GameObject* inGameObject)
 {
 	IComponent::OnDetached(inGameObject);
 
-	EventMessenger::GetSingleton()->UnsubscribeToEvent(INPUT_SPACE_PRESS, mOwner, mCallbackMember.get());
+	/*EventMessenger::GetSingleton()->UnsubscribeToEvent(INPUT_SPACE_PRESS, mOwner, mCallbackMember.get());
 	EventMessenger::GetSingleton()->UnsubscribeToEvent(DEATH, mOwner, mCallbackMember.get());
 
-	mCallbackMember.reset();
+	mCallbackMember.reset();*/
 }
 
 void ComponentBallController::LaunchBall()
