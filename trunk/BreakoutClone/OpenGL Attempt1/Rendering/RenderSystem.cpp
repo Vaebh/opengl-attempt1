@@ -144,7 +144,7 @@ void RenderSystem::Draw()
 	{
 		if(mComponents[i]->IsVisible())
 		{
-			if(spriteShader == NULL)
+			//if(spriteShader == NULL)
 			{
                 Shader sprShader(mComponents[i]->GetShader());
 				spriteShader = &(sprShader);
