@@ -38,17 +38,18 @@ int main(void)
 	AudioSystem* audioSystem = new AudioSystem();
 	audioSystem->Initialise();
 
-	audioSystem->PlayMusic("Tank.mp3");
+	//audioSystem->PlayMusic("Tank.mp3");
 
-	StateManager* stateManager = new StateManager(new StateLevelOne());
+	StateManager* stateManager = StateManager::GetSingleton();
+	stateManager->PushState(new StateLevelOne());
 
 	double olddelta = 0;
 	double delta = 0;
 
 	float fpsTimer = 0;
+	float timer = 0;
 
 	bool stateChange = false;
-	float timer = 0;
 
 	// Loop until the window should close
 	while (!glfwWindowShouldClose(RenderSystem::GetSingleton()->mWindow))
@@ -58,11 +59,10 @@ int main(void)
 
 		fpsTimer += delta;
 
-		if(fpsTimer > 0.2)
+		if(fpsTimer > 0.5)
 		{
 			fpsTimer = 0;
-			//cout << "DeltaTime: " << delta << endl;
-			//cout << "FPS: " << 1 / delta << endl;
+			cout << "FPS: " << 1 / delta << endl;
 		}
 
 		// Stupid test code
