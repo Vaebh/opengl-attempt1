@@ -6,8 +6,10 @@
 class StateManager
 {
 public:
-	StateManager(IState* inInitialState);
+	StateManager();
 	~StateManager();
+
+	static StateManager* GetSingleton();
 
 	const IState* GetActiveState() const;
 
@@ -20,6 +22,8 @@ private:
 	IState* mActiveState;
 
 	std::vector<IState*> mStateHierarchy;
+
+	static StateManager* mStateManager;
 };
 
 #endif

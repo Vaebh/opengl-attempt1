@@ -1,7 +1,7 @@
 #ifndef SCENE_SIMENGINE
 #define SCENE_SIMENGINE
 
-#include "../Foundation/Foundation.h"
+/*#include "../Foundation/Foundation.h"
 #include "../Structure/GameObject.h"
 #include "../Structure/State.h"
 
