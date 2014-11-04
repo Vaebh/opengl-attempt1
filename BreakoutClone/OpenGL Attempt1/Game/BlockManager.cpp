@@ -4,7 +4,7 @@
 #include "../Foundation/Foundation.h"
 #include "../Foundation/StringUtils.h"
 
-BlockManager::BlockManager(std::vector<GameObject*>& outGameObjects, std::string instrLevelLayout)
+BlockManager::BlockManager(std::vector<GameObject*>& outGameObjects, std::string instrLevelLayout) : mAllBlocksDead(false)
 {
 	for(uint32_t i = 0; i < BLOCK_COLS; ++i)
 	{
@@ -29,12 +29,19 @@ BlockManager::~BlockManager()
 
 void BlockManager::Update(float inDT)
 {
+	if(mAllBlocksDead)
+		return;
+
+	bool blocksDead = true;
+
 	for(uint32_t i = 0; i < BLOCK_COLS; ++i)
 	{
 		for(uint32_t j = 0; j < BLOCK_ROWS; ++j)
 		{
 			if(mBlocks[i][j] != NULL)
 			{
+				blocksDead = false;
+
                 for(uint32_t k = 0; k < mBlocks[i][j]->mComponents.size(); ++k)
 				{
 					// TODO Replace FragileCollisionComp with a BlockModel component and have it just listen to collision events from it's owner
@@ -55,4 +62,7 @@ void BlockManager::Update(float inDT)
 			}
 		}
 	}
+
+	if(blocksDead)
+		mAllBlocksDead = true;
 }

@@ -4,8 +4,8 @@
 #include "../Structure/GameObject.h"
 #include <vector>
 
-const int BLOCK_COLS = 6;
-const int BLOCK_ROWS = 4;
+const int BLOCK_COLS = 2;//6;
+const int BLOCK_ROWS = 2;//4;
 
 class BlockManager
 {
@@ -15,8 +15,12 @@ public:
 
 	void Update(float inDT);
 
+	inline bool AreAllBlocksDead() const {return mAllBlocksDead;}
+
 private:
 	GameObject* mBlocks[BLOCK_COLS][BLOCK_ROWS];
+
+	bool mAllBlocksDead;
 };
 
 #endif
